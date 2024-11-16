@@ -7,31 +7,202 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-  title1 = 'Sales Department';
   topic = ''
 
   constructor(private router: Router){}
-  inputBtn1 = [
-    {
-      btnTitleName: "Customers",
-      subMenu: "1",
-      subBtn:[]
-    },
-    {
-      btnTitleName: "Sale Invoice",
-      subMenu: "2",
-      subBtn: [
-        {btnTitleName: "Invoice"},
-        {btnTitleName: "Receipt"},
-        {btnTitleName: "Report"},
+  allBtn = [
+    {title: 'File',
+      inputBtn: [
+        {
+          btnTitleName: "Print Invoice",
+          subMenu: "1",
+          subBtn:[]
+        },
+        {
+          btnTitleName: "Sale Report",
+          subMenu: "2",
+          subBtn: [
+            {btnTitleName: "Daily"},
+            {btnTitleName: "Weekly"},
+            {btnTitleName: "Monthly"},
+          ]
+        },
+        {
+          btnTitleName: "Purchase Report",
+          subMenu: "3",
+          subBtn: [
+            {btnTitleName: "Daily"},
+            {btnTitleName: "Weekly"},
+            {btnTitleName: "Monthly"},
+          ]
+        },
+        
       ]
-    },
-    {
-      btnTitleName: "Sale Payment",
-      subMenu: "3",
-      subBtn: []
-    },
-    
+    },{
+      title: 'Purchase',
+      inputBtn: [
+        {
+          btnTitleName: "Print Invoice",
+          subMenu: "1",
+          subBtn:[]
+        },
+        {
+          btnTitleName: "Sale Report",
+          subMenu: "2",
+          subBtn: [
+            {btnTitleName: "Daily"},
+            {btnTitleName: "Weekly"},
+            {btnTitleName: "Monthly"},
+          ]
+        },
+        {
+          btnTitleName: "Purchase Report",
+          subMenu: "3",
+          subBtn: [
+            {btnTitleName: "Daily"},
+            {btnTitleName: "Weekly"},
+            {btnTitleName: "Monthly"},
+          ]
+        },
+        
+      ]
+    },{
+      title: 'Sales',
+      inputBtn: [
+        {
+          btnTitleName: "Customers",
+          subMenu: "1",
+          subBtn:[]
+        },
+        {
+          btnTitleName: "Sale Invoice",
+          subMenu: "2",
+          subBtn: [
+            {btnTitleName: "Invoice"},
+            {btnTitleName: "Receipt"},
+            {btnTitleName: "Report"},
+          ]
+        },
+        {
+          btnTitleName: "Sale Payment",
+          subMenu: "3",
+          subBtn: []
+        },
+        
+      ]
+    },{
+      title: 'Stock',
+      inputBtn: [
+        {
+          btnTitleName: "Print Invoice",
+          subMenu: "1",
+          subBtn:[]
+        },
+        {
+          btnTitleName: "Sale Report",
+          subMenu: "2",
+          subBtn: [
+            {btnTitleName: "Daily"},
+            {btnTitleName: "Weekly"},
+            {btnTitleName: "Monthly"},
+          ]
+        },
+        {
+          btnTitleName: "Purchase Report",
+          subMenu: "3",
+          subBtn: [
+            {btnTitleName: "Daily"},
+            {btnTitleName: "Weekly"},
+            {btnTitleName: "Monthly"},
+          ]
+        },
+        
+      ]
+    },{
+      title: 'Setting',
+      inputBtn: [
+        {
+          btnTitleName: "Print Invoice",
+          subMenu: "1",
+          subBtn:[]
+        },
+        {
+          btnTitleName: "Sale Report",
+          subMenu: "2",
+          subBtn: [
+            {btnTitleName: "Daily"},
+            {btnTitleName: "Weekly"},
+            {btnTitleName: "Monthly"},
+          ]
+        },
+        {
+          btnTitleName: "Purchase Report",
+          subMenu: "3",
+          subBtn: [
+            {btnTitleName: "Daily"},
+            {btnTitleName: "Weekly"},
+            {btnTitleName: "Monthly"},
+          ]
+        },
+        
+      ]
+    },{
+      title: 'Reports',
+      inputBtn: [
+        {
+          btnTitleName: "Print Invoice",
+          subMenu: "1",
+          subBtn:[]
+        },
+        {
+          btnTitleName: "Sale Report",
+          subMenu: "2",
+          subBtn: [
+            {btnTitleName: "Daily"},
+            {btnTitleName: "Weekly"},
+            {btnTitleName: "Monthly"},
+          ]
+        },
+        {
+          btnTitleName: "Purchase Report",
+          subMenu: "3",
+          subBtn: [
+            {btnTitleName: "Daily"},
+            {btnTitleName: "Weekly"},
+            {btnTitleName: "Monthly"},
+          ]
+        },
+        
+      ]
+    },{
+      title : 'Transactions',
+      inputBtn : [
+        {
+          btnTitleName: "Print Invoice",
+          subMenu: "1",
+          subBtn:[]
+        },
+        {
+          btnTitleName: "Sale Report",
+          subMenu: "2",
+          subBtn: [
+            {btnTitleName: "Daily"},
+            {btnTitleName: "Weekly"},
+            {btnTitleName: "Monthly"},
+          ]
+        },
+        {
+          btnTitleName: "Purchase Report",
+          subMenu: "3",
+          subBtn: [
+            {btnTitleName: "Daily"},
+            {btnTitleName: "Weekly"},
+            {btnTitleName: "Monthly"},
+          ]
+        },
+        
+      ]
+    }
   ]
 
   triggerBtnEvent(value: string){

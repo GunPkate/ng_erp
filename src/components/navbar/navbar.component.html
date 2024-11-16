@@ -1,3 +1,5 @@
-<app-button-menu [btnTitle] = "title1"  [btnMenuList]= "inputBtn1" (BtnEvent)="triggerBtnEvent($event)"></app-button-menu>
+<div class="d-flex">
+        <app-button-menu *ngFor="let i of allBtn" [btnTitle] = "i.title"  [btnMenuList]= "i.inputBtn" (BtnEvent)="triggerBtnEvent($event)"></app-button-menu>
+</div>
 
 {{topic}}
