@@ -1,37 +1,23 @@
 <div>
-    <button mat-button class="btn" [matMenuTriggerFor]="animals">Animal index</button>
-    <button mat-button class="btn" [matMenuTriggerFor]="animals">Animal index</button>
+    <button mat-button class="btn btn-primary" [matMenuTriggerFor]="animals">{{btnTitle}}</button>
+    
 </div>
 
-
-<mat-menu #animals="matMenu">
-  <button mat-menu-item [matMenuTriggerFor]="vertebrates">Vertebrates</button>
-  <button mat-menu-item [matMenuTriggerFor]="invertebrates">Invertebrates</button>
+<mat-menu #animals="matMenu" >
+  <div *ngFor="let i of btnMenuList">
+    <button mat-menu-item [matMenuTriggerFor]="option1">{{i.btnTitleName}}</button>
+  </div>
+  <!-- <button mat-menu-item [matMenuTriggerFor]="option2">Invertebrates</button> -->
 </mat-menu>
 
-<mat-menu #vertebrates="matMenu">
-  <button mat-menu-item [matMenuTriggerFor]="fish">Fishes</button>
-  <button mat-menu-item [matMenuTriggerFor]="amphibians">Amphibians</button>
-  <button mat-menu-item>Birds</button>
-  <button mat-menu-item>Mammals</button>
-</mat-menu>
-
-<mat-menu #invertebrates="matMenu">
-  <button mat-menu-item>Insects</button>
-  <button mat-menu-item>Molluscs</button>
-  <button mat-menu-item>Crustaceans</button>
-  <button mat-menu-item>Corals</button>
-  <button mat-menu-item>Arachnids</button>
-  <button mat-menu-item>Velvet worms</button>
-  <button mat-menu-item>Horseshoe crabs</button>
-</mat-menu>
-
-<mat-menu #fish="matMenu">
-  <button mat-menu-item>Baikal oilfish</button>
-  <button mat-menu-item>Bala shark</button>
-  <button mat-menu-item>Ballan wrasse</button>
-  <button mat-menu-item>Bamboo shark</button>
-  <button mat-menu-item>Banded killifish</button>
+<mat-menu #option1="matMenu">
+  <button mat-menu-item (click)="triggerBtn('Insects')">Insects</button>
+  <button mat-menu-item (click)="triggerBtn('Molluscs')">Molluscs</button>
+  <button mat-menu-item (click)="triggerBtn('Crustaceans')">Crustaceans</button>
+  <button mat-menu-item (click)="triggerBtn('Corals')">Corals</button>
+  <button mat-menu-item (click)="triggerBtn('Arachnids')">Arachnids</button>
+  <button mat-menu-item (click)="triggerBtn('Velvet ')">Velvet worms</button>
+  <button mat-menu-item (click)="triggerBtn('Horseshoe ')">Horseshoe crabs</button>
 </mat-menu>
 
 <mat-menu #amphibians="matMenu">
@@ -39,6 +25,5 @@
   <button mat-menu-item>Western toad</button>
   <button mat-menu-item>Arroyo toad</button>
   <button mat-menu-item>Yosemite toad</button>
-</mat-menu>
-
+</mat-menu> 
 
