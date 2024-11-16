@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -9,6 +10,7 @@ export class NavbarComponent {
   title1 = 'Sales Department';
   topic = ''
 
+  constructor(private router: Router){}
   inputBtn1 = [
     {
       btnTitleName: "Customers",
@@ -32,8 +34,13 @@ export class NavbarComponent {
     
   ]
 
-  triggerBtnEvent(value: any){
-    this.topic = value
+  triggerBtnEvent(value: string){
+    // this.topic = value
     console.log(value)
+    let check = value.split('/')
+    let param = check[1].toLowerCase().replace(" ","")
+    if(check[0] == 'sales'){
+      this.router.navigate([`/sales`, param])
+    }
   }
 }

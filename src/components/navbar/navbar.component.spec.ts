@@ -19,7 +19,7 @@ describe('NavbarComponent', () => {
   it(`should have as title 'ng_erp'`, () => {
     const fixture = TestBed.createComponent(NavbarComponent);
     const navbar = fixture.componentInstance;
-    expect(navbar.title).toEqual('ng_erp');
+    expect(navbar.title1).toEqual('ng_erp');
   });
 
   it('should render title', () => {

@@ -4,8 +4,8 @@
 
 <mat-menu #option1="matMenu" >
   <div *ngFor="let btnMenu of btnMenuList; let i = index">
-    <button *ngIf="btnMenu.subBtn.length > 0" mat-menu-item [matMenuTriggerFor]="option2" (menuOpened)="getSubBtn(i+1)">{{btnMenu.btnTitleName}}</button>
-    <button *ngIf="btnMenu.subBtn.length == 0" mat-menu-item >{{btnMenu.btnTitleName}}</button>
+    <button *ngIf="btnMenu.subBtn.length > 0" mat-menu-item [matMenuTriggerFor]="option2" (menuOpened)="getSubBtn(i+1)" (click)="triggerBtn(btnMenu.btnTitleName)">{{btnMenu.btnTitleName}}</button>
+    <button *ngIf="btnMenu.subBtn.length == 0" mat-menu-item (click)="triggerBtn(btnMenu.btnTitleName)">{{btnMenu.btnTitleName}}</button>
   </div>
 </mat-menu>
   

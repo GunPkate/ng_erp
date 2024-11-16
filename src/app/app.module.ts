@@ -13,6 +13,7 @@ import { P00MainComponent } from 'src/pages/p00-main/p00-main.component';
 const routes :Routes = [
   {path:'',component: P00MainComponent},
   {path:'sales',component: P01SalesComponent},
+  {path:'sales/:assign',component: P01SalesComponent},
 ]
 
 @NgModule({
