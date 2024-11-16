@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-  title = '';
+  title1 = 'Sales Department';
   topic = ''
 
   inputBtn1 = [
