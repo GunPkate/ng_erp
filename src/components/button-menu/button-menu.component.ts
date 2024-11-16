@@ -1,32 +1,39 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {MatMenuModule} from '@angular/material/menu'; 
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-button-menu',
   templateUrl: './button-menu.component.html',
   standalone: true,
   imports: [MatMenuModule,CommonModule],
-  styleUrls: ['./button-menu.component.css']
 })
 export class ButtonMenuComponent implements OnInit {
 
-  constructor() { }
+  constructor(private domSanitizer: DomSanitizer) { }
 
   @Input() btnTitle?: string;
   @Input() btnMenuList?: any;
   @Output('BtnEvent') 
   btnEvent:EventEmitter<string> = new EventEmitter<string>;
 
-  subBtn: any
+  subBtn: any = []
   ngOnInit(): void {
-    if(this.btnMenuList.subBtn){
-      this.subBtn = this.btnMenuList.subBtn
-    }
+  
   }
 
   triggerBtn(value: string){
     this.btnEvent.emit(value);
     console.log(value)
+  }
+
+  getSubBtn(number: number){
+    this.subBtn = []
+    this.btnMenuList.forEach((e: any) => {
+        if(number == e.subMenu){
+          this.subBtn = (e.subBtn)
+        }
+      });
   }
 }

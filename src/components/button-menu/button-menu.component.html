@@ -1,29 +1,17 @@
 <div>
-    <button mat-button class="btn btn-primary" [matMenuTriggerFor]="animals">{{btnTitle}}</button>
-    
+    <button mat-button class="btn btn-primary" [matMenuTriggerFor]="option1">{{btnTitle}}</button>
 </div>
 
-<mat-menu #animals="matMenu" >
-  <div *ngFor="let i of btnMenuList">
-    <button mat-menu-item [matMenuTriggerFor]="option1">{{i.btnTitleName}}</button>
+<mat-menu #option1="matMenu" >
+  <div *ngFor="let btnMenu of btnMenuList; let i = index">
+    <button *ngIf="btnMenu.subBtn.length > 0" mat-menu-item [matMenuTriggerFor]="option2" (menuOpened)="getSubBtn(i+1)">{{btnMenu.btnTitleName}}</button>
+    <button *ngIf="btnMenu.subBtn.length == 0" mat-menu-item >{{btnMenu.btnTitleName}}</button>
   </div>
-  <!-- <button mat-menu-item [matMenuTriggerFor]="option2">Invertebrates</button> -->
 </mat-menu>
-
-<mat-menu #option1="matMenu">
-  <button mat-menu-item (click)="triggerBtn('Insects')">Insects</button>
-  <button mat-menu-item (click)="triggerBtn('Molluscs')">Molluscs</button>
-  <button mat-menu-item (click)="triggerBtn('Crustaceans')">Crustaceans</button>
-  <button mat-menu-item (click)="triggerBtn('Corals')">Corals</button>
-  <button mat-menu-item (click)="triggerBtn('Arachnids')">Arachnids</button>
-  <button mat-menu-item (click)="triggerBtn('Velvet ')">Velvet worms</button>
-  <button mat-menu-item (click)="triggerBtn('Horseshoe ')">Horseshoe crabs</button>
+  
+<mat-menu #option2="matMenu">
+  <div>
+    <button mat-menu-item *ngFor="let i of subBtn" (click)="triggerBtn(i.btnTitleName)">{{i.btnTitleName}}</button>
+  </div>
 </mat-menu>
-
-<mat-menu #amphibians="matMenu">
-  <button mat-menu-item>Sonoran desert toad</button>
-  <button mat-menu-item>Western toad</button>
-  <button mat-menu-item>Arroyo toad</button>
-  <button mat-menu-item>Yosemite toad</button>
-</mat-menu> 
 

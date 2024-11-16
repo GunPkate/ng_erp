@@ -10,13 +10,23 @@ export class AppComponent {
   topic = ''
   inputBtn1 = [
     {
-      btnTitleName: "Sale",
-      subMenu: "btn1",
+      btnTitleName: "Customers",
+      subMenu: "1",
+      subBtn:[]
+    },
+    {
+      btnTitleName: "Sale Invoice",
+      subMenu: "2",
       subBtn: [
         {btnTitleName: "Invoice"},
         {btnTitleName: "Receipt"},
         {btnTitleName: "Report"},
       ]
+    },
+    {
+      btnTitleName: "Sale Payment",
+      subMenu: "3",
+      subBtn: []
     },
     
   ]
