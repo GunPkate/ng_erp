@@ -24,8 +24,7 @@ export class ButtonMenuComponent implements OnInit {
   }
 
   triggerBtn(value: string){
-    this.btnEvent.emit("sales/"+value);
-    console.log(value,this.btnTitle)
+    this.btnEvent.emit(this.btnTitle+"/"+value);
   }
 
   getSubBtn(number: number){
