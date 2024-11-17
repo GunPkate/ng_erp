@@ -85,29 +85,30 @@ export const AllBtn: Btn[] = [
       title: 'Stock',
       inputBtn: [
         {
-          btnTitleName: "Print Invoice",
+          btnTitleName: "Categories",
           subMenu: "1",
           subBtn:[]
         },
         {
-          btnTitleName: "Sale Report",
+          btnTitleName: "Products",
           subMenu: "2",
-          subBtn: [
-            {btnTitleName: "Daily"},
-            {btnTitleName: "Weekly"},
-            {btnTitleName: "Monthly"},
-          ]
+          subBtn: []
         },
         {
-          btnTitleName: "Purchase Report",
+          btnTitleName: "Stock Details",
           subMenu: "3",
-          subBtn: [
-            {btnTitleName: "Daily"},
-            {btnTitleName: "Weekly"},
-            {btnTitleName: "Monthly"},
-          ]
-        },
-        
+          subBtn: []
+        }, 
+        {
+          btnTitleName: "Low Stock Details",
+          subMenu: "4",
+          subBtn: []
+        }, 
+        {
+          btnTitleName: "Empty Stock Details",
+          subMenu: "5",
+          subBtn: []
+        }, 
       ]
     },{
       title: 'Setting',
