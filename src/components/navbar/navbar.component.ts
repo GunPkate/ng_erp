@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AllBtn } from '../../constant/AllBtn'
+import { Btn } from 'src/interface/Btn';
 
 @Component({
   selector: 'app-navbar',
@@ -9,7 +10,7 @@ import { AllBtn } from '../../constant/AllBtn'
 })
 export class NavbarComponent {
   topic = ''
-  allBtn = AllBtn
+  allBtn: Btn[] = AllBtn
   constructor(private router: Router){}
 
   triggerBtnEvent(value: string){

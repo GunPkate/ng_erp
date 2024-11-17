@@ -14,8 +14,11 @@ export class MainPageGridComponent implements OnInit {
 
   constructor() { }
   @Input() btnImport?: any
-
+  subBtnGrid: any
   ngOnInit(): void {
+    // subBtnGrid = this.btnImport.forEach(element => {
+      
+    // });
   }
 
 }

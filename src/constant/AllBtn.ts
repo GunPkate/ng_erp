@@ -1,5 +1,8 @@
-export const AllBtn = [
-    {title: 'File',
+import { Btn } from "src/interface/Btn";
+
+export const AllBtn: Btn[] = [
+    {
+      title: 'File',
       inputBtn: [
         {
           btnTitleName: "Print Invoice",

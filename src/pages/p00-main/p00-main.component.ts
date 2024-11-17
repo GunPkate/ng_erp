@@ -11,7 +11,7 @@ export class P00MainComponent implements OnInit {
   constructor() { }
   btnImport = AllBtn 
   ngOnInit(): void {
-    console.log(this.btnImport.map(x=>x.title))
+    console.log(this.btnImport.map(x=>x.inputBtn))
   }
 
 }
