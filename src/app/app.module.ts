@@ -10,6 +10,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { P01SalesComponent } from 'src/pages/p01-sales/p01-sales.component';
 import { P00MainComponent } from 'src/pages/p00-main/p00-main.component';
 import { P00MainModule } from 'src/pages/p00-main/p00-main.module';
+import { P02FileComponent } from 'src/pages/p02-file/p02-file.component';
+import { P03PurchaseComponent } from 'src/pages/p03-purchase/p03-purchase.component';
+import { P04SettingComponent } from 'src/pages/p04-setting/p04-setting.component';
+import { P05StockComponent } from 'src/pages/p05-stock/p05-stock.component';
+import { P06ReportsComponent } from 'src/pages/p06-reports/p06-reports.component';
+import { P07TransactionsComponent } from 'src/pages/p07-transactions/p07-transactions.component';
 
 const routes :Routes = [
   {path:'',component: P00MainComponent},
@@ -22,12 +28,12 @@ const routes :Routes = [
   {path:'transactions', component: P00MainComponent},
 
   {path:'sales/:assign',component: P01SalesComponent},
-  {path:'file/:assign', component: P01SalesComponent}, 
-  {path:'purchase/:assign', component: P01SalesComponent},   
-  {path:'stock/:assign', component: P01SalesComponent}, 
-  {path:'setting/:assign', component: P01SalesComponent}, 
-  {path:'reports/:assign', component: P01SalesComponent}, 
-  {path:'transactions/:assign', component: P01SalesComponent},
+  {path:'file/:assign', component: P02FileComponent}, 
+  {path:'purchase/:assign', component: P03PurchaseComponent},   
+  {path:'stock/:assign', component: P05StockComponent}, 
+  {path:'setting/:assign', component: P04SettingComponent}, 
+  {path:'reports/:assign', component: P06ReportsComponent}, 
+  {path:'transactions/:assign', component: P07TransactionsComponent},
 ]
 
 @NgModule({
