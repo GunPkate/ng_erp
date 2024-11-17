@@ -1,6 +1,8 @@
 import { NgFor } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { Btn } from 'src/interface/Btn';
+import { InputBtn } from 'src/interface/InputBtn';
 
 
 @Component({
@@ -13,11 +15,14 @@ import { MatGridListModule } from '@angular/material/grid-list';
 export class MainPageGridComponent implements OnInit {
 
   constructor() { }
-  @Input() btnImport?: any
-  subBtnGrid: any
+  @Input() btnImport!: Btn[]
+  subBtnGrid: InputBtn[] | undefined
   ngOnInit(): void {
     // subBtnGrid = this.btnImport.forEach(element => {
-      
+      this.btnImport.forEach( x=> 
+        this.subBtnGrid = x.inputBtn
+      )
+      console.log("this.subBtnGrid",this.subBtnGrid)
     // });
   }
 
