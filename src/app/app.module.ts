@@ -17,6 +17,7 @@ import { P06ReportsComponent } from 'src/pages/p06-reports/p06-reports.component
 import { P07TransactionsComponent } from 'src/pages/p07-transactions/p07-transactions.component';
 
 import { P00MainModule } from 'src/pages/p00-main/p00-main.module';
+import { P03PurchaseModule } from 'src/pages/p03-purchase/p03-purchase.module';
 import { P05StockModule } from 'src/pages/p05-stock/p05-stock.module';
 
 const routes :Routes = [
@@ -48,6 +49,7 @@ const routes :Routes = [
     NavbarModule,
     ButtonMenuComponent,
     P00MainModule,
+    P03PurchaseModule,
     P05StockModule,
     RouterModule.forRoot(routes),
     BrowserAnimationsModule,
