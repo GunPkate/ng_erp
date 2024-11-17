@@ -131,9 +131,10 @@ export const AllBtn: Btn[] = [
           btnTitleName: "Purchase Report",
           subMenu: "3",
           subBtn: [
-            {btnTitleName: "Daily"},
-            {btnTitleName: "Weekly"},
-            {btnTitleName: "Monthly"},
+            {btnTitleName: "Suppliers"},
+            {btnTitleName: "Purchase Invoice"},
+            {btnTitleName: "Purchase Payment"},
+            {btnTitleName: "All Purchase"},
           ]
         },
         

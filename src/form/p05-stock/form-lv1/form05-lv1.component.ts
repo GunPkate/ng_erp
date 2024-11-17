@@ -8,11 +8,11 @@ import { MatTableModule  } from '@angular/material/table';
 import { MatSortModule  } from '@angular/material/sort';
 
 @Component({
-  selector: 'app-form-lv1',
-  templateUrl: './form-lv1.component.html',
+  selector: 'app-form05-lv1',
+  templateUrl: './form05-lv1.component.html',
   standalone: true,
   imports: [ MatFormFieldModule, MatInputModule,MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatSortModule, MatTableModule, ],
-  styleUrls: ['./form-lv1.component.css']
+  styleUrls: ['./form05-lv1.component.css']
 })
 
 export class FormLv1Component implements OnInit {

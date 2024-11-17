@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { P05StockComponent } from './p05-stock.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FormLv1Component } from 'src/components/form-lv1/form-lv1.component';
+import { FormLv1Component as Form05Lv1Component } from 'src/form/p05-stock/form-lv1/form05-lv1.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +15,7 @@ import { FormLv1Component } from 'src/components/form-lv1/form-lv1.component';
     BrowserModule,
     ButtonMenuComponent,
     BrowserAnimationsModule,
-    FormLv1Component,
+    Form05Lv1Component,
     MatFormFieldModule,
     MatInputModule
   ],
