@@ -13,8 +13,21 @@ import { P00MainModule } from 'src/pages/p00-main/p00-main.module';
 
 const routes :Routes = [
   {path:'',component: P00MainComponent},
-  {path:'sales',component: P01SalesComponent},
+  {path:'sales',component: P00MainComponent},
+  {path:'file', component: P00MainComponent}, 
+  {path:'purchase', component: P00MainComponent},   
+  {path:'stock', component: P00MainComponent}, 
+  {path:'setting', component: P00MainComponent}, 
+  {path:'reports', component: P00MainComponent}, 
+  {path:'transactions', component: P00MainComponent},
+
   {path:'sales/:assign',component: P01SalesComponent},
+  {path:'file/:assign', component: P01SalesComponent}, 
+  {path:'purchase/:assign', component: P01SalesComponent},   
+  {path:'stock/:assign', component: P01SalesComponent}, 
+  {path:'setting/:assign', component: P01SalesComponent}, 
+  {path:'reports/:assign', component: P01SalesComponent}, 
+  {path:'transactions/:assign', component: P01SalesComponent},
 ]
 
 @NgModule({

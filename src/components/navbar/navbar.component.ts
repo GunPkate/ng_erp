@@ -18,6 +18,10 @@ export class NavbarComponent {
     let check = value.split('/')
     let param0 = check[0].toLowerCase().replace(" ","")
     let param1 = check[1].toLowerCase().replace(" ","")
-    this.router.navigate([`/${param0}`, param1])
+    if(param1 && param1 != ''){
+      this.router.navigate([`/${param0}`, param1])
+    }else{
+      this.router.navigate([`/${param0}`])
+    }
   }
 }
