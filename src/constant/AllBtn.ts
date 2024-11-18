@@ -33,27 +33,24 @@ export const AllBtn: Btn[] = [
       title: 'Purchase',
       inputBtn: [
         {
-          btnTitleName: "Print Invoice",
+          btnTitleName: "Supplier",
           subMenu: "1",
           subBtn:[]
         },
         {
-          btnTitleName: "Sale Report",
+          btnTitleName: "Purchase Invoice",
           subMenu: "2",
-          subBtn: [
-            {btnTitleName: "Daily"},
-            {btnTitleName: "Weekly"},
-            {btnTitleName: "Monthly"},
-          ]
+          subBtn: []
         },
         {
-          btnTitleName: "Purchase Report",
+          btnTitleName: "Purchase Payment",
           subMenu: "3",
-          subBtn: [
-            {btnTitleName: "Daily"},
-            {btnTitleName: "Weekly"},
-            {btnTitleName: "Monthly"},
-          ]
+          subBtn: []
+        },
+        {
+          btnTitleName: "All Purchase",
+          subMenu: "4",
+          subBtn: []
         },
         
       ]
