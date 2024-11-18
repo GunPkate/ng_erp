@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { P03PurchaseComponent } from './p03-purchase.component';
 import { Form03Lv1Component } from 'src/form/p03-purchase/form-lv1/form03-lv1.component';
+import { Form03Lv2Component } from 'src/form/p03-purchase/form-lv2/form03-lv2.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { Form03Lv1Component } from 'src/form/p03-purchase/form-lv1/form03-lv1.co
     ButtonMenuComponent,
     BrowserAnimationsModule,
     Form03Lv1Component,
+    Form03Lv2Component,
     MatFormFieldModule,
     MatInputModule
   ],
