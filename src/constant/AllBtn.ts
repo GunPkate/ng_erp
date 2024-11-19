@@ -111,30 +111,23 @@ export const AllBtn: Btn[] = [
       title: 'Setting',
       inputBtn: [
         {
-          btnTitleName: "Print Invoice",
+          btnTitleName: "User Setting",
           subMenu: "1",
-          subBtn:[]
+          subBtn: [
+            {btnTitleName: "Add User"},
+            {btnTitleName: "User Type"},
+          ]
         },
         {
-          btnTitleName: "Sale Report",
+          btnTitleName: "Account Setting",
           subMenu: "2",
           subBtn: [
-            {btnTitleName: "Daily"},
-            {btnTitleName: "Weekly"},
-            {btnTitleName: "Monthly"},
+            {btnTitleName: "Account Head"},
+            {btnTitleName: "Account Control"},
+            {btnTitleName: "Account SubControl"},
+            {btnTitleName: "Fiscal Year"},
           ]
-        },
-        {
-          btnTitleName: "Purchase Report",
-          subMenu: "3",
-          subBtn: [
-            {btnTitleName: "Suppliers"},
-            {btnTitleName: "Purchase Invoice"},
-            {btnTitleName: "Purchase Payment"},
-            {btnTitleName: "All Purchase"},
-          ]
-        },
-        
+        },    
       ]
     },{
       title: 'Reports',
