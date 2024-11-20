@@ -24,23 +24,23 @@ import { P05StockModule } from 'src/pages/p05-stock/p05-stock.module';
 
 const routes :Routes = [
   {path:'',component: P00MainComponent},
-  {path:'sales',component: P00MainComponent},
+  {
+    path:'sales', 
+    loadChildren: () => import('../pages/p01-sales/p01-sales.module').then(e=>e.P01SalesModule)
+  },
   {path:'file', component: P00MainComponent}, 
-  {path:'purchase', 
+  {
+    path:'purchase', 
     loadChildren: () => import('../pages/p03-purchase/p03-purchase.module').then(e=>e.P03PurchaseModule)
   },   
-  {path:'stock', component: P00MainComponent}, 
+  {
+    path:'stock', 
+    loadChildren: () => import('../pages/p05-stock/p05-stock.module').then(e=>e.P05StockModule)
+  }, 
   {path:'setting', component: P00MainComponent}, 
   {path:'reports', component: P00MainComponent}, 
   {path:'transactions', component: P00MainComponent},
 
-  {path:'sales/:assign',component: P01SalesComponent},
-  {path:'file/:assign', component: P02FileComponent}, 
-  // {path:'purchase/:assign', component: P03PurchaseComponent},   
-  {path:'stock/:assign', component: P05StockComponent}, 
-  {path:'setting/:assign', component: P04SettingComponent}, 
-  {path:'reports/:assign', component: P06ReportsComponent}, 
-  {path:'transactions/:assign', component: P07TransactionsComponent},
 ]
 
 @NgModule({
