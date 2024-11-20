@@ -9,19 +9,33 @@ import { Form03Lv1Component } from 'src/form/p03-purchase/form-lv1/form03-lv1.co
 import { Form03Lv2Component } from 'src/form/p03-purchase/form-lv2/form03-lv2.component';
 import { Form03Lv3Component } from 'src/form/p03-purchase/form-lv3/form03-lv3.component';
 import { Form03lv4Component } from 'src/form/p03-purchase/form-lv4/form03-lv4.component';
+import { RouterModule, Routes } from '@angular/router';
+
+export const p03routes:Routes = [
+  {
+    path: '', 
+    component: P03PurchaseComponent,
+    children:[
+      {path: 'supplier', component: Form03Lv1Component},
+      {path: 'purchaseinvoice', component: Form03Lv2Component},
+      {path: 'purchasepayment', component: Form03Lv3Component},
+      {path: 'allpurchase', component: Form03lv4Component},
+    ]
+  }
+]
 
 @NgModule({
   declarations: [
     P03PurchaseComponent
   ],
   imports: [
-    BrowserModule,
     ButtonMenuComponent,
-    BrowserAnimationsModule,
     Form03Lv1Component,
     Form03Lv2Component,
     Form03Lv3Component,
     Form03lv4Component,
+    RouterModule.forChild(p03routes),
+
     MatFormFieldModule,
     MatInputModule
   ],
