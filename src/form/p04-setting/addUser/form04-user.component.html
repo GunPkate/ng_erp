@@ -14,7 +14,7 @@
 
         <mat-form-field class="col-12" appearance="fill">
             <mat-label>Select User Type</mat-label>
-            <mat-select (selectionChange)="userTypeChange($event.value)">
+            <mat-select [value]="currentUser.user_type_id" (selectionChange)="userTypeChange($event.value)">
                 <div *ngFor="let i of userTypeDropDown">
                     <mat-option [value]="i.userType">{{ i.userType }}</mat-option>
                 </div>

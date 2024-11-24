@@ -36,7 +36,6 @@ export class Form04UserComponent implements OnInit {
   dataSource :any = []
   userTypeDropDown: UserType[] = []
   currentUser: User = InitialUser.InitialUserObj()
-  first_name: string = "";
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
