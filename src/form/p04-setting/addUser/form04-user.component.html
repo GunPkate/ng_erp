@@ -4,7 +4,7 @@
     <div class="col-6">
         <mat-form-field class="col-12" appearance="fill">
             <mat-label>First Name</mat-label>
-            <input (blur)="firstNameChange($event)" matInput>
+            <input (ngModel)="currentUser.first_name" (blur)="firstNameChange($event)" matInput>
         </mat-form-field>
 
         <mat-form-field class="col-12" appearance="fill">
@@ -37,6 +37,12 @@
             <mat-label>Password</mat-label>
             <input (blur)="PasswordChange($event)" matInput>
         </mat-form-field>
+    </div>
+</div>
+<div class="d-flex">
+    <div class="ml-4">
+        <button class="btn btn-primary" (click)="register()" type="submit">Register</button>
+        <button class="btn btn-danger" (click)="clear()">Clear</button>
     </div>
 </div>
 

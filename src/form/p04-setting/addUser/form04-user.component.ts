@@ -23,7 +23,7 @@ import { InitialUser, User } from 'src/interface/P04Setting/User/User';
     MatNativeDateModule, 
     MatSortModule, 
     MatTableModule, 
-    NgFor
+    NgFor,
   ],
   styleUrls: ['./form04-user.component.css']
 })
@@ -39,10 +39,7 @@ export class Form04UserComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.http.get('http://localhost:3000/user/all').subscribe((res)=> {
-      this.dataSource = res
-      console.log(res)
-    })
+    this.loadUser();
     this.http.get('http://localhost:3000/usertype/all').subscribe((res:any)=> {
       res.forEach((element: any) => {
         let data = InitialUserType.InitialUserTypeObj()
@@ -57,12 +54,12 @@ export class Form04UserComponent implements OnInit {
   }
 
   firstNameChange( event : any){
-    this.currentUser.first_name = this.validateInput(event.value);
+    this.currentUser.first_name = this.validateInput(event.target.value);
     console.log(this.currentUser)
   }
 
   lastNameChange( event : any){
-    this.currentUser.last_name = this.validateInput(event.value);
+    this.currentUser.last_name = this.validateInput(event.target.value);
     console.log(this.currentUser)
   }
 
@@ -72,17 +69,17 @@ export class Form04UserComponent implements OnInit {
   }
 
   ContactChange( event : any){
-    this.currentUser.contact_no = this.validateInput(event.value);
+    this.currentUser.contact_no = this.validateInput(event.target.value);
     console.log(this.currentUser)
   }
 
   UsernameChange( event : any){
-    this.currentUser.username = this.validateInput(event.value);
+    this.currentUser.username = this.validateInput(event.target.value);
     console.log(this.currentUser)
   }
 
   PasswordChange( event : any){
-    this.currentUser.password = this.validateInput(event.value);
+    this.currentUser.password = this.validateInput(event.target.value);
     console.log(this.currentUser)
   }
 
@@ -92,5 +89,19 @@ export class Form04UserComponent implements OnInit {
     }else{
       return ""
     }
+  }
+
+  loadUser(){
+    this.http.get('http://localhost:3000/user/all').subscribe((res)=> {
+      this.dataSource = res
+      console.log(res)
+    })
+  }
+
+  register(){
+    this.http.post('http://localhost:3000/user/create',this.currentUser)
+  }
+  clear(){
+    this.currentUser = InitialUser.InitialUserObj();
   }
 }
