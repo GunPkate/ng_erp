@@ -1,0 +1,69 @@
+<p>{{title04}}</p>
+
+<div class="d-flex">  
+    <div class="col-6">
+        <div class="col-12">             
+            <div>
+                <mat-form-field class="col-12" appearance="fill">
+                    <mat-label>Customer Name</mat-label>
+                    <input matInput>
+                </mat-form-field>
+            <div>
+
+                <mat-form-field class="col-12" appearance="fill">
+                    <mat-label>Contact No</mat-label>
+                    <input matInput>
+                </mat-form-field>
+            </div> 
+                
+            <div>
+
+                <mat-form-field class="col-12" appearance="fill">
+                    <mat-label>Customer Area</mat-label>
+                    <input matInput>
+                </mat-form-field>
+            </div>
+            </div>
+        </div> 
+    </div>
+
+    <div class="col-6">
+        <div>
+            <mat-form-field class="col-12" appearance="fill">
+                <mat-label>Address</mat-label>
+                <textarea style="height: 150px;" matInput></textarea>
+            </mat-form-field>
+        </div>
+
+        <div>
+            <mat-form-field class="col-12" appearance="fill">
+                <mat-label>Description</mat-label>
+                <textarea style="height: 150px;" matInput></textarea>
+            </mat-form-field>
+        </div>
+    </div>    
+</div>
+
+<div class="col-12">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 col-12">
+        
+        <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+        
+        <!-- Position Column -->
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+        
+        <!-- Name Column -->
+        <ng-container matColumnDef="user_type">
+            <th mat-header-cell *matHeaderCellDef> User Type </th>
+            <td mat-cell *matCellDef="let element"> {{element.user_type}} </td>
+        </ng-container>
+                
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+</div>
+
