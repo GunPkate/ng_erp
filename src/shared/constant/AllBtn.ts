@@ -1,4 +1,4 @@
-import { Btn } from "src/interface/Btn";
+import { Btn } from "src/shared/interface/Btn";
 
 export const AllBtn: Btn[] = [
     {

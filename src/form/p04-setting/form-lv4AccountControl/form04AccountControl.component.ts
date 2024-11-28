@@ -6,7 +6,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatTableModule  } from '@angular/material/table';
 import { MatSortModule  } from '@angular/material/sort';
-import { accountHead } from 'src/constant/AccountHead';
+import { accountHead } from 'src/shared/constant/AccountHead';
 
 @Component({
   selector: 'app-form04AccountControl',

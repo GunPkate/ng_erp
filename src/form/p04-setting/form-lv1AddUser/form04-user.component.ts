@@ -7,9 +7,9 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatTableModule  } from '@angular/material/table';
 import { MatSortModule  } from '@angular/material/sort';
 import { HttpClient } from '@angular/common/http';
-import { InitialUserType, UserType } from 'src/interface/P04Setting/User/UserType';
+import { InitialUserType, UserType } from 'src/shared/interface/P04Setting/User/UserType';
 import { NgFor } from '@angular/common';
-import { InitialUser, User } from 'src/interface/P04Setting/User/User';
+import { InitialUser, User } from 'src/shared/interface/P04Setting/User/User';
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({

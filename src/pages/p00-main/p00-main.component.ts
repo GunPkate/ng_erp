@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AllBtn } from 'src/constant/AllBtn';
+import { AllBtn } from 'src/shared/constant/AllBtn';
 
 @Component({
   selector: 'app-p00-main',

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AllBtn } from '../../constant/AllBtn'
-import { Btn } from 'src/interface/Btn';
+import { AllBtn } from '../../shared/constant/AllBtn'
+import { Btn } from 'src/shared/interface/Btn';
 
 @Component({
   selector: 'app-navbar',

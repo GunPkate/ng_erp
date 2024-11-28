@@ -2,8 +2,8 @@ import { NgFor, NgIf } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { Router } from '@angular/router';
-import { Btn } from 'src/interface/Btn';
-import { InputBtn } from 'src/interface/InputBtn';
+import { Btn } from 'src/shared/interface/Btn';
+import { InputBtn } from 'src/shared/interface/InputBtn';
 
 
 @Component({
