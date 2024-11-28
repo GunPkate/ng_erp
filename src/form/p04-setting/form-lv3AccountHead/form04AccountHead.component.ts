@@ -8,7 +8,6 @@ import { MatTableModule  } from '@angular/material/table';
 import { MatSortModule  } from '@angular/material/sort';
 import { HttpClient } from '@angular/common/http';
 
-import { UserService } from 'src/shared/services/S04setting/S04_1User';
 import { v4 as uuidv4 } from 'uuid';
 import { AccountHead, InitialAccountHead } from 'src/shared/interface/P04Setting/Account/AccountHead';
 import { AccountHeadBehaviorSubj } from 'src/shared/behaviorsubject/AccountHead';
@@ -49,7 +48,7 @@ export class Form04AccountHead implements OnInit {
 
   loadAccountHead() {
     this.accountService.loadAccountHead();
-    this.accountHeadBehaviorSubj.getUserList().subscribe((res)=>{ this.dataSource = res; console.log(res)  } )
+    this.accountHeadBehaviorSubj.getAccountHeadList().subscribe((res)=>{ this.dataSource = res; console.log(res)  } )
   }
 
   clear(){
@@ -69,8 +68,8 @@ export class Form04AccountHead implements OnInit {
     }
   }
 
-  IdChange( event : any){
-    this.accHead.id = this.validateInput(event.target.value);
+  codeChange( event : any){
+    this.accHead.code = this.validateInput(event.target.value);
     console.log(this.accHead)
   }
 

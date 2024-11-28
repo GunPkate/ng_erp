@@ -8,14 +8,14 @@ import { MatTableModule  } from '@angular/material/table';
 import { MatSortModule  } from '@angular/material/sort';
 
 @Component({
-  selector: 'app-form03-lv4',
-  templateUrl: './form03-lv4.component.html',
+  selector: 'app-form04AccountSubcontrol',
+  templateUrl: './form04AccountSubcontrol.component.html',
   standalone: true,
   imports: [ MatFormFieldModule, MatInputModule,MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatSortModule, MatTableModule, ],
-  styleUrls: ['./form03-lv4.component.css']
+  styleUrls: ['./form04AccountSubcontrol.component.css']
 })
 
-export class Form03lv4Component implements OnInit {
+export class Form04AccountSubcontrol implements OnInit {
   
   ELEMENT_DATA: PeriodicElement[] = [
     {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},

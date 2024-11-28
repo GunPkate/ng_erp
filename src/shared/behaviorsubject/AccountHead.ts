@@ -7,22 +7,22 @@ export class AccountHeadBehaviorSubj{
     private accountHead :AccountHead = InitialAccountHead.InitialAccountHeadObj();
     private accountHeadList: AccountHead[] = []
 
-    private userSubject = new BehaviorSubject<AccountHead>(this.accountHead);
-    private userListSubject = new BehaviorSubject<AccountHead[]>(this.accountHeadList);
+    private accountHeadSubject = new BehaviorSubject<AccountHead>(this.accountHead);
+    private accountHeadListSubject = new BehaviorSubject<AccountHead[]>(this.accountHeadList);
 
-    getUser(){
-        return this.userSubject;
+    getAccountHead(){
+        return this.accountHeadSubject;
     }
 
-    setUser(accountHead: AccountHead){
-        this.userSubject.next(accountHead)
+    setAccountHead(accountHead: AccountHead){
+        this.accountHeadSubject.next(accountHead)
     }
 
-    getUserList(){
-        return this.userListSubject;
+    getAccountHeadList(){
+        return this.accountHeadListSubject;
     }
 
-    setUserList(accountHeadList: AccountHead[]){
-        this.userListSubject.next(accountHeadList)
+    setAccountHeadList(accountHeadList: AccountHead[]){
+        this.accountHeadListSubject.next(accountHeadList)
     }
 }

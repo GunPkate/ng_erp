@@ -6,8 +6,6 @@ import { P04SettingComponent } from './p04-setting.component';
 import { Form04UserComponent } from 'src/form/p04-setting/form-lv1AddUser/form04-user.component';
 import { Form04UserTypeComponent } from 'src/form/p04-setting/form-lv2UserType/form04-usertype.component';
 import { Form04AccountHead } from 'src/form/p04-setting/form-lv3AccountHead/form04AccountHead.component';
-import { Form04AccountControl } from 'src/form/p04-setting/form-lv4AccountControl/form04AccountControl.component';
-import { Form03lv4Component } from 'src/form/p04-setting/form-lv4/form03-lv4.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { UserService } from 'src/shared/services/S04setting/S04_1User';
@@ -15,13 +13,16 @@ import { UserBehaviorSubj } from 'src/shared/behaviorsubject/User';
 import { UserTypeBehaviorSubj } from 'src/shared/behaviorsubject/UserType';
 import { AccountHeadBehaviorSubj } from 'src/shared/behaviorsubject/AccountHead';
 import { AccountService } from 'src/shared/services/S04setting/S04_2Account';
+import { Form04AccountControl } from 'src/form/p04-setting/form-lv4AccountControl/form04AccountControl.component';
+import { Form04AccountSubcontrol } from 'src/form/p04-setting/form-lv5AccountSubcontrol/form04AccountSubcontrol.component';
+import { AccountControlBehaviorSubj } from 'src/shared/behaviorsubject/AccountConrtol';
 
 const routes:Routes = [
   { path: "adduser", component: Form04UserComponent },
   { path: "usertype", component: Form04UserTypeComponent },
   { path: "accounthead", component: Form04AccountHead },
-  { path: "accountcontrol", component: Form04AccountHead },
-  { path: "accountsubcontrol", component: Form04AccountHead },
+  { path: "accountcontrol", component: Form04AccountControl },
+  { path: "accountsubcontrol", component: Form04AccountSubcontrol },
   { path: "fiscalyear", component: Form04AccountHead },
 ]
 
@@ -41,7 +42,7 @@ const routes:Routes = [
     UserService, 
     UserBehaviorSubj, UserTypeBehaviorSubj, 
     AccountService,
-    AccountHeadBehaviorSubj,
+    AccountHeadBehaviorSubj, AccountControlBehaviorSubj 
    ],
 
 })

@@ -2,6 +2,7 @@ export interface AccountHead{
     id: string,
     accountHeadName: string,
     code: string
+    accountHeadCode: string
 }
 
 export class InitialAccountHead {
@@ -9,7 +10,8 @@ export class InitialAccountHead {
         return {
             id: "",
             accountHeadName: "",
-            code: ""
+            code: "",
+            accountHeadCode: ""
         }
     }
 }
