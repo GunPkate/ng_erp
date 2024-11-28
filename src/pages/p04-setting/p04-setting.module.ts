@@ -13,6 +13,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserService } from 'src/shared/services/S04setting/S04_1User';
 import { UserBehaviorSubj } from 'src/shared/behaviorsubject/User';
 import { UserTypeBehaviorSubj } from 'src/shared/behaviorsubject/UserType';
+import { AccountHeadBehaviorSubj } from 'src/shared/behaviorsubject/AccountHead';
+import { AccountService } from 'src/shared/services/S04setting/S04_2Account';
 
 const routes:Routes = [
   { path: "adduser", component: Form04UserComponent },
@@ -35,7 +37,12 @@ const routes:Routes = [
     MatFormFieldModule,
     MatInputModule
   ],
-  providers: [UserService, UserBehaviorSubj, UserTypeBehaviorSubj ],
+  providers: [
+    UserService, 
+    UserBehaviorSubj, UserTypeBehaviorSubj, 
+    AccountService,
+    AccountHeadBehaviorSubj,
+   ],
 
 })
 export class P04SettingModule { }
