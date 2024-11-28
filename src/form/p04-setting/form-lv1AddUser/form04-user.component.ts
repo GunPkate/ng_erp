@@ -53,7 +53,13 @@ export class Form04UserComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    // this.currentUser.firstName = "Test01";
+    // this.currentUser.lastName = "Test01";
+    // this.currentUser.email = "Test01";
+    // this.currentUser.contactNo = "Test01";
+    // this.currentUser.username = "Test01";
+    // this.currentUser.password = "Test01";
+    // this.currentUser.userTypeId = "Test01";
   }
 
   firstNameChange( event : any){
@@ -106,8 +112,10 @@ export class Form04UserComponent implements OnInit {
 
   register(){
     this.currentUser.userId = uuidv4()
-    this.http.post('http://localhost:3000/user/create',this.currentUser).subscribe()
-    this.loadUser()
+    this.http.post('http://localhost:3000/user/create',this.currentUser).subscribe(res=>{
+      this.loadUser()
+      this.clear()
+    })
   }
   clear(){
     this.currentUser = InitialUser.InitialUserObj();
