@@ -77,7 +77,6 @@ export class Form04UserTypeComponent implements OnInit {
     this.currentUserType.id = id
     this.http.post('http://localhost:3000/usertype/delete',this.currentUserType).subscribe(
       (res) =>{
-        console.log("delete",res)
         this.loadUser()
         this.clear()
       }
@@ -87,8 +86,12 @@ export class Form04UserTypeComponent implements OnInit {
   updateData(id: string){
     console.log(id)
     this.currentUserType.id = id
-    this.http.post('http://localhost:3000/usertype/update',this.currentUserType).subscribe((res)=>{})
-    this.loadUser()
+    this.http.post('http://localhost:3000/usertype/update',this.currentUserType).subscribe(
+      (res) =>{
+        this.loadUser()
+        this.clear()
+      }
+    )
   }
 
 }

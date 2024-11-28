@@ -106,7 +106,7 @@ export class Form04UserComponent implements OnInit {
 
   register(){
     this.currentUser.userId = uuidv4()
-    this.http.post('http://localhost:3000/user/create',this.currentUser).toPromise()
+    this.http.post('http://localhost:3000/user/create',this.currentUser).subscribe()
     this.loadUser()
   }
   clear(){
@@ -116,15 +116,22 @@ export class Form04UserComponent implements OnInit {
   deleteData(id: string){
     console.log(id)
     this.currentUser.userId = id
-    this.http.post('http://localhost:3000/usertype/delete',this.currentUser).toPromise()
-    this.loadUser()
-    this.clear()
+    this.http.post('http://localhost:3000/user/delete',this.currentUser).subscribe(
+      (res) =>{
+        this.loadUser()
+        this.clear()
+      }
+    )
   }
 
   updateData(id: string){
     console.log(id)
     this.currentUser.userId = id
-    this.http.post('http://localhost:3000/usertype/update',this.currentUser).toPromise()
-    this.loadUser()
+    this.http.post('http://localhost:3000/user/update',this.currentUser).subscribe(
+      (res) =>{
+        this.loadUser()
+        this.clear()
+      }
+    )
   }
 }
