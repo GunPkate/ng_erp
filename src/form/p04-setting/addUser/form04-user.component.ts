@@ -10,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 import { InitialUserType, UserType } from 'src/interface/P04Setting/User/UserType';
 import { NgFor } from '@angular/common';
 import { InitialUser, User } from 'src/interface/P04Setting/User/User';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-form04-user',
@@ -32,7 +33,7 @@ export class Form04UserComponent implements OnInit {
   
 
   title04 = 'User'
-  displayedColumns: string[] = ['userId','firstName','lastName','contactNo','email','username'];
+  displayedColumns: string[] = ['userId', 'userTypeId', 'firstName','lastName','contactNo','email','username'];
   dataSource :any = []
   userTypeDropDown: UserType[] = []
   currentUser: User = InitialUser.InitialUserObj()
@@ -40,17 +41,7 @@ export class Form04UserComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadUser();
-    this.http.get('http://localhost:3000/usertype/all').subscribe((res:any)=> {
-      res.forEach((element: any) => {
-        let data = InitialUserType.InitialUserTypeObj()
-        data.userType = element.userType
-        data.id = element.id
-        this.userTypeDropDown.push(data)
-      }
-    );
-    console.log(this.userTypeDropDown)
-
-    })
+    this.loadUserType();
     // console.log(process.env)
   }
 
@@ -66,6 +57,11 @@ export class Form04UserComponent implements OnInit {
 
   userTypeChange( event : any){
     this.currentUser.userTypeId = event;
+    console.log(this.currentUser)
+  }
+
+  EmailChange( event : any){
+    this.currentUser.email = this.validateInput(event.target.value);
     console.log(this.currentUser)
   }
 
@@ -95,13 +91,35 @@ export class Form04UserComponent implements OnInit {
   loadUser(){
     this.http.get('http://localhost:3000/user/all').subscribe((res)=> {
       this.dataSource = res
-      console.log(res)
+    })
+  }
+
+  loadUserType(){
+    this.http.get('http://localhost:3000/usertype/all').subscribe((res:any)=> {
+      res.forEach((element: any) => {
+        let data = InitialUserType.InitialUserTypeObj()
+        data.userType = element.userType
+        data.id = element.id
+        this.userTypeDropDown.push(data)
+
+        
+        if(this.dataSource.length > 0) {
+          for (let i = 0; i < this.dataSource.length; i++) {
+            if(element.id == this.dataSource[i].userTypeId){
+              this.dataSource[i].userTypeId = element.userType ;
+            }
+          }
+        }
+
+      }
+    );
     })
   }
 
   register(){
-    console.log(2134)
+    this.currentUser.userId = uuidv4()
     this.http.post('http://localhost:3000/user/create',this.currentUser).toPromise()
+    this.loadUser()
   }
   clear(){
     this.currentUser = InitialUser.InitialUserObj();
