@@ -10,6 +10,7 @@ import { Form04AccountControl } from 'src/form/p04-setting/form-lv4AccountContro
 import { Form03lv4Component } from 'src/form/p04-setting/form-lv4/form03-lv4.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { UserService } from 'src/shared/services/S04setting/S04_1User';
 
 const routes:Routes = [
   { path: "adduser", component: Form04UserComponent },
@@ -32,7 +33,7 @@ const routes:Routes = [
     MatFormFieldModule,
     MatInputModule
   ],
-  providers: [],
+  providers: [UserService],
 
 })
 export class P04SettingModule { }

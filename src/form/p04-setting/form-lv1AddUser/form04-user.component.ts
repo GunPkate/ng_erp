@@ -11,6 +11,7 @@ import { InitialUserType, UserType } from 'src/shared/interface/P04Setting/User/
 import { NgFor } from '@angular/common';
 import { InitialUser, User } from 'src/shared/interface/P04Setting/User/User';
 import { v4 as uuidv4 } from 'uuid';
+import { UserService } from 'src/shared/services/S04setting/S04_1User';
 
 @Component({
   selector: 'app-form04-user',
@@ -37,11 +38,15 @@ export class Form04UserComponent implements OnInit {
   dataSource :any = []
   userTypeDropDown: UserType[] = []
   currentUser: User = InitialUser.InitialUserObj()
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private userService: UserService
+  ) { }
 
   ngOnInit(): void {
     this.loadUser();
     this.loadUserType();
+    this.userService.loadUser();
     // console.log(process.env)
   }
 
