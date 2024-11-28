@@ -59,7 +59,12 @@
 
         <ng-container matColumnDef="userId">
             <th mat-header-cell *matHeaderCellDef> User ID </th>
-            <td mat-cell *matCellDef="let element"> {{element.userId}} </td>
+            <td mat-cell *matCellDef="let element"> 
+                <button  class="btn btn-outline-danger" (click)="deleteData(element.userId)"> <i class="fas fa-trash-alt">Delete</i></button>
+                &nbsp; <button  class="btn btn-outline-info" (click)="updateData(element.userId)"> <i class="fas fa-trash-alt">Update</i></button>
+                &nbsp; {{element.userId}} 
+            </td>
+  
         </ng-container>
 
 

@@ -112,4 +112,19 @@ export class Form04UserComponent implements OnInit {
   clear(){
     this.currentUser = InitialUser.InitialUserObj();
   }
+
+  deleteData(id: string){
+    console.log(id)
+    this.currentUser.userId = id
+    this.http.post('http://localhost:3000/usertype/delete',this.currentUser).toPromise()
+    this.loadUser()
+    this.clear()
+  }
+
+  updateData(id: string){
+    console.log(id)
+    this.currentUser.userId = id
+    this.http.post('http://localhost:3000/usertype/update',this.currentUser).toPromise()
+    this.loadUser()
+  }
 }

@@ -7,6 +7,10 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatTableModule  } from '@angular/material/table';
 import { MatSortModule  } from '@angular/material/sort';
 import { HttpClient } from '@angular/common/http';
+import { UserTypeBehaviorSubj } from 'src/shared/behaviorsubject/UserType';
+import { UserService } from 'src/shared/services/S04setting/S04_1User';
+import { InitialUserType, UserType } from 'src/shared/interface/P04Setting/User/UserType';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-form04-usertype',
@@ -20,17 +24,71 @@ export class Form04UserTypeComponent implements OnInit {
   
 
   title04 = 'User Type'
-  displayedColumns: string[] = ['id', 'user_type'];
-  dataSource :any = []
-  constructor(private http: HttpClient) { }
+  displayedColumns: string[] = ['id', 'userType'];
+  dataSource :UserType[] = []
+  currentUserType: UserType = InitialUserType.InitialUserTypeObj();
+
+  constructor(
+    private http: HttpClient,
+    private userService: UserService,
+    private userTypeBehaviorSubj: UserTypeBehaviorSubj,
+  ) { 
+    this.loadUser()
+  }
 
   ngOnInit(): void {
-    this.http.get('http://localhost:3000/usertype/all').subscribe((res)=> {
-      this.dataSource = res
-      console.log(res)
+
+  }
+
+  register(){
+    this.currentUserType.id = uuidv4()
+    this.http.post('http://localhost:3000/usertype/create',this.currentUserType).subscribe((res)=>{this.loadUser()})    
+  }
+
+  loadUser() {
+    this.userService.loadUserType();
+    this.userTypeBehaviorSubj.getUserList().subscribe((res)=>{ this.dataSource = res  } )
+  }
+
+  clear(){
+    this.currentUserType = InitialUserType.InitialUserTypeObj();
+  }
+
+  UserTypeChange( event : any){
+    this.currentUserType.userType = this.validateInput(event.target.value);
+    console.log(this.currentUserType)
+  }
+
+  validateInput(data: any){
+    if(data){
+      return data
+    }else{
+      return ""
     }
-  )
-    // console.log(process.env)
+  }
+
+  IdChange( event : any){
+    this.currentUserType.id = this.validateInput(event.target.value);
+    console.log(this.currentUserType)
+  }
+
+  deleteData(id: string){
+    console.log(id)
+    this.currentUserType.id = id
+    this.http.post('http://localhost:3000/usertype/delete',this.currentUserType).subscribe(
+      (res) =>{
+        console.log("delete",res)
+        this.loadUser()
+        this.clear()
+      }
+    )
+  }
+
+  updateData(id: string){
+    console.log(id)
+    this.currentUserType.id = id
+    this.http.post('http://localhost:3000/usertype/update',this.currentUserType).subscribe((res)=>{})
+    this.loadUser()
   }
 
 }
