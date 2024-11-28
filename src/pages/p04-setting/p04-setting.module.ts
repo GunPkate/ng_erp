@@ -11,6 +11,8 @@ import { Form03lv4Component } from 'src/form/p04-setting/form-lv4/form03-lv4.com
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { UserService } from 'src/shared/services/S04setting/S04_1User';
+import { UserBehaviorSubj } from 'src/shared/behaviorsubject/User';
+import { UserTypeBehaviorSubj } from 'src/shared/behaviorsubject/UserType';
 
 const routes:Routes = [
   { path: "adduser", component: Form04UserComponent },
@@ -33,7 +35,7 @@ const routes:Routes = [
     MatFormFieldModule,
     MatInputModule
   ],
-  providers: [UserService],
+  providers: [UserService, UserBehaviorSubj, UserTypeBehaviorSubj ],
 
 })
 export class P04SettingModule { }

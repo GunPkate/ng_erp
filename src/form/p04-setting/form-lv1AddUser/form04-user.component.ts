@@ -12,6 +12,8 @@ import { NgFor } from '@angular/common';
 import { InitialUser, User } from 'src/shared/interface/P04Setting/User/User';
 import { v4 as uuidv4 } from 'uuid';
 import { UserService } from 'src/shared/services/S04setting/S04_1User';
+import { UserBehaviorSubj } from "src/shared/behaviorsubject/User";
+import { UserTypeBehaviorSubj } from "src/shared/behaviorsubject/UserType";
 
 @Component({
   selector: 'app-form04-user',
@@ -35,19 +37,23 @@ export class Form04UserComponent implements OnInit {
 
   title04 = 'User'
   displayedColumns: string[] = ['userId', 'userTypeId', 'firstName','lastName','contactNo','email','username'];
-  dataSource :any = []
+  dataSource :User[] = []
   userTypeDropDown: UserType[] = []
   currentUser: User = InitialUser.InitialUserObj()
   constructor(
     private http: HttpClient,
-    private userService: UserService
-  ) { }
+    private userService: UserService,
+    private userTypeBehaviorSubj: UserTypeBehaviorSubj,
+    private userBehaviorSubj: UserBehaviorSubj,
+  ) { 
+    this.userService.loadUserType();
+    this.userService.loadUser();
+    this.userTypeBehaviorSubj.getUserList().subscribe((res)=>{ this.userTypeDropDown = res  } )
+    this.userBehaviorSubj.getUserList().subscribe((res)=>{ this.dataSource = res  } )
+  }
 
   ngOnInit(): void {
-    this.loadUser();
-    this.loadUserType();
-    this.userService.loadUser();
-    // console.log(process.env)
+
   }
 
   firstNameChange( event : any){
@@ -94,32 +100,9 @@ export class Form04UserComponent implements OnInit {
   }
 
   loadUser(){
-    this.http.get('http://localhost:3000/user/all').subscribe((res)=> {
-      this.dataSource = res
-    })
+    this.userService.loadUser();
   }
 
-  loadUserType(){
-    this.http.get('http://localhost:3000/usertype/all').subscribe((res:any)=> {
-      res.forEach((element: any) => {
-        let data = InitialUserType.InitialUserTypeObj()
-        data.userType = element.userType
-        data.id = element.id
-        this.userTypeDropDown.push(data)
-
-        
-        if(this.dataSource.length > 0) {
-          for (let i = 0; i < this.dataSource.length; i++) {
-            if(element.id == this.dataSource[i].userTypeId){
-              this.dataSource[i].userTypeId = element.userType ;
-            }
-          }
-        }
-
-      }
-    );
-    })
-  }
 
   register(){
     this.currentUser.userId = uuidv4()
