@@ -3,10 +3,10 @@ import { ButtonMenuComponent } from 'src/components/button-menu/button-menu.comp
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { P04SettingComponent } from './p04-setting.component';
-import { Form04UserComponent } from 'src/form/p04-setting/addUser/form04-user.component';
-import { Form04UserTypeComponent } from 'src/form/p04-setting/userType/form04-usertype.component';
-import { Form03Lv2Component } from 'src/form/p04-setting/form-lv2/form03-lv2.component';
-import { Form03Lv3Component } from 'src/form/p04-setting/form-lv3/form03-lv3.component';
+import { Form04UserComponent } from 'src/form/p04-setting/form-lv1AddUser/form04-user.component';
+import { Form04UserTypeComponent } from 'src/form/p04-setting/form-lv2UserType/form04-usertype.component';
+import { Form04AccountHead } from 'src/form/p04-setting/form-lv3AccountHead/form04AccountHead.component';
+import { Form04AccountControl } from 'src/form/p04-setting/form-lv4AccountControl/form04AccountControl.component';
 import { Form03lv4Component } from 'src/form/p04-setting/form-lv4/form03-lv4.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
@@ -14,10 +14,10 @@ import { HttpClientModule } from '@angular/common/http';
 const routes:Routes = [
   { path: "adduser", component: Form04UserComponent },
   { path: "usertype", component: Form04UserTypeComponent },
-  { path: "accounthead", component: Form03Lv2Component },
-  { path: "accountcontrol", component: Form03Lv2Component },
-  { path: "accountsubcontrol", component: Form03Lv2Component },
-  { path: "fiscalyear", component: Form03Lv2Component },
+  { path: "accounthead", component: Form04AccountHead },
+  { path: "accountcontrol", component: Form04AccountHead },
+  { path: "accountsubcontrol", component: Form04AccountHead },
+  { path: "fiscalyear", component: Form04AccountHead },
 ]
 
 @NgModule({

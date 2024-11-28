@@ -9,14 +9,14 @@ import { MatSortModule  } from '@angular/material/sort';
 import { accountHead } from 'src/constant/AccountHead';
 
 @Component({
-  selector: 'app-form03-lv3',
-  templateUrl: './form03-lv3.component.html',
+  selector: 'app-form04AccountControl',
+  templateUrl: './form04AccountControl.component.html',
   standalone: true,
   imports: [ MatFormFieldModule, MatInputModule,MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatSortModule, MatTableModule, ],
-  styleUrls: ['./form03-lv3.component.css']
+  styleUrls: ['./form04AccountControl.component.css']
 })
 
-export class Form03Lv3Component implements OnInit {
+export class Form04AccountControl implements OnInit {
   
   ELEMENT_DATA: any[] = accountHead
 
