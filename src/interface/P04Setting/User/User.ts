@@ -1,23 +1,25 @@
 export interface User{
-    first_name: string
-    last_name: string
+    userId: string
+    firstName: string
+    lastName: string
     email: string
-    contact_no: string
+    contactNo: string
     username: string
     password: string
-    user_type_id: string
+    userTypeId: string
 }
 
 export class InitialUser {
     static  InitialUserObj(){
         return {
-            first_name: "",
-            last_name: "",
+            userId: "",
+            firstName: "",
+            lastName: "",
             email: "",
-            contact_no: "",
+            contactNo: "",
             username: "",
             password: "",
-            user_type_id: "",
+            userTypeId: "",
         }
     }
 }

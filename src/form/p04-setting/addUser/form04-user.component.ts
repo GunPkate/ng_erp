@@ -32,7 +32,7 @@ export class Form04UserComponent implements OnInit {
   
 
   title04 = 'User'
-  displayedColumns: string[] = ['user_id','first_name','last_name','contact_no','email','username'];
+  displayedColumns: string[] = ['userId','firstName','lastName','contactNo','email','username'];
   dataSource :any = []
   userTypeDropDown: UserType[] = []
   currentUser: User = InitialUser.InitialUserObj()
@@ -43,7 +43,8 @@ export class Form04UserComponent implements OnInit {
     this.http.get('http://localhost:3000/usertype/all').subscribe((res:any)=> {
       res.forEach((element: any) => {
         let data = InitialUserType.InitialUserTypeObj()
-        data.userType = element.user_type
+        data.userType = element.userType
+        data.id = element.id
         this.userTypeDropDown.push(data)
       }
     );
@@ -54,22 +55,22 @@ export class Form04UserComponent implements OnInit {
   }
 
   firstNameChange( event : any){
-    this.currentUser.first_name = this.validateInput(event.target.value);
+    this.currentUser.firstName = this.validateInput(event.target.value);
     console.log(this.currentUser)
   }
 
   lastNameChange( event : any){
-    this.currentUser.last_name = this.validateInput(event.target.value);
+    this.currentUser.lastName = this.validateInput(event.target.value);
     console.log(this.currentUser)
   }
 
   userTypeChange( event : any){
-    this.currentUser.user_type_id = event;
+    this.currentUser.userTypeId = event;
     console.log(this.currentUser)
   }
 
   ContactChange( event : any){
-    this.currentUser.contact_no = this.validateInput(event.target.value);
+    this.currentUser.contactNo = this.validateInput(event.target.value);
     console.log(this.currentUser)
   }
 
@@ -99,7 +100,8 @@ export class Form04UserComponent implements OnInit {
   }
 
   register(){
-    this.http.post('http://localhost:3000/user/create',this.currentUser)
+    console.log(2134)
+    this.http.post('http://localhost:3000/user/create',this.currentUser).toPromise()
   }
   clear(){
     this.currentUser = InitialUser.InitialUserObj();

@@ -4,19 +4,19 @@
     <div class="col-6">
         <mat-form-field class="col-12" appearance="fill">
             <mat-label>First Name</mat-label>
-            <input [value]="currentUser.first_name" (blur)="firstNameChange($event)" matInput>
+            <input [value]="currentUser.firstName" (blur)="firstNameChange($event)" matInput>
         </mat-form-field>
 
         <mat-form-field class="col-12" appearance="fill">
             <mat-label>Last Name</mat-label>
-            <input [value]="currentUser.last_name" (blur)="lastNameChange($event)" matInput>
+            <input [value]="currentUser.lastName" (blur)="lastNameChange($event)" matInput>
         </mat-form-field>
 
         <mat-form-field class="col-12" appearance="fill">
             <mat-label>Select User Type</mat-label>
-            <mat-select [value]="currentUser.user_type_id" (selectionChange)="userTypeChange($event.value)">
+            <mat-select [value]="currentUser.userTypeId" (selectionChange)="userTypeChange($event.value)">
                 <div *ngFor="let i of userTypeDropDown">
-                    <mat-option [value]="i.userType">{{ i.userType }}</mat-option>
+                    <mat-option [value]="i.id">{{ i.userType }}</mat-option>
                 </div>
             </mat-select>
         </mat-form-field>
@@ -25,7 +25,7 @@
     <div class="col-6">
         <mat-form-field class="col-12" appearance="fill">
             <mat-label>Contact No</mat-label>
-            <input [value]="currentUser.contact_no" (blur)="ContactChange($event)" matInput>
+            <input [value]="currentUser.contactNo" (blur)="ContactChange($event)" matInput>
         </mat-form-field>
 
         <mat-form-field class="col-12" appearance="fill">
@@ -52,25 +52,25 @@
         <!--- Note that these columns can be defined in any order.
                 The actual rendered columns are set as a property on the row definition" -->
 
-        <ng-container matColumnDef="user_id">
+        <ng-container matColumnDef="userId">
             <th mat-header-cell *matHeaderCellDef> User ID </th>
-            <td mat-cell *matCellDef="let element"> {{element.user_id}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.userId}} </td>
         </ng-container>
 
 
-        <ng-container matColumnDef="first_name">
+        <ng-container matColumnDef="firstName">
             <th mat-header-cell *matHeaderCellDef> First Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.first_name}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="last_name">
+        <ng-container matColumnDef="lastName">
             <th mat-header-cell *matHeaderCellDef> Last Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.last_name}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="contact_no">
+        <ng-container matColumnDef="contactNo">
             <th mat-header-cell *matHeaderCellDef> Contact No </th>
-            <td mat-cell *matCellDef="let element"> {{element.contact_no}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.contactNo}} </td>
         </ng-container>
 
         <ng-container matColumnDef="email">
