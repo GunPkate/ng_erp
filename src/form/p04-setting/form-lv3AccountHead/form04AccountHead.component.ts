@@ -25,7 +25,7 @@ import { AccountService } from 'src/shared/services/S04setting/S04_2Account';
 export class Form04AccountHead implements OnInit {
 
 
-  title04 = 'User Type'
+  title04 = 'Account Head'
   displayedColumns: string[] = ['id', 'accountHeadName', 'code'];
   dataSource :AccountHead[] = []
   accHead: AccountHead = InitialAccountHead.InitialAccountHeadObj();
@@ -77,7 +77,7 @@ export class Form04AccountHead implements OnInit {
   deleteData(id: string){
     console.log(id)
     this.accHead.id = id
-    this.http.post('http://localhost:3000/usertype/delete',this.accHead).subscribe(
+    this.http.post('http://localhost:3000/account/acchead/delete',this.accHead).subscribe(
       (res) =>{
         this.loadAccountHead()
         this.clear()
@@ -88,7 +88,7 @@ export class Form04AccountHead implements OnInit {
   updateData(id: string){
     console.log(id)
     this.accHead.id = id
-    this.http.post('http://localhost:3000/usertype/update',this.accHead).subscribe(
+    this.http.post('http://localhost:3000/account/acchead/update',this.accHead).subscribe(
       (res) =>{
         this.loadAccountHead()
         this.clear()
