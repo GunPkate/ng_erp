@@ -16,6 +16,7 @@ import { AccountService } from 'src/shared/services/S04setting/S04_2Account';
 import { Form04AccountControl } from 'src/form/p04-setting/form-lv4AccountControl/form04AccountControl.component';
 import { Form04AccountSubcontrol } from 'src/form/p04-setting/form-lv5AccountSubcontrol/form04AccountSubcontrol.component';
 import { AccountControlBehaviorSubj } from 'src/shared/behaviorsubject/AccountConrtol';
+import { AccountSubcontrolBehaviorSubj } from 'src/shared/behaviorsubject/AccountSubconrtol';
 
 const routes:Routes = [
   { path: "adduser", component: Form04UserComponent },
@@ -42,7 +43,8 @@ const routes:Routes = [
     UserService, 
     UserBehaviorSubj, UserTypeBehaviorSubj, 
     AccountService,
-    AccountHeadBehaviorSubj, AccountControlBehaviorSubj 
+    AccountHeadBehaviorSubj, AccountControlBehaviorSubj,
+    AccountSubcontrolBehaviorSubj, 
    ],
 
 })

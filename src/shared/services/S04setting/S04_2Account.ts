@@ -5,13 +5,15 @@ import { AccountControlBehaviorSubj } from "src/shared/behaviorsubject/AccountCo
 import { UserBehaviorSubj } from "src/shared/behaviorsubject/User";
 import { UserTypeBehaviorSubj } from "src/shared/behaviorsubject/UserType";
 import { UserType } from "src/shared/interface/P04Setting/User/UserType";
+import { AccountSubcontrolBehaviorSubj } from "src/shared/behaviorsubject/AccountSubconrtol";
 
 @Injectable()
 export class AccountService{
     constructor(
         private http: HttpClient,
         private accountHeadBehaviorSubj: AccountHeadBehaviorSubj,
-        private accountControlBehaviorSubj: AccountControlBehaviorSubj
+        private accountControlBehaviorSubj: AccountControlBehaviorSubj,
+        private accountSubcontrolBehaviorSubj: AccountSubcontrolBehaviorSubj
     ){}
 
     loadAccountHead(){
@@ -25,6 +27,13 @@ export class AccountService{
         this.http.get('http://localhost:3000/account/accControl/all').subscribe((res: any)=> {
             console.log(res)
             this.accountControlBehaviorSubj.setAccountControlList(res)
+        })
+    }
+
+    loadAccounSubcontrol(){
+        this.http.get('http://localhost:3000/account/accsubcontrol/all').subscribe((res: any)=> {
+            console.log(res)
+            this.accountSubcontrolBehaviorSubj.setAccountSubcontrolList(res)
         })
     }
 }
