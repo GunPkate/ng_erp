@@ -10,6 +10,7 @@ import { Form03lv4Component } from 'src/form/p03-purchase/form-lv4/form03-lv4.co
 import { RouterModule, Routes } from '@angular/router';
 import { SupplierService } from 'src/shared/services/S03Purchase/S03_Supplier';
 import { SupplierBehaviorSubj } from 'src/shared/behaviorsubject/Supplier';
+import { HttpClientModule } from '@angular/common/http';
 
 export const p03routes:Routes = [
   {
@@ -29,6 +30,7 @@ export const p03routes:Routes = [
     P03PurchaseComponent
   ],
   imports: [
+    HttpClientModule,
     ButtonMenuComponent,
     Form03SupplierComponent,
     Form03Lv2Component,
