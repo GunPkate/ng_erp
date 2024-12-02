@@ -3,14 +3,13 @@ export interface Product{
     productId: string
     catagoryId: string
     productName: string
-    quantity: string
-    salePrice: string
-    currentPurchasePrice: string
+    quantity: number
+    salePrice: number
+    currentPurchasePrice: number
     description: string
-    category: string
-    expiryDate: string
-    manuDate: string
-    stockThresholdQty: string
+    expiryDate: Date
+    manuDate: Date
+    stockThresholdQty: number
     userId: string
 }
 
@@ -21,14 +20,13 @@ export class InitialProduct{
         productId: "",
         catagoryId: "",
         productName: "",
-        quantity: "",
-        salePrice: "",
-        currentPurchasePrice: "",
+        quantity: 0,
+        salePrice: 0,
+        currentPurchasePrice: 0,
         description: "",
-        category: "",
-        expiryDate: "",
-        manuDate: "",
-        stockThresholdQty: "",
+        expiryDate: new Date(),
+        manuDate: new Date(),
+        stockThresholdQty: 0,
         userId: "",
         }
     }

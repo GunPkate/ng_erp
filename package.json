@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "^14.2.0",
     "@angular/router": "^14.2.0",
     "bootstrap": "^4.6.2",
+    "dayjs": "^1.11.13",
     "jquery": "^3.5.1",
     "popper.js": "^1.14.3",
     "rxjs": "~7.5.0",
