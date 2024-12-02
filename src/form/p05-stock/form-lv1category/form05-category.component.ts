@@ -11,7 +11,7 @@ import { CategoryBehaviorSubj } from 'src/shared/behaviorsubject/Category';
 import { Category, InitialCategory } from 'src/shared/interface/P05Stock/Category';
 import { UserService } from 'src/shared/services/S04setting/S04_1User';
 import { v4 as uuidv4 } from 'uuid';
-import { CategoryService } from 'src/shared/services/S05Stocks/S05_Category';
+import { StockService } from 'src/shared/services/S05Stocks/S05_Category';
 
 @Component({
   selector: 'app-form05-category',
@@ -31,7 +31,7 @@ export class Form05CategoryComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private categoryService: CategoryService,
+    private categoryService: StockService,
     private categoryBehaviorSubj: CategoryBehaviorSubj,
   ) { 
     this.loadUser()

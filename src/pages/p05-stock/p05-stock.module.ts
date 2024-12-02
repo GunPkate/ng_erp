@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormLv1Component  } from 'src/form/p05-stock/form-lv1/form05-lv1.component';
 import { RouterModule, Routes } from '@angular/router';
 import { Form05CategoryComponent } from 'src/form/p05-stock/form-lv1category/form05-category.component';
-import { CategoryService } from 'src/shared/services/S05Stocks/S05_Category';
+import { StockService } from 'src/shared/services/S05Stocks/S05_Category';
 import { CategoryBehaviorSubj } from 'src/shared/behaviorsubject/Category';
 
 export const p05routes: Routes = [
@@ -33,7 +33,7 @@ export const p05routes: Routes = [
     MatInputModule
   ],
   providers: [
-    CategoryService, CategoryBehaviorSubj
+    StockService, CategoryBehaviorSubj
    ],
 
 })
