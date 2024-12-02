@@ -1,81 +1,94 @@
-<p>Customers</p>
+<p>{{title03}}</p>
 
-<div class="d-flex">  
+<div class="d-flex">
     <div class="col-6">
-        <div class="col-12">             
-            <div>
-                <mat-form-field class="col-12" appearance="fill">
-                    <mat-label>Customer Name</mat-label>
-                    <input matInput>
-                </mat-form-field>
-            <div>
+        <mat-form-field class="col-12" appearance="fill">
+            <mat-label>Customer Name</mat-label>
+            <input [value]="currentCustomer.customerName" (blur)="customerNameChange($event)" matInput>
+        </mat-form-field>
 
-                <mat-form-field class="col-12" appearance="fill">
-                    <mat-label>Contact No</mat-label>
-                    <input matInput>
-                </mat-form-field>
-            </div> 
-                
-            <div>
+        <mat-form-field class="col-12" appearance="fill">
+            <mat-label>Email</mat-label>
+            <input [value]="currentCustomer.email" (blur)="emailChange($event)" matInput>
+        </mat-form-field>
 
-                <mat-form-field class="col-12" appearance="fill">
-                    <mat-label>Customer Area</mat-label>
-                    <input matInput>
-                </mat-form-field>
-            </div>
-            </div>
-        </div> 
+        <!-- <mat-form-field class="col-12" appearance="fill">
+            <mat-label>Select User Type</mat-label>
+            <mat-select [value]="currentCustomer.userTypeId" (selectionChange)="userTypeChange($event.value)">
+                <div *ngFor="let i of userTypeDropDown">
+                    <mat-option [value]="i.id">{{ i.userType }}</mat-option>
+                </div>
+            </mat-select>
+        </mat-form-field> -->
+     </div>
+
+    <div class="col-6">
+        <mat-form-field class="col-12" appearance="fill">
+            <mat-label>Address</mat-label>
+            <input [value]="currentCustomer.address" (blur)="AddressChange($event)" matInput>
+        </mat-form-field>
+
+        <mat-form-field class="col-12" appearance="fill">
+            <mat-label>Contact No</mat-label>
+            <input [value]="currentCustomer.contactNo" (blur)="ContactChange($event)" matInput>
+        </mat-form-field>
+
+        <mat-form-field class="col-12" appearance="fill">
+            <mat-label>Description</mat-label>
+            <input [value]="currentCustomer.description" (blur)="descriptionChange($event)" matInput>
+        </mat-form-field>
+
     </div>
-
-    <div class="col-6">
-        <div>
-            <mat-form-field class="col-12" appearance="fill">
-                <mat-label>Address</mat-label>
-                <textarea style="height: 150px;" matInput></textarea>
-            </mat-form-field>
-        </div>
-
-        <div>
-            <mat-form-field class="col-12" appearance="fill">
-                <mat-label>Description</mat-label>
-                <textarea style="height: 150px;" matInput></textarea>
-            </mat-form-field>
-        </div>
-    </div>    
+</div>
+<div class="d-flex">
+    <div class="ml-4">
+        <button class="btn btn-primary" (click)="register()" type="submit">Register</button>
+        <button class="btn btn-danger" (click)="clear()">Clear</button>
+    </div>
 </div>
 
 <div class="col-12">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 col-12">
-        
+
         <!--- Note that these columns can be defined in any order.
                 The actual rendered columns are set as a property on the row definition" -->
-        
-        <!-- Position Column -->
-        <ng-container matColumnDef="position">
-            <th mat-header-cell *matHeaderCellDef> No. </th>
-            <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+
+        <ng-container matColumnDef="customerId">
+            <th mat-header-cell *matHeaderCellDef> User ID </th>
+            <td mat-cell *matCellDef="let element"> 
+                <button  class="btn btn-outline-danger" (click)="deleteData(element.customerId)"> <i class="fas fa-trash-alt">Delete</i></button>
+                &nbsp; <button  class="btn btn-outline-info" (click)="updateData(element.customerId)"> <i class="fas fa-trash-alt">Update</i></button>
+                &nbsp; {{element.customerId}} 
+            </td>
+  
         </ng-container>
-        
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+
+        <ng-container matColumnDef="customerName">
+            <th mat-header-cell *matHeaderCellDef> Customer Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.customerName}} </td>
         </ng-container>
-        
-        <!-- Weight Column -->
-        <ng-container matColumnDef="weight">
-            <th mat-header-cell *matHeaderCellDef> Weight </th>
-            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+
+        <ng-container matColumnDef="address">
+            <th mat-header-cell *matHeaderCellDef> Address </th>
+            <td mat-cell *matCellDef="let element"> {{element.address}} </td>
         </ng-container>
-        
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="symbol">
-            <th mat-header-cell *matHeaderCellDef> Symbol </th>
-            <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+
+        <ng-container matColumnDef="contactNo">
+            <th mat-header-cell *matHeaderCellDef> Contact No </th>
+            <td mat-cell *matCellDef="let element"> {{element.contactNo}} </td>
         </ng-container>
-        
+
+        <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef> Email </th>
+            <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef> Description </th>
+            <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+        </ng-container>
+
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
+    </table>
 </div>
-

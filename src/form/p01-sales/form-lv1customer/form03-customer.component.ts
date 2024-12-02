@@ -6,6 +6,11 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatTableModule  } from '@angular/material/table';
 import { MatSortModule  } from '@angular/material/sort';
+import { Customer, InitialCustomer } from 'src/shared/interface/P03Purchases/Customer/Customer';
+import { HttpClient } from '@angular/common/http';
+import { CustomerBehaviorSubj } from 'src/shared/behaviorsubject/Customer';
+import { CustomerService } from 'src/shared/services/S01Sales/S01_Customer';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-form03-customer',
@@ -17,32 +22,99 @@ import { MatSortModule  } from '@angular/material/sort';
 
 export class Form03CustomerComponent implements OnInit {
   
-  ELEMENT_DATA: PeriodicElement[] = [
-    {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-    {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-    {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-    {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-    {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-    {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-    {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-    {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-    {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-    {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  ];
-
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = this.ELEMENT_DATA;
-  constructor() { }
-
-  ngOnInit(): void {
-    
+  title03 = "Customer"
+  displayedColumns: string[] = ["customerId","customerName","address","email","contactNo","description"];
+  dataSource:Customer[] = []
+  currentCustomer: Customer = InitialCustomer.InitialCustomerObj();
+  
+  constructor(
+    private customerService: CustomerService,
+    private customerBehaviorSubj :CustomerBehaviorSubj,
+    private http: HttpClient
+  ) { 
+    this.loadCustomer()
   }
 
-}
+  ngOnInit(): void {
+    //mockdata
+    this.currentCustomer.customerName = "Phx Phamarcy"
+    this.currentCustomer.address = "Bangkok"
+    this.currentCustomer.email = "PhxPhamarcy@gmail.com"
+    this.currentCustomer.contactNo = "0584446523"
+    this.currentCustomer.customerId = ""
+    this.currentCustomer.description = "VIP Customer"
+  }
 
-interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+  loadCustomer() {
+    this.customerService.loadCustomer();
+    this.customerBehaviorSubj.getCustomerList().subscribe(res=> this.dataSource = res);
+  }
+
+  register(){
+    this.currentCustomer.customerId = uuidv4()
+    this.http.post('http://localhost:3000/customer/create',this.currentCustomer).subscribe((res)=>{this.loadCustomer()})    
+  }
+
+  clear(){
+    this.currentCustomer = InitialCustomer.InitialCustomerObj();
+  }
+
+  customerNameChange( event : any){
+    this.currentCustomer.customerName = this.validateInput(event.target.value);
+    console.log(this.currentCustomer)
+  }
+  
+  emailChange( event : any){
+    this.currentCustomer.email = this.validateInput(event.target.value);
+    console.log(this.currentCustomer)
+  }
+
+  ContactChange( event : any){
+    this.currentCustomer.contactNo = this.validateInput(event.target.value);
+    console.log(this.currentCustomer)
+  }
+
+  AddressChange( event : any){
+    this.currentCustomer.address = this.validateInput(event.target.value);
+    console.log(this.currentCustomer)
+  }
+
+  descriptionChange( event : any){
+    this.currentCustomer.description = this.validateInput(event.target.value);
+    console.log(this.currentCustomer)
+  }
+
+  validateInput(data: any){
+    if(data){
+      return data
+    }else{
+      return ""
+    }
+  }
+
+
+
+  deleteData(id: string){
+    console.log(id)
+    this.currentCustomer.customerId = id
+    this.http.post('http://localhost:3000/customer/delete',this.currentCustomer).subscribe(
+      (res) =>{
+        this.loadCustomer()
+        this.clear()
+      }
+    )
+  }
+
+  updateData(id: string){
+    console.log(id)
+    this.currentCustomer.customerId = id
+    this.http.post('http://localhost:3000/customer/update',this.currentCustomer).subscribe(
+      (res) =>{
+        this.loadCustomer()
+        this.clear()
+      }
+    )
+  }
+  
+
 }

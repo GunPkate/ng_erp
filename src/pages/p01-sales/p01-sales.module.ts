@@ -8,6 +8,8 @@ import { Form03Lv3Component } from 'src/form/p01-sales/form-lv3/form03-lv3.compo
 import { Form03lv4Component } from 'src/form/p01-sales/form-lv4/form03-lv4.component';
 import { P01SalesComponent } from './p01-sales.component';
 import { RouterModule, Routes } from '@angular/router';
+import { CustomerService } from 'src/shared/services/S01Sales/S01_Customer';
+import { CustomerBehaviorSubj } from 'src/shared/behaviorsubject/Customer';
 
 export const p01routes: Routes = [
   { 
@@ -38,7 +40,7 @@ export const p01routes: Routes = [
     MatFormFieldModule,
     MatInputModule
   ],
-  providers: [],
+  providers: [CustomerService, CustomerBehaviorSubj ],
 
 })
 export class P01SalesModule { }

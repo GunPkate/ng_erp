@@ -10,7 +10,7 @@ export class CustomerService{
     ){}
 
     loadCustomer(){
-        this.http.get('http://localhost:3000/supplier/all').subscribe( (res:any)=>{
+        this.http.get('http://localhost:3000/customer/all').subscribe( (res:any)=>{
             this.customerBehaviorSubj.setCustomerList(res)
         })
     }
