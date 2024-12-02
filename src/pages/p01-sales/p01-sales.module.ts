@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { ButtonMenuComponent } from 'src/components/button-menu/button-menu.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Form03Lv1Component } from 'src/form/p01-sales/form-lv1/form03-lv1.component';
+import { Form03CustomerComponent } from 'src/form/p01-sales/form-lv1customer/form03-customer.component';
 import { Form03Lv2Component } from 'src/form/p01-sales/form-lv2/form03-lv2.component';
 import { Form03Lv3Component } from 'src/form/p01-sales/form-lv3/form03-lv3.component';
 import { Form03lv4Component } from 'src/form/p01-sales/form-lv4/form03-lv4.component';
@@ -14,7 +14,7 @@ export const p01routes: Routes = [
     path: '', 
     component:  P01SalesComponent,
     children: [
-      {path: 'customers', component: Form03Lv1Component},
+      {path: 'customers', component: Form03CustomerComponent},
       {path: 'saleinvoice', component: Form03Lv2Component,
         // children: [{path: ':assign', component: Form03Lv2Component}, ]
       },
@@ -29,7 +29,7 @@ export const p01routes: Routes = [
   ],
   imports: [
     ButtonMenuComponent,
-    Form03Lv1Component,
+    Form03CustomerComponent,
     Form03Lv2Component,
     Form03Lv3Component,
     Form03lv4Component,
