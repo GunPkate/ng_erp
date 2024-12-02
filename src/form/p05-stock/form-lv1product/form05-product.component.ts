@@ -16,14 +16,14 @@ import { v4 as uuidv4 } from 'uuid';
 import { NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-form05-lv1',
-  templateUrl: './form05-lv1.component.html',
+  selector: 'app-form05-product',
+  templateUrl: './form05-product.component.html',
   standalone: true,
   imports: [ MatFormFieldModule, MatInputModule,MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatSortModule, MatTableModule, NgFor ],
-  styleUrls: ['./form05-lv1.component.css']
+  styleUrls: ['./form05-product.component.css']
 })
 
-export class FormLv1Component implements OnInit {
+export class FormProductComponent implements OnInit {
 
   title05 = 'Product'
   displayedColumns: string[] = ['id',
