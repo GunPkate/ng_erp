@@ -45,7 +45,18 @@ export class FormProductComponent implements OnInit {
     this.stockService.loadCategory();
     this.stockService.loadProduct();
     this.categoryBehaviorSubj.getCategoryList().subscribe((res)=>{ this.categoryDropDown = res  } )
-    this.productBehaviorSubj.getProductList().subscribe((res)=>{ this.dataSource = res  } )
+    this.productBehaviorSubj.getProductList().subscribe((res)=>{ 
+      this.categoryBehaviorSubj.getCategoryList().subscribe((res2)=>{
+        for (let i = 0; i < res2.length; i++) {
+          for (let y = 0; y < res.length; y++) {
+            if( res[y].catagoryId == res2[i].id){
+              res[y].catagoryId = res2[i].categoryName
+            }
+          }
+        }  
+        this.dataSource = res
+      } )
+    } )
   }
   ngOnInit(): void {
     this.currentProduct.id  = '',
@@ -59,7 +70,7 @@ export class FormProductComponent implements OnInit {
     // this.currentProduct.expiryDate  = Date.now(),
     // this.currentProduct.manuDate  = Date.now(),
     this.currentProduct.stockThresholdQty  = 10,
-    this.currentProduct.userId  = '1'
+    this.currentProduct.userId  = '22d38441-b515-4a82-ae00-6207faa165b6'
   }
 
   categoryChange( event : any){

@@ -49,17 +49,30 @@ export class Form04UserComponent implements OnInit {
     this.userService.loadUserType();
     this.userService.loadUser();
     this.userTypeBehaviorSubj.getUserList().subscribe((res)=>{ this.userTypeDropDown = res  } )
-    this.userBehaviorSubj.getUserList().subscribe((res)=>{ this.dataSource = res  } )
+    this.userBehaviorSubj.getUserList().subscribe((res)=>{ 
+
+        this.userTypeBehaviorSubj.getUserList().subscribe((res2)=>{ 
+          for (let i = 0; i < res2.length; i++) {
+            for (let y = 0; y < res.length; y++) {
+              if( res[y].userTypeId == res2[i].id){
+                res[y].userTypeId = res2[i].userType
+              }
+            }
+          }
+          this.dataSource = res
+        } )
+    } )
+
   }
 
   ngOnInit(): void {
-    // this.currentUser.firstName = "Test01";
-    // this.currentUser.lastName = "Test01";
-    // this.currentUser.email = "Test01";
-    // this.currentUser.contactNo = "Test01";
-    // this.currentUser.username = "Test01";
-    // this.currentUser.password = "Test01";
-    // this.currentUser.userTypeId = "Test01";
+    this.currentUser.firstName = "Test01";
+    this.currentUser.lastName = "Test01";
+    this.currentUser.email = "Test01";
+    this.currentUser.contactNo = "Test01";
+    this.currentUser.username = "Test01";
+    this.currentUser.password = "Test01";
+    this.currentUser.userTypeId = "Test01";
   }
 
   firstNameChange( event : any){
