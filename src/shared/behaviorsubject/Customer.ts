@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { InitialCustomer, Customer } from "../interface/P03Purchases/Customer/Customer";
+import { InitialCustomer, Customer } from "../interface/P01Sales/Customer/Customer";
 import { BehaviorSubject } from "rxjs";
 
 @Injectable()

@@ -6,7 +6,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatTableModule  } from '@angular/material/table';
 import { MatSortModule  } from '@angular/material/sort';
-import { Customer, InitialCustomer } from 'src/shared/interface/P03Purchases/Customer/Customer';
+import { Customer, InitialCustomer } from 'src/shared/interface/P01Sales/Customer/Customer';
 import { HttpClient } from '@angular/common/http';
 import { CustomerBehaviorSubj } from 'src/shared/behaviorsubject/Customer';
 import { CustomerService } from 'src/shared/services/S01Sales/S01_Customer';
