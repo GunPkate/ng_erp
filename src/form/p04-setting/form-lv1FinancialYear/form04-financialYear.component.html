@@ -12,22 +12,27 @@
      </div>
 
     <div class="col-6">
-        <div class="d-flex flex-wrap">
-            <div class="btn btn-info disabled">
-                <input
+        <div class="d-flex ">
+            <button 
+                [ngClass]="(currentFinancialYear.isActive === false) ? 'btn btn-info': 'btn btn-info disabled' "
+                (click)="isActiveChange('false')"
+            >
+                <input style="display: none;"
                 [name]="'active'" 
-                [id]="'active'" [value]="currentFinancialYear.isActive" 
-                (click)="isActiveChange('false')" type="radio" >
-                <label for="active">False</label>
-            </div>
+                [id]="'active'" [value]="currentFinancialYear.isActive">
+                <div for="active">False</div>
+            </button>
             
-            <div class="btn btn-info">
-                <input 
+            <button 
+                [ngClass]="(currentFinancialYear.isActive === true) ? 'btn btn-info': 'btn btn-info disabled' "
+                (click)="isActiveChange('true')"
+            >
+                <input style="display: none;"
                 [name]="'active'" 
                 [id]="'active'" [value]="currentFinancialYear.isActive" 
-                (click)="isActiveChange('true')" type="radio" >
-                <label for="active">True</label>
-            </div>
+ >
+                <div for="active">True</div>
+            </button>
    
         </div>
     </div>
@@ -58,7 +63,7 @@
 
         <ng-container matColumnDef="financialYear">
             <th mat-header-cell *matHeaderCellDef> Financial Year </th>
-            <td mat-cell *matCellDef="let element"> {{element.financialYear}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.financialYear | dateFormatPipe }} </td>
         </ng-container>
 
         <ng-container matColumnDef="isActive">

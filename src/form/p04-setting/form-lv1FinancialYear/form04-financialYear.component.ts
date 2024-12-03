@@ -7,11 +7,12 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatTableModule  } from '@angular/material/table';
 import { MatSortModule  } from '@angular/material/sort';
 import { HttpClient } from '@angular/common/http';
-import { NgFor } from '@angular/common';
+import { NgClass, NgFor } from '@angular/common';
 import { InitialFinancialYear, FinancialYear } from 'src/shared/interface/P04Setting/FinancialYear/FinancialYear';
 import { v4 as uuidv4 } from 'uuid';
 import { FinancialYearService } from 'src/shared/services/S04setting/S04_1FinancialYear';
 import { FinancialYearBehaviorSubj } from "src/shared/behaviorsubject/FinancialYear";
+import { DateFormatPipe } from 'src/shared/services/Pipe/DatePipte';
 
 @Component({
   selector: 'app-form04-financialYear',
@@ -25,7 +26,8 @@ import { FinancialYearBehaviorSubj } from "src/shared/behaviorsubject/FinancialY
     MatNativeDateModule, 
     MatSortModule, 
     MatTableModule, 
-    NgFor,
+    NgFor, NgClass,
+    DateFormatPipe
   ],
   styleUrls: ['./form04-financialYear.component.css']
 })
