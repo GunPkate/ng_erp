@@ -1,0 +1,72 @@
+<p>{{title04}}</p>
+
+<div class="d-flex">
+    <div class="col-6">
+        <mat-form-field appearance="fill">
+            <mat-label>Financial Year</mat-label>
+            <input (dateInput)="financialYearChange($event.value)" matInput [matDatepicker]="financialYearDate">
+            <mat-datepicker-toggle matSuffix [for]="financialYearDate"></mat-datepicker-toggle>
+            <mat-datepicker #financialYearDate></mat-datepicker>
+            <mat-hint>MM/DD/YYYY</mat-hint>
+          </mat-form-field> 
+     </div>
+
+    <div class="col-6">
+        <div class="d-flex flex-wrap">
+            <div class="btn btn-info disabled">
+                <input
+                [name]="'active'" 
+                [id]="'active'" [value]="currentFinancialYear.isActive" 
+                (click)="isActiveChange('false')" type="radio" >
+                <label for="active">False</label>
+            </div>
+            
+            <div class="btn btn-info">
+                <input 
+                [name]="'active'" 
+                [id]="'active'" [value]="currentFinancialYear.isActive" 
+                (click)="isActiveChange('true')" type="radio" >
+                <label for="active">True</label>
+            </div>
+   
+        </div>
+    </div>
+</div>
+<div class="d-flex">
+    <div class="ml-4">
+        <button class="btn btn-primary" (click)="register()" type="submit">Register</button>
+        <button class="btn btn-danger" (click)="clear()">Clear</button>
+    </div>
+</div>
+
+<div class="col-12">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 col-12">
+
+        <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+
+        <ng-container matColumnDef="financialYearId">
+            <th mat-header-cell *matHeaderCellDef> Financialyear ID </th>
+            <td mat-cell *matCellDef="let element"> 
+                <button  class="btn btn-outline-danger" (click)="deleteData(element.financialYearId)"> <i class="fas fa-trash-alt">Delete</i></button>
+                &nbsp; <button  class="btn btn-outline-info" (click)="updateData(element.financialYearId)"> <i class="fas fa-trash-alt">Update</i></button>
+                &nbsp; {{element.financialYearId}} 
+            </td>
+  
+        </ng-container>
+
+
+        <ng-container matColumnDef="financialYear">
+            <th mat-header-cell *matHeaderCellDef> Financial Year </th>
+            <td mat-cell *matCellDef="let element"> {{element.financialYear}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="isActive">
+            <th mat-header-cell *matHeaderCellDef> isActive </th>
+            <td mat-cell *matCellDef="let element"> {{element.isActive}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

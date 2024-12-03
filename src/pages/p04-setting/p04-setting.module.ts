@@ -17,6 +17,9 @@ import { Form04AccountControl } from 'src/form/p04-setting/form-lv4AccountContro
 import { Form04AccountSubcontrol } from 'src/form/p04-setting/form-lv5AccountSubcontrol/form04AccountSubcontrol.component';
 import { AccountControlBehaviorSubj } from 'src/shared/behaviorsubject/AccountConrtol';
 import { AccountSubcontrolBehaviorSubj } from 'src/shared/behaviorsubject/AccountSubconrtol';
+import { FinancialYearService } from 'src/shared/services/S04setting/S04_1FinancialYear';
+import { FinancialYearBehaviorSubj } from 'src/shared/behaviorsubject/FinancialYear';
+import { Form04FinancialYearComponent } from 'src/form/p04-setting/form-lv1FinancialYear/form04-financialYear.component';
 
 const routes:Routes = [
   { path: "adduser", component: Form04UserComponent },
@@ -24,7 +27,7 @@ const routes:Routes = [
   { path: "accounthead", component: Form04AccountHead },
   { path: "accountcontrol", component: Form04AccountControl },
   { path: "accountsubcontrol", component: Form04AccountSubcontrol },
-  { path: "fiscalyear", component: Form04AccountHead },
+  { path: "fiscalyear", component: Form04FinancialYearComponent },
 ]
 
 @NgModule({
@@ -45,6 +48,7 @@ const routes:Routes = [
     AccountService,
     AccountHeadBehaviorSubj, AccountControlBehaviorSubj,
     AccountSubcontrolBehaviorSubj, 
+    FinancialYearService, FinancialYearBehaviorSubj
    ],
 
 })
