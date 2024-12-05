@@ -1,4 +1,5 @@
 <div class="d-flex">
+        <button mat-button class="btn" [routerLink]="'/'">Home</button>
         <app-button-menu *ngFor="let i of allBtn" [btnTitle] = "i.title"  [btnMenuList]= "i.inputBtn" (BtnEvent)="triggerBtnEvent($event)"></app-button-menu>
 </div>
 

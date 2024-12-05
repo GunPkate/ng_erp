@@ -10,12 +10,14 @@ import { P01SalesComponent } from './p01-sales.component';
 import { RouterModule, Routes } from '@angular/router';
 import { CustomerService } from 'src/shared/services/S01Sales/S01_Customer';
 import { CustomerBehaviorSubj } from 'src/shared/behaviorsubject/Customer';
+import { P00MainComponent } from '../p00-main/p00-main.component';
 
 export const p01routes: Routes = [
   { 
     path: '', 
     component:  P01SalesComponent,
     children: [
+      {path: '', component: P00MainComponent},
       {path: 'customers', component: Form03CustomerComponent},
       {path: 'saleinvoice', component: Form03Lv2Component,
         // children: [{path: ':assign', component: Form03Lv2Component}, ]

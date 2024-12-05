@@ -5,6 +5,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { CommonModule, NgFor } from '@angular/common';
 import { P00MainComponent } from './p00-main.component';
 import { MainPageGridComponent } from "../../components/main-page-grid/main-page-grid.component"; 
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { Draggable } from 'src/components/draggable/draggable.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +16,9 @@ import { MainPageGridComponent } from "../../components/main-page-grid/main-page
     BrowserModule,
     ButtonMenuComponent,
     BrowserAnimationsModule,
-    MainPageGridComponent
+    MainPageGridComponent,
+    DragDropModule, 
+    Draggable,
 ],
   providers: [],
 
