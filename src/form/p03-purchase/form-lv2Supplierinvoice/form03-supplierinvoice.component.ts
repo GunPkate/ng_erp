@@ -19,8 +19,8 @@ import { SupplierBehaviorSubj } from 'src/shared/behaviorsubject/Supplier';
 import { SupplierService } from 'src/shared/services/S03Purchase/S03_Supplier';
 import { Supplier } from 'src/shared/interface/P03Purchases/Supplier/Supplier';
 import { AccountService } from 'src/shared/services/S04setting/S04_2Account';
-import { AccountSubcontrolBehaviorSubj } from 'src/shared/behaviorsubject/AccountSubconrtol';
-import { AccountSubcontrol } from 'src/shared/interface/P04Setting/Account/AccountSubcontrol';
+import { AccountControl } from 'src/shared/interface/P04Setting/Account/AccountControl';
+import { AccountControlBehaviorSubj } from 'src/shared/behaviorsubject/AccountConrtol';
 
 @Component({
   selector: 'app-form03-supplierinvoice',
@@ -42,7 +42,7 @@ export class Form03SupplierinvoiceComponent implements OnInit {
   categoryDropDown: Category[] = []
   supplierDropDown: Supplier[] = []
   productDropDown: Product[] = []
-  subAccountDropDown: AccountSubcontrol[] = []
+  accountControlDropDown: AccountControl[] = []
   
   currentProduct: Product = InitialProduct.InitialProductObj()
   manuDate: Date = new Date
@@ -55,18 +55,18 @@ export class Form03SupplierinvoiceComponent implements OnInit {
     private productBehaviorSubj: ProductBehaviorSubj,
     private categoryBehaviorSubj: CategoryBehaviorSubj,
     private supplierBehaviorSubj: SupplierBehaviorSubj,
-    private accountSubcontrolBehaviorSubj: AccountSubcontrolBehaviorSubj,
+    private accountControlBehaviorSubj: AccountControlBehaviorSubj,
   ) { 
     this.stockService.loadCategory();
     this.stockService.loadProduct();
     this.supplierService.loadSupplierInvoice();
     this.supplierService.loadSupplier();
-    this.accountService.loadAccounSubcontrol();
+    this.accountService.loadAccountControl();
 
     this.supplierBehaviorSubj.getSupplierList().subscribe((res)=>{ this.supplierDropDown = res})
     this.categoryBehaviorSubj.getCategoryList().subscribe((res)=>{ this.categoryDropDown = res  } )
     this.productBehaviorSubj.getProductList().subscribe((res)=>{ this.productDropDown = res })
-    this.accountSubcontrolBehaviorSubj.getAccountSubcontrolList().subscribe((res)=> this.subAccountDropDown = res)
+    this.accountControlBehaviorSubj.getAccountControlList().subscribe((res)=>{ this.accountControlDropDown = res})
     //   this.categoryBehaviorSubj.getCategoryList().subscribe((res2)=>{
     //     for (let i = 0; i < res2.length; i++) {
     //       for (let y = 0; y < res.length; y++) {
