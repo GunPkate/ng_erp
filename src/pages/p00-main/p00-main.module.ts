@@ -7,6 +7,7 @@ import { P00MainComponent } from './p00-main.component';
 import { MainPageGridComponent } from "../../components/main-page-grid/main-page-grid.component"; 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { Draggable } from 'src/components/draggable/draggable.component';
+import { MainPageFlowComponent } from 'src/components/main-page-flow/main-page-flow.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { Draggable } from 'src/components/draggable/draggable.component';
     MainPageGridComponent,
     DragDropModule, 
     Draggable,
+    MainPageFlowComponent,
 ],
   providers: [],
 

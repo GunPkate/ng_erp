@@ -1,21 +1,24 @@
+import { NgFor, NgIf, CommonModule } from '@angular/common';
 import {Component, OnInit} from '@angular/core';
 import {MatExpansionModule} from '@angular/material/expansion'; 
-import { NgFor } from '@angular/common';
+import { BusinessFlow } from 'src/shared/constant/BusinessFlow';
+
 
 @Component({
   selector: 'app-draggable',
   standalone: true,
-  imports: [ MatExpansionModule , NgFor],
+  imports: [ NgFor, NgIf, CommonModule ],
   templateUrl: './draggable.component.html',
   styleUrls: ['./draggable.component.css']
 })
 export class Draggable implements OnInit {
+  businessFlow: any = BusinessFlow
+
   panelOpenState = false;
   constructor() { }
-  items = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
-  expandedIndex = 0;
-  ngOnInit(): void {
 
+  ngOnInit(): void {
+    // console.log(this.businessFlow)
   }
 
 }

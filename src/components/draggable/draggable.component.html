@@ -5,6 +5,13 @@
 
       <div class="block_grid">
 
+        <div *ngFor="let i = businessFlow" class="block-item-wrapper">
+          <div class="dashed-line"></div>
+          <div class="block_item purhcases">
+            <p class="need"><span class="bg"><span class="icon">{{ i.procresses }}</span></span></p>
+          </div>
+        </div>
+
         <div class="block-item-wrapper">
           <div class="dashed-line"></div>
           <div class="block_item purhcases">
@@ -16,39 +23,6 @@
           <div class="block_item purhcases">
             <p class="need"><span class="bg"><span class="icon">Supplier Invoice (Purchases)</span></span></p>
 
-            <mat-accordion>
-              <mat-expansion-panel hideToggle>
-                <mat-expansion-panel-header>
-                  <mat-panel-title>
-                    Purchases Merchandise
-                  </mat-panel-title>
-                  <!-- <mat-panel-description>
-                    This is a summary of the content
-                  </mat-panel-description> -->
-                </mat-expansion-panel-header>
-                <div>
-                  DR Inventory
-                </div>
-                <!-- <div>
-                  DR Inventory
-                </div> -->
-                <div style="margin-left: 15px;">  
-                  CR Account Payable
-                </div>
-              </mat-expansion-panel>
-              <mat-expansion-panel (opened)="panelOpenState = true"
-                                   (closed)="panelOpenState = false">
-                <mat-expansion-panel-header>
-                  <mat-panel-title>
-                    Self aware panel
-                  </mat-panel-title>
-                  <mat-panel-description>
-                    Currently I am {{panelOpenState ? 'open' : 'closed'}}
-                  </mat-panel-description>
-                </mat-expansion-panel-header>
-                <p>I'm visible because I am open</p>
-              </mat-expansion-panel>
-            </mat-accordion>
             
  
           </div>
