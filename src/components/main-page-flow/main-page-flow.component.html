@@ -58,7 +58,6 @@
                 </mat-expansion-panel-header>
                 <div>
 
-                  <div *ngFor="let dr of transaction.dr">
                     <div *ngFor="let dr of transaction.dr">
                       DR {{dr.description}}
                     </div>
@@ -66,8 +65,6 @@
                     <div style="margin-left: 15px;" *ngFor="let cr of transaction.cr">
                       CR {{cr.description}}
                     </div>
-                    
-                  </div>
                   
                 </div>
               </mat-expansion-panel>
