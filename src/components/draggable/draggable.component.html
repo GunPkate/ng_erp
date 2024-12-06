@@ -1,15 +1,97 @@
-<div class="example-boundary">
-    <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag>
-      Order
-    </div>
+<body>
 
-    <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag>
-      Invoice
-    </div>
+  <section class="block-map">
+    <div class="bound-layout example-boundary">
 
-    <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag>
-      Payment
+      <div class="block_grid">
+
+        <div class="block-item-wrapper">
+          <div class="dashed-line"></div>
+          <div class="block_item purhcases">
+            <p class="need"><span class="bg"><span class="icon">Order</span></span></p>
+          </div>
+        </div>
+        <div class="block-item-wrapper">
+          <div class="dashed-line"></div>
+          <div class="block_item purhcases">
+            <p class="need"><span class="bg"><span class="icon">Supplier Invoice (Purchases)</span></span></p>
+
+            <div class="block_subitem">
+              <div>
+                DR Inventory
+              </div>
+              <!-- <div>
+                DR Inventory
+              </div> -->
+              <div style="margin-left: 15px;">  
+                CR Account Payable
+              </div>
+            </div>
+ 
+          </div>
+        </div>
+        <div class="block-item-wrapper">
+          <div class="dashed-line"></div>
+          <div class="block_item purhcases">
+            <p class="need"><span class="bg"><span class="icon">Payment (Purchases)</span></span></p>
+
+            <div class="block_subitem">
+              <div>
+                DR Account Payable
+              </div>
+              <div style="margin-left: 15px;">  
+                CR Cash
+              </div>
+              <!-- <div>
+                DR 
+              </div>
+              <div style="margin-left: 15px;">  
+                CR Account Payable
+              </div> -->
+            </div>
+          </div>
+        </div>
+        <div class="block-item-wrapper">
+          <div class="dashed-line"></div>
+          <div class="block_item sales">
+            <p class="need"><span class="bg"><span class="icon">Request</span></span></p>
+          </div>
+        </div>
+        <div class="block-item-wrapper">
+          <div class="dashed-line"></div>
+          <div class="block_item sales">
+            <p class="need"><span class="bg"><span class="icon">Customer Invoice(Sales)</span></span></p>
+            <div class="block_subitem">
+              <div>
+                DR Account Receivable
+              </div>
+              <div style="margin-left: 15px;">  
+                CR Sales
+              </div>
+              <div>
+                DR COGS
+              </div>
+              <div style="margin-left: 15px;">  
+                CR Inventory
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="block-item-wrapper">
+          <div class="dashed-line"></div>
+          <div class="block_item sales">
+            <p class="need"><span class="bg"><span class="icon">Payment (Sales)</span></span></p>
+            <div class="block_subitem">
+              <div>
+                DR Cash
+              </div>
+              <div style="margin-left: 15px;">  
+                CR Account Receivable
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-  
-  
+  </section>
+</body>
