@@ -34,6 +34,12 @@ export const BusinessFlow = [
             }
         ]
     },
+
+    {
+        procresses: "Request",
+        type: "sales",
+        transaction: []
+    },
     {
         procresses: "Request",
         type: "sales",
@@ -53,7 +59,18 @@ export const BusinessFlow = [
                     {   description:"Sales"},
                     {   description:"Inventory"},
                 ]
-            }
+            },
+                {
+                    step:"Sell Merchandise",
+                    dr: [
+                        {   description:"Account Receivable"},
+                        {   description:"COGS"},
+                    ],
+                    cr: [
+                        {   description:"Sales"},
+                        {   description:"Inventory"},
+                    ]
+                },
         ]
     },
     {

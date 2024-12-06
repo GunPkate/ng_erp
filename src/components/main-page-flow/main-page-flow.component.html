@@ -1,13 +1,12 @@
 <body>
 
   <section class="block-map">
-    <div class="bound-layout example-boundary">
+    <div class="d-flex flex-row flex-md-column">
 
-      <div class="block_grid">
+      <div class="mt-4 d-flex flex-column flex-md-row justify-content-around">
+        <div ngClass="col-4" *ngFor="let i of businessFlowPurchases" class="block-item-wrapper">
 
-        <div *ngFor="let i of businessFlowPurchases" class="block-item-wrapper">
-
-          <div class="dashed-line"></div>
+          <!-- <div class="dashed-line"></div> -->
           <div class="block_item purhcases">
             <p class="need"><span class="bg"><span class="icon">{{ i.procresses }}</span></span></p>
   
@@ -39,10 +38,11 @@
             </div>   
           </div>  
         </div>
+      </div>
+      <div class="mt-4 d-flex flex-column flex-md-row justify-content-around">
+        <div ngClass="col-4" *ngFor="let i of businessFlowSales" class="block-item-wrapper">
 
-        <div *ngFor="let i of businessFlowSales" class="block-item-wrapper">
-
-          <div class="dashed-line"></div>
+          <!-- <div class="dashed-line"></div> -->
           <div class="block_item sales">
             <p class="need"><span class="bg"><span class="icon">{{ i.procresses }}</span></span></p>
   
