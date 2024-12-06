@@ -5,89 +5,76 @@
 
       <div class="block_grid">
 
-        <div *ngFor="let i of businessFlow" class="block-item-wrapper">
+        <div *ngFor="let i of businessFlowPurchases" class="block-item-wrapper">
+
           <div class="dashed-line"></div>
           <div class="block_item purhcases">
             <p class="need"><span class="bg"><span class="icon">{{ i.procresses }}</span></span></p>
-          </div>
+  
+            <div *ngIf="i.transaction.length >0" class="block_subitem">
+              <mat-expansion-panel *ngFor="let transaction of i.transaction" hideToggle>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    {{transaction.step}}
+                  </mat-panel-title>
+                  <!-- <mat-panel-description>
+                    This is a summary of the content
+                  </mat-panel-description> -->
+                </mat-expansion-panel-header>
+                <div>
+
+                  <div *ngFor="let dr of transaction.dr">
+                    <div *ngFor="let dr of transaction.dr">
+                      DR {{dr.description}}
+                    </div>
+                    
+                    <div style="margin-left: 15px;" *ngFor="let cr of transaction.cr">
+                      CR {{cr.description}}
+                    </div>
+                    
+                  </div>
+                  
+                </div>
+              </mat-expansion-panel>
+            </div>   
+          </div>  
         </div>
 
-        <div class="block-item-wrapper">
-          <div class="dashed-line"></div>
-          <div class="block_item purhcases">
-            <p class="need"><span class="bg"><span class="icon">Order</span></span></p>
-          </div>
-        </div>
-        <div class="block-item-wrapper">
-          <div class="dashed-line"></div>
-          <div class="block_item purhcases">
-            <p class="need"><span class="bg"><span class="icon">Supplier Invoice (Purchases)</span></span></p>
+        <div *ngFor="let i of businessFlowSales" class="block-item-wrapper">
 
-            
- 
-          </div>
-        </div>
-        <div class="block-item-wrapper">
           <div class="dashed-line"></div>
-          <div class="block_item purhcases">
-            <p class="need"><span class="bg"><span class="icon">Payment (Purchases)</span></span></p>
+          <div class="block_item sales">
+            <p class="need"><span class="bg"><span class="icon">{{ i.procresses }}</span></span></p>
+  
+            <div *ngIf="i.transaction.length >0" class="block_subitem">
+              <mat-expansion-panel *ngFor="let transaction of i.transaction" hideToggle>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    {{transaction.step}}
+                  </mat-panel-title>
+                  <!-- <mat-panel-description>
+                    This is a summary of the content
+                  </mat-panel-description> -->
+                </mat-expansion-panel-header>
+                <div>
 
-            <div class="block_subitem">
-              <div>
-                DR Account Payable
-              </div>
-              <div style="margin-left: 15px;">  
-                CR Cash
-              </div>
-              <!-- <div>
-                DR 
-              </div>
-              <div style="margin-left: 15px;">  
-                CR Account Payable
-              </div> -->
-            </div>
-          </div>
+                  <div *ngFor="let dr of transaction.dr">
+                    <div *ngFor="let dr of transaction.dr">
+                      DR {{dr.description}}
+                    </div>
+                    
+                    <div style="margin-left: 15px;" *ngFor="let cr of transaction.cr">
+                      CR {{cr.description}}
+                    </div>
+                    
+                  </div>
+                  
+                </div>
+              </mat-expansion-panel>
+            </div>   
+          </div>  
         </div>
-        <div class="block-item-wrapper">
-          <div class="dashed-line"></div>
-          <div class="block_item sales">
-            <p class="need"><span class="bg"><span class="icon">Request</span></span></p>
-          </div>
-        </div>
-        <div class="block-item-wrapper">
-          <div class="dashed-line"></div>
-          <div class="block_item sales">
-            <p class="need"><span class="bg"><span class="icon">Customer Invoice(Sales)</span></span></p>
-            <div class="block_subitem">
-              <div>
-                DR Account Receivable
-              </div>
-              <div style="margin-left: 15px;">  
-                CR Sales
-              </div>
-              <div>
-                DR COGS
-              </div>
-              <div style="margin-left: 15px;">  
-                CR Inventory
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="block-item-wrapper">
-          <div class="dashed-line"></div>
-          <div class="block_item sales">
-            <p class="need"><span class="bg"><span class="icon">Payment (Sales)</span></span></p>
-            <div class="block_subitem">
-              <div>
-                DR Cash
-              </div>
-              <div style="margin-left: 15px;">  
-                CR Account Receivable
-              </div>
-            </div>
-          </div>
-        </div>
+
       </div>
     </div>
   </section>

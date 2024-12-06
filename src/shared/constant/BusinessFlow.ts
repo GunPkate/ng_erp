@@ -44,7 +44,7 @@ export const BusinessFlow = [
         type: "sales",
         transaction: [
             {
-                step:"Purchase Merchandise",
+                step:"Sell Merchandise",
                 dr: [
                     {   description:"Account Receivable"},
                     {   description:"COGS"},
@@ -61,7 +61,7 @@ export const BusinessFlow = [
         type: "sales",
         transaction: [
             {
-                step:"Cash Payment",
+                step:"Cash Collection",
                 dr: [
                     {   description:"Cash"}  
                 ],
