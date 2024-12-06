@@ -24,13 +24,13 @@
                 <div>
 
                   <div *ngFor="let dr of transaction.dr">
-                    <div *ngFor="let dr of transaction.dr">
+                    <mat-panel-description *ngFor="let dr of transaction.dr">
                       DR {{dr.description}}
-                    </div>
+                    </mat-panel-description>
                     
-                    <div style="margin-left: 15px;" *ngFor="let cr of transaction.cr">
+                    <mat-panel-description style="margin-left: 15px;" *ngFor="let cr of transaction.cr">
                       CR {{cr.description}}
-                    </div>
+                    </mat-panel-description>
                     
                   </div>
                   
@@ -56,15 +56,15 @@
                     This is a summary of the content
                   </mat-panel-description> -->
                 </mat-expansion-panel-header>
-                <div>
+                <div class="expansion-content">
 
-                    <div *ngFor="let dr of transaction.dr">
+                    <mat-panel-description *ngFor="let dr of transaction.dr">
                       DR {{dr.description}}
-                    </div>
+                    </mat-panel-description>
                     
-                    <div style="margin-left: 15px;" *ngFor="let cr of transaction.cr">
+                    <mat-panel-description style="margin-left: 15px;" *ngFor="let cr of transaction.cr">
                       CR {{cr.description}}
-                    </div>
+                    </mat-panel-description>
                   
                 </div>
               </mat-expansion-panel>
