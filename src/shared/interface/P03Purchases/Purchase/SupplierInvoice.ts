@@ -1,4 +1,4 @@
-import { SupplierInvoiceDetail } from "./SupplierInvoiceDetails"
+import { SupplierInvoiceDetail } from "./SupplierInvoiceDetail"
 import { SupplierPayment } from "./SupplierPayment"
 
 export interface SupplierInvoice{
