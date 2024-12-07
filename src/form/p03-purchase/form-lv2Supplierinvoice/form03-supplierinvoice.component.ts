@@ -108,7 +108,7 @@ export class Form03SupplierinvoiceComponent implements OnInit {
     this.currentSupplierInvoice.description = 'Purchase #1'
     this.currentSupplierInvoice.userId  = '22d38441-b515-4a82-ae00-6207faa165b6'
  
-    this.currentSupplierInvoiceDetail.supplierInvoiceId = this.currentSupplierInvoice.invoiceNo
+    // this.currentSupplierInvoiceDetail.supplierInvoiceId = this.currentSupplierInvoice.invoiceNo
     this.currentSupplierInvoiceDetail.purchaseQty = 10
     this.currentSupplierInvoiceDetail.purchaseUnitPrice = 100
   }
@@ -159,7 +159,7 @@ export class Form03SupplierinvoiceComponent implements OnInit {
 
   
   purchaseUnitPriceChange(event: any){
-    this.currentSupplierInvoiceDetail.purchaseUnitPrice = this.validateInput(event.target.value);
+    this.currentSupplierInvoiceDetail.purchaseUnitPrice = parseInt(this.validateInput(event.target.value));
     console.log(this.currentSupplierInvoiceDetail)
   }
 
@@ -190,9 +190,9 @@ export class Form03SupplierinvoiceComponent implements OnInit {
     this.currentSupplierInvoiceDetail.id = uuidv4()
     this.http.post('http://localhost:3000/supplierinvoicedetail/create',this.currentSupplierInvoiceDetail).subscribe(res=>{
       this.loadSupplierInvoice()
-      this.clearDetails()
+      // this.clearDetails()
+      this.loadInvoiceDetail()
     })
-    this.loadInvoiceDetail()
     // this.dataSourceDetails.push(this.currentSupplierInvoiceDetail)
   }
 
@@ -202,7 +202,7 @@ export class Form03SupplierinvoiceComponent implements OnInit {
 
   clearDetails(){
     this.currentSupplierInvoiceDetail = InitialSupplierInvoiceDetail.InitialSupplierInvoiceDetailObj();
-    this.currentSupplierInvoiceDetail.supplierInvoiceId = this.currentSupplierInvoice.invoiceNo;
+    // this.currentSupplierInvoiceDetail.supplierInvoiceId = this.currentSupplierInvoice.invoiceNo;
   }
 
   deleteData(id: string){
