@@ -13,48 +13,58 @@ import { Product, InitialProduct } from 'src/shared/interface/P05Stock/Product';
 import { StockService } from 'src/shared/services/S05Stocks/S05_Category';
 import { CategoryBehaviorSubj } from 'src/shared/behaviorsubject/Category';
 import { v4 as uuidv4 } from 'uuid';
-import { NgFor } from '@angular/common';
-import { SupplierInvoice } from 'src/shared/interface/P03Purchases/Purchase/SupplierInvoice';
+import { NgFor, NgIf } from '@angular/common';
+import { InitialSupplierInvoice, SupplierInvoice } from 'src/shared/interface/P03Purchases/Purchase/SupplierInvoice';
 import { SupplierBehaviorSubj } from 'src/shared/behaviorsubject/Supplier';
 import { SupplierService } from 'src/shared/services/S03Purchase/S03_Supplier';
 import { Supplier } from 'src/shared/interface/P03Purchases/Supplier/Supplier';
 import { AccountService } from 'src/shared/services/S04setting/S04_2Account';
 import { AccountControl } from 'src/shared/interface/P04Setting/Account/AccountControl';
 import { AccountControlBehaviorSubj } from 'src/shared/behaviorsubject/AccountConrtol';
+import { SupplierInvoiceBehaviorSubj } from 'src/shared/behaviorsubject/SupplierInvoice';
 
 @Component({
   selector: 'app-form03-supplierinvoice',
   templateUrl: './form03-supplierinvoice.component.html',
   standalone: true,
-  imports: [ MatFormFieldModule, MatInputModule,MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatSortModule, MatTableModule, NgFor ],
+  imports: [ MatFormFieldModule, MatInputModule,MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatSortModule, MatTableModule, NgFor, NgIf ],
   styleUrls: ['./form03-supplierinvoice.component.css']
 })
 
 export class Form03SupplierinvoiceComponent implements OnInit {
 
   title05 = 'Supplier Invoice'
-  displayedColumns: string[] = ['id',
-    // 'productId',
-    'catagoryId','productName','quantity','salePrice','currentPurchasePrice','description',
-    // 'expiryDate','manuDate','stockThresholdQty','userId'
-  ];
-  // dataSource :SupplierInvoice[] = []
+  // displayedColumns: string[] = ['id',
+  //   // 'productId',
+  //   'catagoryId','productName','quantity','salePrice','currentPurchasePrice','description',
+  //   // 'expiryDate','manuDate','stockThresholdQty','userId'
+  // ];
+  dataSource :SupplierInvoice[] = []
   categoryDropDown: Category[] = []
   supplierDropDown: Supplier[] = []
+  supplierInvoiceDropdown: SupplierInvoice[] = []
   productDropDown: Product[] = []
   accountControlDropDown: AccountControl[] = []
   
-  currentProduct: Product = InitialProduct.InitialProductObj()
-  manuDate: Date = new Date
-  expiryDate: Date = new Date
+  currentSupplierInvoice: SupplierInvoice = InitialSupplierInvoice.InitialSupplierInvoiceObj()
+  invoiceDate: Date = new Date
+
+  searchSupplierInvoice: SupplierInvoice[] = [];
+  page:string = "list"
+
+  displayedColumns: string[] = ['id', 'supplierId',  'invoiceNo', 'title', 'totalAmount', 'date', 'description', 'userId',];
+ 
+
   constructor(
     private http: HttpClient,
     private stockService: StockService,
     private supplierService: SupplierService,
     private accountService: AccountService,
+
     private productBehaviorSubj: ProductBehaviorSubj,
     private categoryBehaviorSubj: CategoryBehaviorSubj,
     private supplierBehaviorSubj: SupplierBehaviorSubj,
+    private supplierInvoiceBehaviorSubj: SupplierInvoiceBehaviorSubj, 
     private accountControlBehaviorSubj: AccountControlBehaviorSubj,
   ) { 
     this.stockService.loadCategory();
@@ -64,6 +74,7 @@ export class Form03SupplierinvoiceComponent implements OnInit {
     this.accountService.loadAccountControl();
 
     this.supplierBehaviorSubj.getSupplierList().subscribe((res)=>{ this.supplierDropDown = res})
+    this.supplierInvoiceBehaviorSubj.getSupplierInvoiceList().subscribe((res)=>{ this.dataSource = res })
     this.categoryBehaviorSubj.getCategoryList().subscribe((res)=>{ this.categoryDropDown = res  } )
     this.productBehaviorSubj.getProductList().subscribe((res)=>{ this.productDropDown = res })
     this.accountControlBehaviorSubj.getAccountControlList().subscribe((res)=>{ this.accountControlDropDown = res})
@@ -80,71 +91,50 @@ export class Form03SupplierinvoiceComponent implements OnInit {
     // } )
   }
   ngOnInit(): void {
-    this.currentProduct.id  = '',
-    this.currentProduct.productId  = '123,'
-    this.currentProduct.catagoryId  = '',
-    this.currentProduct.productName  = 'Bufen'
-    this.currentProduct.quantity  = 40,
-    this.currentProduct.salePrice  = 50,
-    this.currentProduct.currentPurchasePrice  = 30,
-    this.currentProduct.description  = 'Bufen lot 1'
-    // this.currentProduct.expiryDate  = Date.now(),
-    // this.currentProduct.manuDate  = Date.now(),
-    this.currentProduct.stockThresholdQty  = 10,
-    this.currentProduct.userId  = '22d38441-b515-4a82-ae00-6207faa165b6'
+    this.currentSupplierInvoice.id = '',
+    this.currentSupplierInvoice.invoiceNo = 'INV123'
+    this.currentSupplierInvoice.supplierId = ''
+    this.currentSupplierInvoice.date = new Date
+    this.currentSupplierInvoice.title = 'Purchase #1'
+    this.currentSupplierInvoice.description = 'Purchase #1'
+    this.currentSupplierInvoice.userId  = '22d38441-b515-4a82-ae00-6207faa165b6'
   }
 
-  categoryChange( event : any){
-    this.currentProduct.catagoryId = event;
-    console.log(this.currentProduct)
+  supplierChange( event : any){
+    this.currentSupplierInvoice.supplierId = event;
+    console.log(this.currentSupplierInvoice)
   }
 
-  productNameChange( event : any){
-    this.currentProduct.productName = this.validateInput(event.target.value);
-    console.log(this.currentProduct)
+  invoiceNoChange( event : any){
+    this.currentSupplierInvoice.invoiceNo = event.target.value;
+    console.log(this.currentSupplierInvoice)
   }
 
-  currentPriceChange( event : any){
-    this.currentProduct.currentPurchasePrice = this.validateInput(event.target.value);
-    console.log(this.currentProduct)
+  titleChange( event : any){
+    this.currentSupplierInvoice.title = event.target.value;
+    console.log(this.currentSupplierInvoice)
   }
 
-  quantityChange( event : any){
-    this.currentProduct.quantity = this.validateInput(event.target.value);
-    console.log(this.currentProduct)
-  }
-
-  thresholdChange( event : any){
-    this.currentProduct.stockThresholdQty = event;
-    console.log(this.currentProduct)
-  }
-
-  salePriceChange( event : any){
-    this.currentProduct.salePrice = event;
-    console.log(this.currentProduct)
-  }
+  // categoryChange( event : any){
+  //   this.currentSupplierInvoice.catagoryId = event;
+  //   console.log(this.currentSupplierInvoice)
+  // }
 
   descriptionChange( event : any){
-    this.currentProduct.description = this.validateInput(event.target.value);
-    console.log(this.currentProduct)
+    this.currentSupplierInvoice.description = this.validateInput(event.target.value);
+    console.log(this.currentSupplierInvoice)
   }
 
-  expiryDateChange( event : any){
+  dateChange( event : any){
     console.log(event)
-    this.expiryDate = this.validateInput(event);
-    this.currentProduct.expiryDate = this.expiryDate;
-    console.log(this.currentProduct)
-  }
-  manuDateChange( event : any){
-    console.log(event)
-    this.manuDate = this.validateInput(event);
-    this.currentProduct.manuDate = this.manuDate;
-    console.log(this.currentProduct)
+    this.invoiceDate = this.validateInput(event);
+    this.currentSupplierInvoice.date = this.invoiceDate;
+    console.log(this.currentSupplierInvoice)
   }
 
   // PasswordChange( event : any){
-  //   this.currentProduct.password = this.validateInput(event.target.value);
-  //   console.log(this.currentProduct)
+  //   this.currentSupplierInvoice.password = this.validateInput(event.target.value);
+  //   console.log(this.currentSupplierInvoice)
   // }
 
   validateInput(data: any){
@@ -155,28 +145,30 @@ export class Form03SupplierinvoiceComponent implements OnInit {
     }
   }
 
-  loadProduct(){
-    this.stockService.loadProduct();
+  loadSupplierInvoice(){
+    this.supplierService.loadSupplierInvoice();
   }
 
 
   register(){
-    this.currentProduct.id = uuidv4()
-    this.http.post('http://localhost:3000/product/create',this.currentProduct).subscribe(res=>{
-      this.loadProduct()
+    this.currentSupplierInvoice.id = uuidv4()
+    this.http.post('http://localhost:3000/supplierinvoice/create',this.currentSupplierInvoice).subscribe(res=>{
+      this.loadSupplierInvoice()
       this.clear()
+      this.changePage('list')
     })
   }
   clear(){
-    this.currentProduct = InitialProduct.InitialProductObj();
+    this.currentSupplierInvoice = InitialSupplierInvoice.InitialSupplierInvoiceObj();
   }
 
   deleteData(id: string){
-    console.log(id)
-    this.currentProduct.id = id
-    this.http.post('http://localhost:3000/product/delete',this.currentProduct).subscribe(
+    let body = this.dataSource.filter(x=>x.id == id)
+    console.log(body)
+    this.currentSupplierInvoice = body[0]
+    this.http.post('http://localhost:3000/supplierinvoice/delete',this.currentSupplierInvoice).subscribe(
       (res) =>{
-        this.loadProduct()
+        this.loadSupplierInvoice()
         this.clear()
       }
     )
@@ -184,12 +176,17 @@ export class Form03SupplierinvoiceComponent implements OnInit {
 
   updateData(id: string){
     console.log(id)
-    this.currentProduct.userId = id
-    this.http.post('http://localhost:3000/user/update',this.currentProduct).subscribe(
+    this.currentSupplierInvoice.userId = id
+    this.http.post('http://localhost:3000/supplierinvoice/update',this.currentSupplierInvoice).subscribe(
       (res) =>{
-        this.loadProduct()
+        this.loadSupplierInvoice()
         this.clear()
       }
     )
+  }
+
+  changePage(navPage: string) {
+    this.page = navPage;
+    this.loadSupplierInvoice()
   }
 }

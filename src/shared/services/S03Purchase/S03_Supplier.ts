@@ -18,7 +18,7 @@ export class SupplierService{
     }
 
     loadSupplierInvoice(){
-        this.http.get('http://localhost:3000/supplier/all').subscribe( (res:any)=>{
+        this.http.get('http://localhost:3000/supplierinvoice/all').subscribe( (res:any)=>{
             this.supplierInvoiceBehaviorSubj.setSupplierInvoiceList(res)
         })
     }
