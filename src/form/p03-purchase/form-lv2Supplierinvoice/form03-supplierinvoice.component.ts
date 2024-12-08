@@ -248,9 +248,16 @@ export class Form03SupplierinvoiceComponent implements OnInit {
   }
 
   clickCurrentSelect(id: string, rowData: SupplierInvoice){
-    this.currentSelect == id ? this.currentSelect = '' : this.currentSelect = id
-    this.currentSupplierInvoice = rowData
-    this.dataSourceDetails = rowData.supplierInvoiceDetail
-    console.log(this.currentSelect, rowData)
+    if(this.currentSelect == id)  {
+      this.currentSelect = ''
+      this.currentSupplierInvoice = InitialSupplierInvoice.InitialSupplierInvoiceObj()
+      this.dataSourceDetails = []
+    }
+    else{
+      this.currentSelect = id
+      this.currentSupplierInvoice = rowData
+      this.dataSourceDetails = rowData.supplierInvoiceDetail
+
+    }
   }
 }
