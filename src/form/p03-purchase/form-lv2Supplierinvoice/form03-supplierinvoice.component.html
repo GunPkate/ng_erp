@@ -236,7 +236,7 @@
                 <ng-container matColumnDef="action">
                     <th mat-header-cell *matHeaderCellDef> Action </th>
                     <td mat-cell  *matCellDef="let element">  
-                        <button  class="btn btn-outline-danger" (click)="deleteData(element.id)"> <i class="fas fa-trash-alt">Delete</i></button>
+                        <button  class="btn btn-outline-danger" (click)="deleteDetailData(element.id, element)"> <i class="fas fa-trash-alt">Delete</i></button>
                         <!-- &nbsp; <button  class="btn btn-outline-info" (click)="updateData(element.id)"> <i class="fas fa-trash-alt">Update</i></button> -->
                         &nbsp;      
                     </td>

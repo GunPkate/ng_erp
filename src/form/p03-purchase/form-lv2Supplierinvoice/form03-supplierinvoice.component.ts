@@ -206,6 +206,7 @@ export class Form03SupplierinvoiceComponent implements OnInit {
 
   clearDetails(){
     this.currentSupplierInvoiceDetail = InitialSupplierInvoiceDetail.InitialSupplierInvoiceDetailObj();
+    if(this.selectInvoice) this.currentSupplierInvoiceDetail.supplierInvoiceId = this.selectInvoice;
     // this.currentSupplierInvoiceDetail.supplierInvoiceId = this.currentSupplierInvoice.invoiceNo;
   }
 
@@ -218,6 +219,16 @@ export class Form03SupplierinvoiceComponent implements OnInit {
         this.loadSupplierInvoice()
         this.clear()
         this.resetInvoice()
+        this.dataSourceDetails = []
+      }
+    )
+  }
+
+  deleteDetailData(id: string, data: SupplierInvoiceDetail){
+    this.http.post('http://localhost:3000/supplierinvoicedetail/delete',data).subscribe(
+      (res) =>{
+        this.clearDetails()
+        this.loadInvoiceDetail()
       }
     )
   }
@@ -245,13 +256,18 @@ export class Form03SupplierinvoiceComponent implements OnInit {
   }
 
   loadInvoiceDetail(){
-    this.supplierService.loadSupplierInvoiceDetail(this.currentSupplierInvoice.id)
+    if(this.selectInvoice === ''){
+      this.supplierService.loadSupplierInvoiceDetail(this.currentSupplierInvoice.id)
+    }else{
+      this.supplierService.loadSupplierInvoiceDetail(this.selectInvoice)
+    }
     this.supplierInvoiceDetailBehaviorSubj.getSupplierInvoiceDetailList().subscribe((res) => this.dataSourceDetails = res)
   }
 
   clickCurrentInvoice(id: string, rowData: SupplierInvoice){
     if(this.selectInvoice == id)  {
       this.resetInvoice()
+      this.dataSourceDetails = []
     }
     else{
       this.selectInvoice = id
@@ -264,9 +280,8 @@ export class Form03SupplierinvoiceComponent implements OnInit {
 
   resetInvoice(){
     this.selectInvoice = ''
-      this.currentSupplierInvoice = InitialSupplierInvoice.InitialSupplierInvoiceObj()
-      this.currentSupplierInvoiceDetail = InitialSupplierInvoiceDetail.InitialSupplierInvoiceDetailObj()
-      this.dataSourceDetails = []
+    this.currentSupplierInvoice = InitialSupplierInvoice.InitialSupplierInvoiceObj()
+    this.currentSupplierInvoiceDetail = InitialSupplierInvoiceDetail.InitialSupplierInvoiceDetailObj()
   }
 
   clickCurrentDetail(id: string, rowData: SupplierInvoiceDetail){
