@@ -41,11 +41,6 @@ export const BusinessFlow = [
         transaction: []
     },
     {
-        procresses: "Request",
-        type: "sales",
-        transaction: []
-    },
-    {
         procresses: "Customer Invoice(Sales)",
         type: "sales",
         transaction: [
@@ -60,17 +55,17 @@ export const BusinessFlow = [
                     {   description:"Inventory"},
                 ]
             },
-                {
-                    step:"Sell Merchandise",
-                    dr: [
-                        {   description:"Account Receivable"},
-                        {   description:"COGS"},
-                    ],
-                    cr: [
-                        {   description:"Sales"},
-                        {   description:"Inventory"},
-                    ]
-                },
+            // {
+            //     step:"Sell Merchandise",
+            //     dr: [
+            //         {   description:"Account Receivable"},
+            //         {   description:"COGS"},
+            //     ],
+            //     cr: [
+            //         {   description:"Sales"},
+            //         {   description:"Inventory"},
+            //     ]
+            // },
         ]
     },
     {

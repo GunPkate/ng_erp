@@ -2,8 +2,8 @@
 
 
 <div class="d-flex flex-row">
-      <div><button style="width: 80px;" class="btn btn-primary" (click)="changePage('list')" >List</button></div>
-      <div><button style="width: 180px;" class="btn btn-warning" (click)="changePage('new')" >New Invoice</button></div>
+      <div><button style="width: 120px;" class="btn btn-primary" (click)="changePage('list')" >List</button></div>
+      <div><button style="width: 120px;" class="btn btn-warning" (click)="changePage('new')" >{{currentSelect === '' ?'New Invoice': 'Update'}}</button></div>
       <!-- <div><button style="width: 80px;" class="btn btn-info" >Update</button></div>
       <div><button style="width: 80px;" class="btn btn-warning" (click)="clear()">Clear</button></div>
       <div><button style="width: 80px;" class="btn btn-danger" >Cancel</button></div> -->
@@ -77,7 +77,7 @@
             </ng-container>
         
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr (click)="clickCurrentSelect(row.id,row)" id="{{row.id}}" style="{{row.id== currentSelect?'background-color: blanchedalmond;':'background-color: white;'}}" ngClass mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr (click)="clickCurrentSelect(row.id,row)" id="{{row.id}}" style="{{row.id== currentSelect?'background-color: blanchedalmond; transition: 0.8s;':'background-color: white; transition: 0.8s;'}}" ngClass mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
     </div>
 </div>
