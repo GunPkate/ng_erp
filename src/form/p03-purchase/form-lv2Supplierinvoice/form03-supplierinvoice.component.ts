@@ -25,6 +25,9 @@ import { SupplierInvoiceBehaviorSubj } from 'src/shared/behaviorsubject/Supplier
 import { InitialSupplierInvoiceDetail, SupplierInvoiceDetail } from 'src/shared/interface/P03Purchases/Purchase/SupplierInvoiceDetail';
 import { SupplierInvoiceDetailBehaviorSubj } from 'src/shared/behaviorsubject/SupplierInvoiceDetail';
 import { DateFormatPipe } from "../../../shared/services/Pipe/DatePipte";
+import Swal from 'sweetalert2';
+import { catchError, throwError } from 'rxjs';
+
 
 @Component({
   selector: 'app-form03-supplierinvoice',
@@ -185,11 +188,13 @@ export class Form03SupplierinvoiceComponent implements OnInit {
       this.currentSupplierInvoice.id = uuidv4()
     }
     this.currentSupplierInvoiceDetail.supplierInvoiceId = this.currentSupplierInvoice.id
-    this.http.post('http://localhost:3000/supplierinvoice/create',this.currentSupplierInvoice).subscribe(res=>{
-      this.loadSupplierInvoice()
-      // this.clear()
-      // this.changePage('list')
-    })
+    this.http.post('http://localhost:3000/supplierinvoice/create',this.currentSupplierInvoice).pipe(catchError(error => throwError(error))).subscribe(
+      response => { this.loadSupplierInvoice() },
+      error => {
+        Swal.fire('API Error',error.error.error,'error')
+        console.log(error.error.error)
+      }
+  )
   }
 
   registerDetails(){
@@ -205,6 +210,7 @@ export class Form03SupplierinvoiceComponent implements OnInit {
   clear(){
     this.currentSupplierInvoice = InitialSupplierInvoice.InitialSupplierInvoiceObj();
     this.currentSupplierInvoice.userId  = '22d38441-b515-4a82-ae00-6207faa165b6'
+    this.dataSourceDetails = [];
   }
 
   clearDetails(){
