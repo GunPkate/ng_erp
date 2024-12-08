@@ -270,10 +270,10 @@ export class Form03SupplierinvoiceComponent implements OnInit {
   }
 
   clickCurrentDetail(id: string, rowData: SupplierInvoiceDetail){
-    this.selectInvoiceDetail = id
     if(this.selectInvoiceDetail == id){
-      this.currentSupplierInvoiceDetail = InitialSupplierInvoiceDetail.InitialSupplierInvoiceDetailObj()
+      this.clearDetails()
     }else{
+      this.selectInvoiceDetail = id
       this.currentSupplierInvoiceDetail = rowData
     }
     console.log(id, 'page', this.selectInvoiceDetail)

@@ -135,7 +135,7 @@
                 </div>
 
                 <div class="ml-4" *ngIf="currentSupplierInvoice.id && currentSupplierInvoice.id != ''">
-                    <button class="btn btn-info" (click)="setSubpage('detail')" type="submit">Details</button>
+                    <button class="btn btn-info" (click)="setSubpage('detail')" type="submit">{{ selectInvoiceDetail ===''?'Details':'Update'}}</button>
                 </div>
 
                 <div class="ml-4" *ngIf="currentSupplierInvoice.id == null || currentSupplierInvoice.id == ''">
