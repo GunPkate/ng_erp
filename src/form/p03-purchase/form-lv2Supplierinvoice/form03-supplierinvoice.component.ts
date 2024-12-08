@@ -181,7 +181,9 @@ export class Form03SupplierinvoiceComponent implements OnInit {
 
 
   register(){
-    this.currentSupplierInvoice.id = uuidv4()
+    if(this.currentSupplierInvoice.id == ''|| this.currentSupplierInvoice.id == null){
+      this.currentSupplierInvoice.id = uuidv4()
+    }
     this.currentSupplierInvoiceDetail.supplierInvoiceId = this.currentSupplierInvoice.id
     this.http.post('http://localhost:3000/supplierinvoice/create',this.currentSupplierInvoice).subscribe(res=>{
       this.loadSupplierInvoice()
@@ -202,6 +204,7 @@ export class Form03SupplierinvoiceComponent implements OnInit {
 
   clear(){
     this.currentSupplierInvoice = InitialSupplierInvoice.InitialSupplierInvoiceObj();
+    this.currentSupplierInvoice.userId  = '22d38441-b515-4a82-ae00-6207faa165b6'
   }
 
   clearDetails(){
