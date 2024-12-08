@@ -44,7 +44,8 @@ export class Form03SupplierinvoiceComponent implements OnInit {
   // ];
   currentSupplierInvoice: SupplierInvoice = InitialSupplierInvoice.InitialSupplierInvoiceObj()
   currentSupplierInvoiceDetail: SupplierInvoiceDetail = InitialSupplierInvoiceDetail.InitialSupplierInvoiceDetailObj()
-  currentSelect: string = ''
+  selectInvoice: string = ''
+  selectInvoiceDetail: string = ''
 
   dataSource :SupplierInvoice[] = []
   dataSourceDetails :SupplierInvoiceDetail[] = []
@@ -216,6 +217,7 @@ export class Form03SupplierinvoiceComponent implements OnInit {
       (res) =>{
         this.loadSupplierInvoice()
         this.clear()
+        this.resetInvoice()
       }
     )
   }
@@ -247,17 +249,33 @@ export class Form03SupplierinvoiceComponent implements OnInit {
     this.supplierInvoiceDetailBehaviorSubj.getSupplierInvoiceDetailList().subscribe((res) => this.dataSourceDetails = res)
   }
 
-  clickCurrentSelect(id: string, rowData: SupplierInvoice){
-    if(this.currentSelect == id)  {
-      this.currentSelect = ''
-      this.currentSupplierInvoice = InitialSupplierInvoice.InitialSupplierInvoiceObj()
-      this.dataSourceDetails = []
+  clickCurrentInvoice(id: string, rowData: SupplierInvoice){
+    if(this.selectInvoice == id)  {
+      this.resetInvoice()
     }
     else{
-      this.currentSelect = id
+      this.selectInvoice = id
       this.currentSupplierInvoice = rowData
+      this.currentSupplierInvoiceDetail.supplierInvoiceId = this.currentSupplierInvoice.id
       this.dataSourceDetails = rowData.supplierInvoiceDetail
 
     }
+  }
+
+  resetInvoice(){
+    this.selectInvoice = ''
+      this.currentSupplierInvoice = InitialSupplierInvoice.InitialSupplierInvoiceObj()
+      this.currentSupplierInvoiceDetail = InitialSupplierInvoiceDetail.InitialSupplierInvoiceDetailObj()
+      this.dataSourceDetails = []
+  }
+
+  clickCurrentDetail(id: string, rowData: SupplierInvoiceDetail){
+    this.selectInvoiceDetail = id
+    if(this.selectInvoiceDetail == id){
+      this.currentSupplierInvoiceDetail = InitialSupplierInvoiceDetail.InitialSupplierInvoiceDetailObj()
+    }else{
+      this.currentSupplierInvoiceDetail = rowData
+    }
+    console.log(id, 'page', this.selectInvoiceDetail)
   }
 }

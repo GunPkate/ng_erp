@@ -3,7 +3,7 @@
 
 <div class="d-flex flex-row">
       <div><button style="width: 120px;" class="btn btn-primary" (click)="changePage('list')" >List</button></div>
-      <div><button style="width: 120px;" class="btn btn-warning" (click)="changePage('new')" >{{currentSelect === '' ?'New Invoice': 'Update'}}</button></div>
+      <div><button style="width: 120px;" class="btn btn-warning" (click)="changePage('new')" >{{selectInvoice === '' ?'New Invoice': 'Update'}}</button></div>
       <!-- <div><button style="width: 80px;" class="btn btn-info" >Update</button></div>
       <div><button style="width: 80px;" class="btn btn-warning" (click)="clear()">Clear</button></div>
       <div><button style="width: 80px;" class="btn btn-danger" >Cancel</button></div> -->
@@ -38,7 +38,7 @@
             <th mat-header-cell *matHeaderCellDef>Supplier Name </th>
             <td mat-cell *matCellDef="let element"> 
                 <button  class="btn btn-outline-danger" (click)="deleteData(element.id)"> <i class="fas fa-trash-alt">Delete</i></button>
-                &nbsp; <button  class="btn btn-outline-info" (click)="updateData(element.id)"> <i class="fas fa-trash-alt">Update</i></button>
+                <!-- &nbsp; <button  class="btn btn-outline-info" (click)="updateData(element.id)"> <i class="fas fa-trash-alt">Update</i></button> -->
                 &nbsp;   
                 {{element.supplierId}} 
             </td>
@@ -76,8 +76,8 @@
             <td mat-cell *matCellDef="let element"> {{element.userId}} </td>
             </ng-container>
         
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr (click)="clickCurrentSelect(row.id,row)" id="{{row.id}}" style="{{row.id== currentSelect?'background-color: blanchedalmond; transition: 0.8s;':'background-color: white; transition: 0.8s;'}}" ngClass mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr mat-header-row class="text-center" *matHeaderRowDef="displayedColumns"></tr>
+            <tr (click)="clickCurrentInvoice(row.id,row)" id="{{row.id}}" style="{{row.id== selectInvoice?'background-color: blanchedalmond; transition: 0.8s;':'background-color: white; transition: 0.8s;'}}" ngClass mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
     </div>
 </div>
@@ -211,7 +211,7 @@
                 <th mat-header-cell *matHeaderCellDef>Supplier Name </th>
                 <td mat-cell *matCellDef="let element"> 
                     <button  class="btn btn-outline-danger" (click)="deleteData(element.id)"> <i class="fas fa-trash-alt">Delete</i></button>
-                    &nbsp; <button  class="btn btn-outline-info" (click)="updateData(element.id)"> <i class="fas fa-trash-alt">Update</i></button>
+                    <!-- &nbsp; <button  class="btn btn-outline-info" (click)="updateData(element.id)"> <i class="fas fa-trash-alt">Update</i></button> -->
                     &nbsp;   
                     {{element.supplierInvoiceId}} 
                 </td>
@@ -235,7 +235,7 @@
                 </ng-container>
             
                 <tr mat-header-row *matHeaderRowDef="displayedColumnsDetails"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumnsDetails;"></tr>
+                <tr (click)="clickCurrentDetail(row.id,row)" id="{{row.id}}" style="{{row.id== selectInvoiceDetail?'background-color: blanchedalmond; transition: 0.8s;':'background-color: white; transition: 0.8s;'}}" ngClass mat-row *matRowDef="let row; columns: displayedColumnsDetails;"></tr>
             </table>
         </div>
     </div>
