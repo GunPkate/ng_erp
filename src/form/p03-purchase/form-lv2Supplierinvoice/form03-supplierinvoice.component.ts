@@ -63,8 +63,8 @@ export class Form03SupplierinvoiceComponent implements OnInit {
   page:string = "list"
   subpage:string = ''
 
-  displayedColumns: string[] = [ 'supplierId',  'invoiceNo', 'title', 'totalAmount', 'date', 'description', 'userId',];
-  displayedColumnsDetails: string[] = [ 'productId',  'supplierInvoiceId', 'purchaseQty', 'purchaseUnitPrice', ];
+  displayedColumns: string[] = [ 'supplierId',  'invoiceNo', 'title', 'totalAmount', 'date', 'description', 'userId', 'action'];
+  displayedColumnsDetails: string[] = [ 'productId',  'supplierInvoiceId', 'purchaseQty', 'purchaseUnitPrice', 'action'];
  
 
   constructor(
