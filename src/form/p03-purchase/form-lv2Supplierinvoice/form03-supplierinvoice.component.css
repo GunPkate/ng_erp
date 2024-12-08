@@ -1,0 +1,16 @@
+.mat-row:hover .mat-cell {
+    /* border-color: currentColor; */
+    background-color: blanchedalmond;
+    transition: 0.8s;
+    cursor: pointer;
+}
+
+.mat-row .mat-cell {
+    /* border-color: currentColor; */
+    background-color: none;
+    transition: 0.8s;
+}
+  
+  .demo-row-is-clicked {
+    font-weight: bold;
+  }

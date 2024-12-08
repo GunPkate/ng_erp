@@ -24,12 +24,13 @@ import { AccountControlBehaviorSubj } from 'src/shared/behaviorsubject/AccountCo
 import { SupplierInvoiceBehaviorSubj } from 'src/shared/behaviorsubject/SupplierInvoice';
 import { InitialSupplierInvoiceDetail, SupplierInvoiceDetail } from 'src/shared/interface/P03Purchases/Purchase/SupplierInvoiceDetail';
 import { SupplierInvoiceDetailBehaviorSubj } from 'src/shared/behaviorsubject/SupplierInvoiceDetail';
+import { DateFormatPipe } from "../../../shared/services/Pipe/DatePipte";
 
 @Component({
   selector: 'app-form03-supplierinvoice',
   templateUrl: './form03-supplierinvoice.component.html',
   standalone: true,
-  imports: [ MatFormFieldModule, MatInputModule,MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatSortModule, MatTableModule, NgFor, NgIf ],
+  imports: [MatFormFieldModule, MatInputModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatSortModule, MatTableModule, NgFor, NgIf, DateFormatPipe],
   styleUrls: ['./form03-supplierinvoice.component.css']
 })
 
@@ -43,6 +44,8 @@ export class Form03SupplierinvoiceComponent implements OnInit {
   // ];
   currentSupplierInvoice: SupplierInvoice = InitialSupplierInvoice.InitialSupplierInvoiceObj()
   currentSupplierInvoiceDetail: SupplierInvoiceDetail = InitialSupplierInvoiceDetail.InitialSupplierInvoiceDetailObj()
+  currentSelect: string = ''
+
   dataSource :SupplierInvoice[] = []
   dataSourceDetails :SupplierInvoiceDetail[] = []
 
@@ -242,5 +245,12 @@ export class Form03SupplierinvoiceComponent implements OnInit {
   loadInvoiceDetail(){
     this.supplierService.loadSupplierInvoiceDetail(this.currentSupplierInvoice.id)
     this.supplierInvoiceDetailBehaviorSubj.getSupplierInvoiceDetailList().subscribe((res) => this.dataSourceDetails = res)
+  }
+
+  clickCurrentSelect(id: string, rowData: SupplierInvoice){
+    this.currentSelect == id ? this.currentSelect = '' : this.currentSelect = id
+    this.currentSupplierInvoice = rowData
+    this.dataSourceDetails = rowData.supplierInvoiceDetail
+    console.log(this.currentSelect, rowData)
   }
 }
