@@ -191,8 +191,7 @@ export class Form03SupplierinvoiceComponent implements OnInit {
     this.http.post('http://localhost:3000/supplierinvoice/create',this.currentSupplierInvoice).pipe(catchError(error => throwError(error))).subscribe(
       response => { this.loadSupplierInvoice() },
       error => {
-        Swal.fire('API Error',error.error.error,'error')
-        console.log(error.error.error)
+        Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
       }
   )
   }
