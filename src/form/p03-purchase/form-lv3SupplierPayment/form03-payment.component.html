@@ -102,7 +102,7 @@
 
             <mat-form-field class="col-12" appearance="fill">
                 <mat-label>Supplier </mat-label>
-                <input [value]="getName(selectName)" disabled="" matInput>
+                <input [value]="getName(selectName, 'supplier')" disabled="" matInput>
             </mat-form-field>
 
             <div>
@@ -144,7 +144,8 @@
 
             <div class="d-flex">
                 <div class="ml-4">
-                    <button class="btn btn-primary" (click)="register()" type="submit">Register</button>
+                    <button *ngIf="validate.length == 0" class="btn btn-primary" (click)="register()" type="submit">Register</button>
+                    <button *ngIf="validate.length > 0" class="btn btn-primary" disabled type="submit">Register</button>
                     <button class="btn btn-danger" (click)="clear()">Clear</button>
                 </div>
 
@@ -163,15 +164,15 @@
                 <!-- Position Column -->
             
                 <!-- Name Column -->
-                <ng-container matColumnDef="supplierInvoiceId">
-                <th mat-header-cell *matHeaderCellDef>Supplier Name </th>
-                <td mat-cell *matCellDef="let element">  {{element.supplierInvoiceId}} </td>
+                <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef>Invoice Detail </th>
+                <td mat-cell *matCellDef="let element">  {{element.id}} </td>
                 </ng-container>
             
                 <!-- Weight Column -->
                 <ng-container matColumnDef="productId">
                 <th mat-header-cell *matHeaderCellDef> Product Id </th>
-                <td mat-cell *matCellDef="let element"> {{element.productId}} </td>
+                <td mat-cell *matCellDef="let element"> {{getName(element.productId, 'product')}} </td>
                 </ng-container>
             
                 <!-- Symbol Column -->
@@ -222,7 +223,7 @@
 
                 <ng-container matColumnDef="supplierId">
                 <th mat-header-cell *matHeaderCellDef>Supplier Name </th>
-                <td mat-cell *matCellDef="let element">  {{element.supplierId}} </td>
+                <td mat-cell *matCellDef="let element">  {{getName(selectName, 'supplier')}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="supplierInvoiceId">
@@ -271,7 +272,7 @@
                 </ng-container>
             
                 <tr mat-header-row *matHeaderRowDef="displayedColumnsPayment"></tr>
-                <tr (click)="clickCurrentPayment(row.id,row)" id="{{row.id}}" style="{{row.id== selectPayment?'background-color: blanchedalmond; transition: 0.8s;':'background-color: white; transition: 0.8s;'}}" ngClass mat-row *matRowDef="let row; columns: displayedColumnsPayment;"></tr>
+                <tr style="{{row.id== selectPayment?'background-color: blanchedalmond; transition: 0.8s;':'background-color: white; transition: 0.8s;'}}" ngClass mat-row *matRowDef="let row; columns: displayedColumnsPayment;"></tr>
             </table>
         </div>
     </div>

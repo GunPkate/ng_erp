@@ -68,8 +68,10 @@ export class Form03PaymentComponent implements OnInit {
   subpage:string = ''
 
   displayedColumns: string[] = [ 'supplierId',  'invoiceNo', 'title', 'totalAmount', 'date', 'description', 'userId', 'action'];
-  displayedColumnsDetails: string[] = [ 'productId',  'supplierInvoiceId', 'purchaseQty', 'purchaseUnitPrice'];
+  displayedColumnsDetails: string[] = [ 'id', 'productId', 'purchaseQty', 'purchaseUnitPrice'];
   displayedColumnsPayment: string[] = [ 'paymentId', 'supplierId', 'supplierInvoiceNo', 'invoiceNo', 'totalAmount', 'paymentAmount', 'remainBalance', 'date', 'userId', 'action']; 
+
+  validate: string[] = []
 
   constructor(
     private http: HttpClient,
@@ -150,7 +152,6 @@ export class Form03PaymentComponent implements OnInit {
     if(this.currentSupplierPayment.paymentId == ''|| this.currentSupplierPayment.paymentId == null){
       this.currentSupplierPayment.paymentId = uuidv4()
     }
-
     this.http.post('http://localhost:3000/supplierpayment/create',this.currentSupplierPayment).pipe(catchError(error => throwError(error))).subscribe(
       response => { 
         this.currentSupplierPayment.paymentId == ''
@@ -174,6 +175,7 @@ export class Form03PaymentComponent implements OnInit {
     this.http.post('http://localhost:3000/supplierpayment/delete',data).subscribe(
       (res) =>{
         this.loadSupplierPayment()
+        this.validate = []
       }
     )
   }
@@ -195,6 +197,7 @@ export class Form03PaymentComponent implements OnInit {
     this.supplierService.loadSupplierInvoicePayment(this.selectPayment);
     this.loadSupplierInvoice()
     if(navPage == 'new') this.loadSupplierPayment()
+    if(this.currentSupplierPayment.paymentAmount == 0) this.validate.push('No Payment value')
   }
 
 
@@ -237,9 +240,16 @@ export class Form03PaymentComponent implements OnInit {
     this.currentSupplierPayment.date = new Date
   }
 
-  getName(value: string){
-    for (let i = 0; i < this.supplierDropDown.length; i++) {
-      if( this.supplierDropDown[i].supplierId == value ) return this.supplierDropDown[i].supplierName
+  getName(value: string, field: string){
+    if(field == 'supplier'){
+      for (let i = 0; i < this.supplierDropDown.length; i++) {
+        if( this.supplierDropDown[i].supplierId == value ) return this.supplierDropDown[i].supplierName
+      }
+    }
+    if(field == 'product'){
+      for (let i = 0; i < this.productDropDown.length; i++) {
+        if( this.supplierDropDown[i].supplierId == value ) return this.supplierDropDown[i].supplierName
+      }
     }
     return 'No Data'
   }
@@ -251,11 +261,20 @@ export class Form03PaymentComponent implements OnInit {
   }
 
   clickCurrentPayment(id: string, rowData: SupplierInvoiceDetail){
+    this.validate = []
     let sum = 0; 
     this.dataSourceDetails.forEach(x => sum += x.purchaseQty * x.purchaseUnitPrice)
     if(this.dataSourcePayment.length > 0){
       this.dataSourcePayment.forEach(x => sum -= x.paymentAmount)
     }
+
+    this.dataSourcePayment.forEach(x=>
+      {
+        if(x.invoiceNo == id)  this.validate.push('Duplicated InvoiceNo')
+      }
+    )
+    this.checkValidate();
+    console.log(this.validate)
 
     if(this.selectInvoiceDetail == id){
       this.resetPayment();
@@ -266,7 +285,7 @@ export class Form03PaymentComponent implements OnInit {
       this.currentSupplierPayment.totalAmount = sum
       this.currentSupplierPayment.invoiceNo = rowData.id
     }
-    console.log(id, 'page', this.selectInvoiceDetail)
+
   }
 
   resetPayment(){
@@ -275,5 +294,11 @@ export class Form03PaymentComponent implements OnInit {
     this.currentSupplierPayment.paymentAmount = 0;
     this.currentSupplierPayment.remainBalance = 0;
     this.currentSupplierPayment.invoiceNo = ''
+  }
+
+  checkValidate(){
+    if(this.validate.length > 0) {
+      this.validate.forEach(x => Swal.fire(x,x,'warning'))
+    }
   }
 }
