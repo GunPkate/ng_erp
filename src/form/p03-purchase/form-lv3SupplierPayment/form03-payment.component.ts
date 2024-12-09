@@ -27,6 +27,8 @@ import { SupplierInvoiceDetailBehaviorSubj } from 'src/shared/behaviorsubject/Su
 import { DateFormatPipe } from "../../../shared/services/Pipe/DatePipte";
 import Swal from 'sweetalert2';
 import { catchError, throwError } from 'rxjs';
+import { SupplierPayment } from 'src/shared/interface/P03Purchases/Purchase/SupplierPayment';
+import { SupplierPaymentBehaviorSubj } from 'src/shared/behaviorsubject/SupplierInvoicePayment';
 
 
 @Component({
@@ -49,9 +51,11 @@ export class Form03PaymentComponent implements OnInit {
   currentSupplierInvoiceDetail: SupplierInvoiceDetail = InitialSupplierInvoiceDetail.InitialSupplierInvoiceDetailObj()
   selectInvoice: string = ''
   selectInvoiceDetail: string = ''
+  selectPayment: string = ''
 
   dataSource :SupplierInvoice[] = []
   dataSourceDetails :SupplierInvoiceDetail[] = []
+  dataSourcePayment :SupplierPayment[] = []
 
   categoryDropDown: Category[] = []
   supplierDropDown: Supplier[] = []
@@ -67,8 +71,8 @@ export class Form03PaymentComponent implements OnInit {
   subpage:string = ''
 
   displayedColumns: string[] = [ 'supplierId',  'invoiceNo', 'title', 'totalAmount', 'date', 'description', 'userId', 'action'];
-  displayedColumnsDetails: string[] = [ 'productId',  'supplierInvoiceId', 'purchaseQty', 'purchaseUnitPrice', 'action'];
- 
+  displayedColumnsDetails: string[] = [ 'productId',  'supplierInvoiceId', 'purchaseQty', 'purchaseUnitPrice'];
+  displayedColumnsPayment: string[] = [ 'paymentId', 'supplierId', 'supplierInvoiceNo', 'invoiceNo', 'totalAmount', 'paymentAmount', 'remainBalance', 'date', 'userId',]; 
 
   constructor(
     private http: HttpClient,
@@ -81,6 +85,7 @@ export class Form03PaymentComponent implements OnInit {
     private supplierBehaviorSubj: SupplierBehaviorSubj,
     private supplierInvoiceBehaviorSubj: SupplierInvoiceBehaviorSubj,
     private supplierInvoiceDetailBehaviorSubj: SupplierInvoiceDetailBehaviorSubj, 
+    private supplierPaymentBehaviorSubj: SupplierPaymentBehaviorSubj, 
     private accountControlBehaviorSubj: AccountControlBehaviorSubj,
   ) { 
     this.stockService.loadCategory();
@@ -255,6 +260,7 @@ export class Form03PaymentComponent implements OnInit {
   changePage(navPage: string) {
     this.page = navPage;
     this.subpage = ''
+    this.supplierService.loadSupplierInvoicePayment(this.selectPayment);
     this.loadSupplierInvoice()
   }
 
@@ -279,6 +285,7 @@ export class Form03PaymentComponent implements OnInit {
     }
     else{
       this.selectInvoice = id
+      this.selectPayment = rowData.invoiceNo
       this.currentSupplierInvoice = rowData
       this.currentSupplierInvoiceDetail.supplierInvoiceId = this.currentSupplierInvoice.id
       this.dataSourceDetails = rowData.supplierInvoiceDetail

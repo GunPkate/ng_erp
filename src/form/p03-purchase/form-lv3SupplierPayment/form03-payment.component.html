@@ -3,7 +3,8 @@
 
 <div class="d-flex flex-row">
       <div><button style="width: 120px;" class="btn btn-primary" (click)="changePage('list')" >List</button></div>
-      <div><button style="width: 120px;" class="btn btn-warning" (click)="changePage('new')" >{{selectInvoice === '' ?'New Payment': 'Update'}}</button></div>
+      <div *ngIf="selectInvoice !== ''"><button style="width: 120px; transition: 1s;" class="btn btn-warning" (click)="changePage('new')" >{{'Payment'}}</button></div>
+      <div *ngIf="selectInvoice === ''"><button style="width: 120px; transition: 1s;" class="btn btn-warning disabled" >{{'Payment'}}</button></div>
       <!-- <div><button style="width: 80px;" class="btn btn-info" >Update</button></div>
       <div><button style="width: 80px;" class="btn btn-warning" (click)="clear()">Clear</button></div>
       <div><button style="width: 80px;" class="btn btn-danger" >Cancel</button></div> -->
@@ -72,9 +73,12 @@
             </ng-container>
 
             <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <th mat-header-cell *matHeaderCellDef> Invoice Details </th>
             <td mat-cell  *matCellDef="let element">  
-                <button  class="btn btn-outline-danger" (click)="deleteData(element.id)"> <i class="fas fa-trash-alt">Delete</i></button>
+                <span class="btn btn-info">
+                  {{element.supplierInvoiceDetail.length}}
+                </span>
+                <!-- <button  class="btn btn-outline-danger" (click)="deleteData(element.id)"> <i class="fas fa-trash-alt">Delete</i></button> -->
                 <!-- &nbsp; <button  class="btn btn-outline-info" (click)="updateData(element.id)"> <i class="fas fa-trash-alt">Update</i></button> -->
                 &nbsp;      
             </td>
@@ -233,14 +237,13 @@
                 <td mat-cell *matCellDef="let element"> {{element.purchaseUnitPrice}} </td>
                 </ng-container>
 
-                <ng-container matColumnDef="action">
+                <!-- <ng-container matColumnDef="action">
                     <th mat-header-cell *matHeaderCellDef> Action </th>
                     <td mat-cell  *matCellDef="let element">  
                         <button  class="btn btn-outline-danger" (click)="deleteDetailData(element.id, element)"> <i class="fas fa-trash-alt">Delete</i></button>
-                        <!-- &nbsp; <button  class="btn btn-outline-info" (click)="updateData(element.id)"> <i class="fas fa-trash-alt">Update</i></button> -->
-                        &nbsp;      
+                      &nbsp;      
                     </td>
-                </ng-container>
+                </ng-container> -->
             
                 <tr mat-header-row *matHeaderRowDef="displayedColumnsDetails"></tr>
                 <tr (click)="clickCurrentDetail(row.id,row)" id="{{row.id}}" style="{{row.id== selectInvoiceDetail?'background-color: blanchedalmond; transition: 0.8s;':'background-color: white; transition: 0.8s;'}}" ngClass mat-row *matRowDef="let row; columns: displayedColumnsDetails;"></tr>

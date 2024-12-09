@@ -13,6 +13,7 @@ import { SupplierBehaviorSubj } from 'src/shared/behaviorsubject/Supplier';
 import { HttpClientModule } from '@angular/common/http';
 import { SupplierInvoiceBehaviorSubj } from 'src/shared/behaviorsubject/SupplierInvoice';
 import { SupplierInvoiceDetailBehaviorSubj } from 'src/shared/behaviorsubject/SupplierInvoiceDetail';
+import { SupplierPaymentBehaviorSubj } from 'src/shared/behaviorsubject/SupplierInvoicePayment';
 
 export const p03routes:Routes = [
   {
@@ -44,7 +45,7 @@ export const p03routes:Routes = [
     MatInputModule
   ],
   providers: [
-    SupplierService, SupplierBehaviorSubj, SupplierInvoiceBehaviorSubj, SupplierInvoiceDetailBehaviorSubj
+    SupplierService, SupplierBehaviorSubj, SupplierInvoiceBehaviorSubj, SupplierInvoiceDetailBehaviorSubj, SupplierPaymentBehaviorSubj
   ],
 
 })
