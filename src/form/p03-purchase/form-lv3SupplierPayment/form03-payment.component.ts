@@ -215,6 +215,7 @@ export class Form03PaymentComponent implements OnInit {
     this.currentSupplierInvoice = InitialSupplierInvoice.InitialSupplierInvoiceObj();
     this.currentSupplierInvoice.userId  = '22d38441-b515-4a82-ae00-6207faa165b6'
     this.dataSourceDetails = [];
+    this.dataSourcePayment = [];
   }
 
   clearDetails(){
@@ -282,6 +283,8 @@ export class Form03PaymentComponent implements OnInit {
     if(this.selectInvoice == id)  {
       this.resetInvoice()
       this.dataSourceDetails = []
+      this.dataSourcePayment = []
+      this.selectPayment = ''
     }
     else{
       this.selectInvoice = id
@@ -295,6 +298,7 @@ export class Form03PaymentComponent implements OnInit {
 
   resetInvoice(){
     this.selectInvoice = ''
+    this.selectPayment = ''
     this.currentSupplierInvoice = InitialSupplierInvoice.InitialSupplierInvoiceObj()
     this.currentSupplierInvoiceDetail = InitialSupplierInvoiceDetail.InitialSupplierInvoiceDetailObj()
   }
