@@ -154,7 +154,8 @@ export class Form03PaymentComponent implements OnInit {
     this.http.post('http://localhost:3000/supplierpayment/create',this.currentSupplierPayment).pipe(catchError(error => throwError(error))).subscribe(
       response => { 
         this.currentSupplierPayment.paymentId == ''
-        this.loadSupplierPayment()
+        this.loadSupplierPayment();
+        this.resetPayment();
       },
       error => {
         Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
@@ -249,23 +250,30 @@ export class Form03PaymentComponent implements OnInit {
     this.currentSupplierInvoice = InitialSupplierInvoice.InitialSupplierInvoiceObj()
   }
 
-  clickCurrentDetail(id: string, rowData: SupplierInvoiceDetail){
+  clickCurrentPayment(id: string, rowData: SupplierInvoiceDetail){
     let sum = 0; 
     this.dataSourceDetails.forEach(x => sum += x.purchaseQty * x.purchaseUnitPrice)
+    if(this.dataSourcePayment.length > 0){
+      this.dataSourcePayment.forEach(x => sum -= x.paymentAmount)
+    }
 
     if(this.selectInvoiceDetail == id){
-      this.selectInvoiceDetail = ''
-      this.currentSupplierPayment.paymentAmount = 0;
-      this.currentSupplierPayment.remainBalance = 0;
-
-
+      this.resetPayment();
     }else{
       this.selectInvoiceDetail = id
       this.currentSupplierPayment.paymentAmount = rowData.purchaseQty * rowData.purchaseUnitPrice
-      this.currentSupplierPayment.remainBalance = -this.currentSupplierPayment.paymentAmount
+      this.currentSupplierPayment.remainBalance = sum - this.currentSupplierPayment.paymentAmount
       this.currentSupplierPayment.totalAmount = sum
+      this.currentSupplierPayment.invoiceNo = rowData.id
     }
     console.log(id, 'page', this.selectInvoiceDetail)
   }
 
+  resetPayment(){
+    this.selectInvoiceDetail = ''
+    this.currentSupplierPayment.totalAmount = 0;
+    this.currentSupplierPayment.paymentAmount = 0;
+    this.currentSupplierPayment.remainBalance = 0;
+    this.currentSupplierPayment.invoiceNo = ''
+  }
 }

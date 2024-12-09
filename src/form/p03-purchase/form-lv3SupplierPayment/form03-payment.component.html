@@ -111,7 +111,11 @@
                     <input [value]="currentSupplierPayment.supplierInvoiceNo" disabled matInput>
                 </mat-form-field>
             
-
+                <mat-form-field class="col-4" appearance="fill">
+                    <mat-label>Invoice Detail No</mat-label>
+                    <input [value]="currentSupplierPayment.invoiceNo" disabled matInput>
+                </mat-form-field>
+            
                 <mat-form-field class="col-4" appearance="fill">
                     <mat-label>Date</mat-label>
                     <input (dateInput)="dateChange($event.value)" matInput [matDatepicker]="invoiceDate">
@@ -190,7 +194,7 @@
                 </ng-container> -->
             
                 <tr mat-header-row *matHeaderRowDef="displayedColumnsDetails"></tr>
-                <tr (click)="clickCurrentDetail(row.id,row)" id="{{row.id}}" style="{{row.id== selectInvoiceDetail?'background-color: blanchedalmond; transition: 0.8s;':'background-color: white; transition: 0.8s;'}}" ngClass mat-row *matRowDef="let row; columns: displayedColumnsDetails;"></tr>
+                <tr (click)="clickCurrentPayment(row.id,row)" id="{{row.id}}" style="{{row.id== selectInvoiceDetail?'background-color: blanchedalmond; transition: 0.8s;':'background-color: white; transition: 0.8s;'}}" ngClass mat-row *matRowDef="let row; columns: displayedColumnsDetails;"></tr>
             </table>
         </div>
     </div>
@@ -267,7 +271,7 @@
                 </ng-container>
             
                 <tr mat-header-row *matHeaderRowDef="displayedColumnsPayment"></tr>
-                <tr (click)="clickCurrentDetail(row.id,row)" id="{{row.id}}" style="{{row.id== selectPayment?'background-color: blanchedalmond; transition: 0.8s;':'background-color: white; transition: 0.8s;'}}" ngClass mat-row *matRowDef="let row; columns: displayedColumnsPayment;"></tr>
+                <tr (click)="clickCurrentPayment(row.id,row)" id="{{row.id}}" style="{{row.id== selectPayment?'background-color: blanchedalmond; transition: 0.8s;':'background-color: white; transition: 0.8s;'}}" ngClass mat-row *matRowDef="let row; columns: displayedColumnsPayment;"></tr>
             </table>
         </div>
     </div>
