@@ -90,7 +90,9 @@
     </div>
 </div>
 
-<div *ngIf="page=='new'" class="d-flex">  
+<div *ngIf="page=='new'">  
+    <div  class="d-flex">
+
     <div class="col-6" *ngIf="subpage !=='detail'">
         <div class="col-12">  
             <mat-form-field class="col-12" appearance="fill">
@@ -99,24 +101,16 @@
             </mat-form-field>
 
             <mat-form-field class="col-12" appearance="fill">
-                <mat-label>Select Supplier</mat-label>
-                <mat-select [value]="currentSupplierInvoice.supplierId" (selectionChange)="supplierChange($event.value)">
-                    <div *ngFor="let i of supplierDropDown">
-                        <mat-option [value]="i.supplierId">{{i.supplierName}}</mat-option>
-                    </div>
-                </mat-select>
+                <mat-label>Supplier </mat-label>
+                <input [value]="getName(selectName)" disabled="" matInput>
             </mat-form-field>
 
             <div>
                 <mat-form-field class="col-4" appearance="fill">
                     <mat-label>Invoice No</mat-label>
-                    <input [value]="currentSupplierInvoice.invoiceNo" (blur)="invoiceNoChange($event)" matInput>
+                    <input [value]="currentSupplierPayment.supplierInvoiceNo" disabled matInput>
                 </mat-form-field>
-                
-                <mat-form-field class="col-4" appearance="fill">
-                    <mat-label>Title</mat-label>
-                    <input [value]="currentSupplierInvoice.title" (blur)="titleChange($event)" matInput>
-                </mat-form-field>
+            
 
                 <mat-form-field class="col-4" appearance="fill">
                     <mat-label>Date</mat-label>
@@ -125,15 +119,23 @@
                     <mat-datepicker #invoiceDate></mat-datepicker>
                     <mat-hint>MM/DD/YYYY</mat-hint>
                 </mat-form-field>  
-    
-
             </div>
 
             <div>
-                <mat-form-field class="col-12" appearance="fill">
-                    <mat-label>Description</mat-label>
-                    <textarea style="height: 150px;" [value]="currentSupplierInvoice.description" (blur)="descriptionChange($event)" matInput></textarea>
-                </mat-form-field>      
+                <mat-form-field class="col-4" appearance="fill">
+                    <mat-label>Total Amount</mat-label>
+                    <input [value]="currentSupplierPayment.totalAmount" disabled matInput>
+                </mat-form-field>
+            
+                <mat-form-field class="col-4" appearance="fill">
+                    <mat-label>Payment Amount</mat-label>
+                    <input [value]="currentSupplierPayment.paymentAmount" (blur)="paymentAmountChange($event)" matInput>
+                </mat-form-field>
+
+                <mat-form-field class="col-4" appearance="fill">
+                    <mat-label>Remain Amount</mat-label>
+                    <input [value]="currentSupplierPayment.remainBalance" disabled matInput>
+                </mat-form-field>
             </div>
 
             <div class="d-flex">
@@ -142,68 +144,10 @@
                     <button class="btn btn-danger" (click)="clear()">Clear</button>
                 </div>
 
-                <div class="ml-4" *ngIf="currentSupplierInvoice.id && currentSupplierInvoice.id != ''">
-                    <button class="btn btn-info" (click)="setSubpage('detail')" type="submit">{{ selectInvoiceDetail ===''?'Details':'Update'}}</button>
-                </div>
-
-                <div class="ml-4" *ngIf="currentSupplierInvoice.id == null || currentSupplierInvoice.id == ''">
-                    <button class="btn btn-info disabled" type="submit">Details</button>
-                </div>
             </div>
         </div> 
     </div>
 
-
-    <div  class="col-6" *ngIf="subpage =='detail'" >
-        <div class="col-12">
-            <mat-form-field class="col-12" appearance="fill">
-                <mat-label>Invoice No</mat-label>
-                <input [value]="currentSupplierInvoiceDetail.supplierInvoiceId" disabled matInput>
-            </mat-form-field>
-
-            <div>
-                <mat-form-field class="col-4" appearance="fill">
-                    <mat-label>Select Product</mat-label>
-                    <mat-select [value]="currentSupplierInvoice.supplierId" (selectionChange)="productChange($event.value)">
-                        <div *ngFor="let i of productDropDown">
-                            <mat-option [value]="i.productId">{{i.productName}}</mat-option>
-                        </div>
-                    </mat-select>
-                </mat-form-field>
-                
-                <mat-form-field class="col-4" appearance="fill">
-                    <mat-label>Purchase Qty</mat-label>
-                    <input [value]="currentSupplierInvoiceDetail.purchaseQty" (blur)="purchaseQtyChange($event)" matInput>
-                </mat-form-field>
-
-                <mat-form-field class="col-4" appearance="fill">
-                    <mat-label>Purchase Unit Price</mat-label>
-                    <input [value]="currentSupplierInvoiceDetail.purchaseUnitPrice" (blur)="purchaseUnitPriceChange($event)" matInput>
-                </mat-form-field>
-
-    
-
-            </div>
-
-            <div>
-                <mat-form-field style="opacity: 0.01" class="col-12" appearance="fill">
-                    <mat-label>Description</mat-label>
-                    <textarea disabled style="height: 150px;" [value]="currentSupplierInvoice.description" (blur)="descriptionChange($event)" matInput></textarea>
-                </mat-form-field>      
-            </div>
-
-            <div class="d-flex">
-                <div class="ml-4">
-                    <button class="btn btn-primary" (click)="registerDetails()" type="submit">Register Details</button>
-                    <button class="btn btn-danger" (click)="clearDetails()">Clear Details</button>
-                </div>
-
-                <div class="ml-4">
-                    <button class="btn btn-info" (click)="setSubpage('')" type="submit">Back</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="col-6">
         <div class="col-12">
@@ -251,5 +195,80 @@
         </div>
     </div>
 
+    </div>
 
+    <div class="col-12">
+        <div class="col-12">
+            <table mat-table [dataSource]="dataSourcePayment" class="mat-elevation-z8 col-12">
+    
+                <ng-container matColumnDef="paymentId">
+                <th mat-header-cell *matHeaderCellDef>Id </th>
+                <td mat-cell *matCellDef="let element">  {{element.paymentId}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="supplierInvoiceNo">
+                <th mat-header-cell *matHeaderCellDef>Invoice No </th>
+                <td mat-cell *matCellDef="let element">  {{element.supplierInvoiceNo}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="invoiceNo">
+                <th mat-header-cell *matHeaderCellDef>Invoice No </th>
+                <td mat-cell *matCellDef="let element">  {{element.invoiceNo}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="supplierId">
+                <th mat-header-cell *matHeaderCellDef>Supplier Name </th>
+                <td mat-cell *matCellDef="let element">  {{element.supplierId}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="supplierInvoiceId">
+                <th mat-header-cell *matHeaderCellDef>Supplier Name </th>
+                <td mat-cell *matCellDef="let element">  {{element.supplierInvoiceId}} </td>
+                </ng-container>
+            
+                <!-- Weight Column -->
+                <ng-container matColumnDef="productId">
+                <th mat-header-cell *matHeaderCellDef> Product Id </th>
+                <td mat-cell *matCellDef="let element"> {{element.productId}} </td>
+                </ng-container>
+            
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="totalAmount">
+                <th mat-header-cell *matHeaderCellDef> Total Amount </th>
+                <td mat-cell *matCellDef="let element"> {{element.totalAmount}} </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="paymentAmount">
+                <th mat-header-cell *matHeaderCellDef> Payment Amount </th>
+                <td mat-cell *matCellDef="let element"> {{element.paymentAmount}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="remainBalance">
+                <th mat-header-cell *matHeaderCellDef> Remain Balance </th>
+                <td mat-cell *matCellDef="let element"> {{element.remainBalance}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef> Date </th>
+                <td mat-cell *matCellDef="let element"> {{element.date | dateFormatPipe}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="userId">
+                <th mat-header-cell *matHeaderCellDef> User Id </th>
+                <td mat-cell *matCellDef="let element"> {{element.userId}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                    <td mat-cell  *matCellDef="let element">  
+                        <button  class="btn btn-outline-danger" (click)="deletePaymentData(element.id, element)"> <i class="fas fa-trash-alt">Delete</i></button>
+                      &nbsp;      
+                    </td>
+                </ng-container>
+            
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsPayment"></tr>
+                <tr (click)="clickCurrentDetail(row.id,row)" id="{{row.id}}" style="{{row.id== selectPayment?'background-color: blanchedalmond; transition: 0.8s;':'background-color: white; transition: 0.8s;'}}" ngClass mat-row *matRowDef="let row; columns: displayedColumnsPayment;"></tr>
+            </table>
+        </div>
+    </div>
 </div>
