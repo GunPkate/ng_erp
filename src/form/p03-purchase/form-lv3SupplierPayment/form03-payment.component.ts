@@ -248,7 +248,7 @@ export class Form03PaymentComponent implements OnInit {
     }
     if(field == 'product'){
       for (let i = 0; i < this.productDropDown.length; i++) {
-        if( this.supplierDropDown[i].supplierId == value ) return this.supplierDropDown[i].supplierName
+        if( this.productDropDown[i].productId == value ) return this.productDropDown[i].productName
       }
     }
     return 'No Data'
