@@ -1,0 +1,252 @@
+<p>Invoice && Invoice Payment</p>
+
+
+<div class="d-flex flex-row">
+      <div><button style="width: 120px;" class="btn btn-primary" (click)="changePage('list')" >List</button></div>
+      <div><button style="width: 120px;" class="btn btn-warning" (click)="changePage('new')" >{{selectInvoice === '' ?'New Payment': 'Update'}}</button></div>
+      <!-- <div><button style="width: 80px;" class="btn btn-info" >Update</button></div>
+      <div><button style="width: 80px;" class="btn btn-warning" (click)="clear()">Clear</button></div>
+      <div><button style="width: 80px;" class="btn btn-danger" >Cancel</button></div> -->
+</div>
+
+<div *ngIf="page=='list'" class="col-12">
+    <div class="col-12">  
+        <mat-form-field class="col-12" appearance="fill">
+            <mat-label>ID</mat-label>
+            <input [value]="currentSupplierInvoice.id" disabled matInput>
+        </mat-form-field>
+
+        <mat-form-field class="col-12" appearance="fill">
+            <mat-label>Select Supplier</mat-label>
+            <mat-select>
+                <mat-option value="one">First option</mat-option>
+                <mat-option value="two">Second option</mat-option>
+            </mat-select>
+        </mat-form-field>
+        </div>
+
+    <div class="col-12">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 col-12">
+
+            <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+        
+            <!-- Position Column -->
+        
+            <!-- Name Column -->
+            <ng-container matColumnDef="supplierId">
+            <th mat-header-cell *matHeaderCellDef>Supplier Name </th>
+            <td mat-cell *matCellDef="let element">  {{element.supplierId}} </td>
+            </ng-container>
+        
+            <!-- Weight Column -->
+            <ng-container matColumnDef="invoiceNo">
+            <th mat-header-cell *matHeaderCellDef> Invoice No </th>
+            <td mat-cell *matCellDef="let element"> {{element.invoiceNo}} </td>
+            </ng-container>
+        
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef> Title </th>
+            <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="totalAmount">
+            <th mat-header-cell *matHeaderCellDef> totalAmount </th>
+            <td mat-cell *matCellDef="let element"> {{element.totalAmount}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef> date </th>
+            <td mat-cell *matCellDef="let element"> {{element.date | dateFormatPipe }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef> description </th>
+            <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="userId">
+                <th mat-header-cell *matHeaderCellDef> User </th>
+                <td mat-cell class="" *matCellDef="let element"> {{element.userId}}  </td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell  *matCellDef="let element">  
+                <button  class="btn btn-outline-danger" (click)="deleteData(element.id)"> <i class="fas fa-trash-alt">Delete</i></button>
+                <!-- &nbsp; <button  class="btn btn-outline-info" (click)="updateData(element.id)"> <i class="fas fa-trash-alt">Update</i></button> -->
+                &nbsp;      
+            </td>
+            </ng-container>
+        
+            <tr mat-header-row class="text-center" *matHeaderRowDef="displayedColumns"></tr>
+            <tr (click)="clickCurrentInvoice(row.id,row)" id="{{row.id}}" style="{{row.id== selectInvoice?'background-color: blanchedalmond; transition: 0.8s;':'background-color: white; transition: 0.8s;'}}" ngClass mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</div>
+
+<div *ngIf="page=='new'" class="d-flex">  
+    <div class="col-6" *ngIf="subpage !=='detail'">
+        <div class="col-12">  
+            <mat-form-field class="col-12" appearance="fill">
+                <mat-label>ID</mat-label>
+                <input [value]="currentSupplierInvoice.id" disabled matInput>
+            </mat-form-field>
+
+            <mat-form-field class="col-12" appearance="fill">
+                <mat-label>Select Supplier</mat-label>
+                <mat-select [value]="currentSupplierInvoice.supplierId" (selectionChange)="supplierChange($event.value)">
+                    <div *ngFor="let i of supplierDropDown">
+                        <mat-option [value]="i.supplierId">{{i.supplierName}}</mat-option>
+                    </div>
+                </mat-select>
+            </mat-form-field>
+
+            <div>
+                <mat-form-field class="col-4" appearance="fill">
+                    <mat-label>Invoice No</mat-label>
+                    <input [value]="currentSupplierInvoice.invoiceNo" (blur)="invoiceNoChange($event)" matInput>
+                </mat-form-field>
+                
+                <mat-form-field class="col-4" appearance="fill">
+                    <mat-label>Title</mat-label>
+                    <input [value]="currentSupplierInvoice.title" (blur)="titleChange($event)" matInput>
+                </mat-form-field>
+
+                <mat-form-field class="col-4" appearance="fill">
+                    <mat-label>Date</mat-label>
+                    <input (dateInput)="dateChange($event.value)" matInput [matDatepicker]="invoiceDate">
+                    <mat-datepicker-toggle matSuffix [for]="invoiceDate"></mat-datepicker-toggle>
+                    <mat-datepicker #invoiceDate></mat-datepicker>
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                </mat-form-field>  
+    
+
+            </div>
+
+            <div>
+                <mat-form-field class="col-12" appearance="fill">
+                    <mat-label>Description</mat-label>
+                    <textarea style="height: 150px;" [value]="currentSupplierInvoice.description" (blur)="descriptionChange($event)" matInput></textarea>
+                </mat-form-field>      
+            </div>
+
+            <div class="d-flex">
+                <div class="ml-4">
+                    <button class="btn btn-primary" (click)="register()" type="submit">Register</button>
+                    <button class="btn btn-danger" (click)="clear()">Clear</button>
+                </div>
+
+                <div class="ml-4" *ngIf="currentSupplierInvoice.id && currentSupplierInvoice.id != ''">
+                    <button class="btn btn-info" (click)="setSubpage('detail')" type="submit">{{ selectInvoiceDetail ===''?'Details':'Update'}}</button>
+                </div>
+
+                <div class="ml-4" *ngIf="currentSupplierInvoice.id == null || currentSupplierInvoice.id == ''">
+                    <button class="btn btn-info disabled" type="submit">Details</button>
+                </div>
+            </div>
+        </div> 
+    </div>
+
+
+    <div  class="col-6" *ngIf="subpage =='detail'" >
+        <div class="col-12">
+            <mat-form-field class="col-12" appearance="fill">
+                <mat-label>Invoice No</mat-label>
+                <input [value]="currentSupplierInvoiceDetail.supplierInvoiceId" disabled matInput>
+            </mat-form-field>
+
+            <div>
+                <mat-form-field class="col-4" appearance="fill">
+                    <mat-label>Select Product</mat-label>
+                    <mat-select [value]="currentSupplierInvoice.supplierId" (selectionChange)="productChange($event.value)">
+                        <div *ngFor="let i of productDropDown">
+                            <mat-option [value]="i.productId">{{i.productName}}</mat-option>
+                        </div>
+                    </mat-select>
+                </mat-form-field>
+                
+                <mat-form-field class="col-4" appearance="fill">
+                    <mat-label>Purchase Qty</mat-label>
+                    <input [value]="currentSupplierInvoiceDetail.purchaseQty" (blur)="purchaseQtyChange($event)" matInput>
+                </mat-form-field>
+
+                <mat-form-field class="col-4" appearance="fill">
+                    <mat-label>Purchase Unit Price</mat-label>
+                    <input [value]="currentSupplierInvoiceDetail.purchaseUnitPrice" (blur)="purchaseUnitPriceChange($event)" matInput>
+                </mat-form-field>
+
+    
+
+            </div>
+
+            <div>
+                <mat-form-field style="opacity: 0.01" class="col-12" appearance="fill">
+                    <mat-label>Description</mat-label>
+                    <textarea disabled style="height: 150px;" [value]="currentSupplierInvoice.description" (blur)="descriptionChange($event)" matInput></textarea>
+                </mat-form-field>      
+            </div>
+
+            <div class="d-flex">
+                <div class="ml-4">
+                    <button class="btn btn-primary" (click)="registerDetails()" type="submit">Register Details</button>
+                    <button class="btn btn-danger" (click)="clearDetails()">Clear Details</button>
+                </div>
+
+                <div class="ml-4">
+                    <button class="btn btn-info" (click)="setSubpage('')" type="submit">Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6">
+        <div class="col-12">
+            <table mat-table [dataSource]="dataSourceDetails" class="mat-elevation-z8 col-12">
+    
+                <!--- Note that these columns can be defined in any order.
+                    The actual rendered columns are set as a property on the row definition" -->
+            
+                <!-- Position Column -->
+            
+                <!-- Name Column -->
+                <ng-container matColumnDef="supplierInvoiceId">
+                <th mat-header-cell *matHeaderCellDef>Supplier Name </th>
+                <td mat-cell *matCellDef="let element">  {{element.supplierInvoiceId}} </td>
+                </ng-container>
+            
+                <!-- Weight Column -->
+                <ng-container matColumnDef="productId">
+                <th mat-header-cell *matHeaderCellDef> Product Id </th>
+                <td mat-cell *matCellDef="let element"> {{element.productId}} </td>
+                </ng-container>
+            
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="purchaseQty">
+                <th mat-header-cell *matHeaderCellDef> Purchase Qty </th>
+                <td mat-cell *matCellDef="let element"> {{element.purchaseQty}} </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="purchaseUnitPrice">
+                <th mat-header-cell *matHeaderCellDef> purchaseUnitPrice </th>
+                <td mat-cell *matCellDef="let element"> {{element.purchaseUnitPrice}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                    <td mat-cell  *matCellDef="let element">  
+                        <button  class="btn btn-outline-danger" (click)="deleteDetailData(element.id, element)"> <i class="fas fa-trash-alt">Delete</i></button>
+                        <!-- &nbsp; <button  class="btn btn-outline-info" (click)="updateData(element.id)"> <i class="fas fa-trash-alt">Update</i></button> -->
+                        &nbsp;      
+                    </td>
+                </ng-container>
+            
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsDetails"></tr>
+                <tr (click)="clickCurrentDetail(row.id,row)" id="{{row.id}}" style="{{row.id== selectInvoiceDetail?'background-color: blanchedalmond; transition: 0.8s;':'background-color: white; transition: 0.8s;'}}" ngClass mat-row *matRowDef="let row; columns: displayedColumnsDetails;"></tr>
+            </table>
+        </div>
+    </div>
+
+
+</div>

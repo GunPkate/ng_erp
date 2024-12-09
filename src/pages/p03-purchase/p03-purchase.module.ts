@@ -5,7 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { P03PurchaseComponent } from './p03-purchase.component';
 import { Form03SupplierComponent } from 'src/form/p03-purchase/form-lv1Supplier/form03-supplier.component';
 import { Form03SupplierinvoiceComponent } from 'src/form/p03-purchase/form-lv2Supplierinvoice/form03-supplierinvoice.component';
-import { Form03Lv3Component } from 'src/form/p03-purchase/form-lv3/form03-lv3.component';
+import { Form03PaymentComponent } from 'src/form/p03-purchase/form-lv3SupplierPayment/form03-payment.component';
 import { Form03lv4Component } from 'src/form/p03-purchase/form-lv4/form03-lv4.component';
 import { RouterModule, Routes } from '@angular/router';
 import { SupplierService } from 'src/shared/services/S03Purchase/S03_Supplier';
@@ -21,7 +21,7 @@ export const p03routes:Routes = [
     children:[
       {path: 'supplier', component: Form03SupplierComponent},
       {path: 'purchaseinvoice', component: Form03SupplierinvoiceComponent},
-      {path: 'purchasepayment', component: Form03Lv3Component},
+      {path: 'purchasepayment', component: Form03PaymentComponent},
       {path: 'allpurchase', component: Form03lv4Component},
     ]
   }
@@ -36,7 +36,7 @@ export const p03routes:Routes = [
     ButtonMenuComponent,
     Form03SupplierComponent,
     Form03SupplierinvoiceComponent,
-    Form03Lv3Component,
+    Form03PaymentComponent,
     Form03lv4Component,
     RouterModule.forChild(p03routes),
 

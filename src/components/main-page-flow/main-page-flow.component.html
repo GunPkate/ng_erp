@@ -1,78 +1,112 @@
-<body>
-
   <section class="block-map">
-    <div class="d-flex flex-row flex-md-column">
+    <div class="d-flex">
+      
+      <div class="col-8 d-flex flex-row flex-md-column">
+        <div class="mt-4 d-flex flex-column flex-md-row justify-content-around">
+          <div ngClass="col-4" *ngFor="let i of businessFlowPurchases" class="block-item-wrapper">
 
-      <div class="mt-4 d-flex flex-column flex-md-row justify-content-around">
-        <div ngClass="col-4" *ngFor="let i of businessFlowPurchases" class="block-item-wrapper">
+            <!-- <div class="dashed-line"></div> -->
+            <div class="block_item purhcases">
+              <p class="need"><span class="bg"><span class="icon">{{ i.procresses }}</span></span></p>
+    
+              <div *ngIf="i.transaction.length >0" class="block_subitem">
+                <mat-expansion-panel *ngFor="let transaction of i.transaction" hideToggle>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      {{transaction.step}}
+                    </mat-panel-title>
+                    <!-- <mat-panel-description>
+                      This is a summary of the content
+                    </mat-panel-description> -->
+                  </mat-expansion-panel-header>
+                  <div>
 
-          <!-- <div class="dashed-line"></div> -->
-          <div class="block_item purhcases">
-            <p class="need"><span class="bg"><span class="icon">{{ i.procresses }}</span></span></p>
-  
-            <div *ngIf="i.transaction.length >0" class="block_subitem">
-              <mat-expansion-panel *ngFor="let transaction of i.transaction" hideToggle>
-                <mat-expansion-panel-header>
-                  <mat-panel-title>
-                    {{transaction.step}}
-                  </mat-panel-title>
-                  <!-- <mat-panel-description>
-                    This is a summary of the content
-                  </mat-panel-description> -->
-                </mat-expansion-panel-header>
-                <div>
-
-                  <div *ngFor="let dr of transaction.dr">
-                    <mat-panel-description *ngFor="let dr of transaction.dr">
-                      DR {{dr.description}}
-                    </mat-panel-description>
-                    
-                    <mat-panel-description style="margin-left: 15px;" *ngFor="let cr of transaction.cr">
-                      CR {{cr.description}}
-                    </mat-panel-description>
+                    <div *ngFor="let dr of transaction.dr">
+                      <mat-panel-description *ngFor="let dr of transaction.dr">
+                        DR {{dr.description}}
+                      </mat-panel-description>
+                      
+                      <mat-panel-description style="margin-left: 15px;" *ngFor="let cr of transaction.cr">
+                        CR {{cr.description}}
+                      </mat-panel-description>
+                      
+                    </div>
                     
                   </div>
-                  
-                </div>
-              </mat-expansion-panel>
-            </div>   
-          </div>  
+                </mat-expansion-panel>
+              </div>   
+            </div>  
+          </div>
+        </div>
+        <div class="mt-4 d-flex flex-column flex-md-row justify-content-around">
+          <div ngClass="col-4" *ngFor="let i of businessFlowSales" class="block-item-wrapper">
+
+            <!-- <div class="dashed-line"></div> -->
+            <div class="block_item sales">
+              <p class="need"><span class="bg"><span class="icon">{{ i.procresses }}</span></span></p>
+    
+              <div *ngIf="i.transaction.length >0" class="block_subitem">
+                <mat-expansion-panel *ngFor="let transaction of i.transaction" hideToggle>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      {{transaction.step}}
+                    </mat-panel-title>
+                    <!-- <mat-panel-description>
+                      This is a summary of the content
+                    </mat-panel-description> -->
+                  </mat-expansion-panel-header>
+                  <div class="expansion-content">
+
+                      <mat-panel-description *ngFor="let dr of transaction.dr">
+                        DR {{dr.description}}
+                      </mat-panel-description>
+                      
+                      <mat-panel-description style="margin-left: 15px;" *ngFor="let cr of transaction.cr">
+                        CR {{cr.description}}
+                      </mat-panel-description>
+                    
+                  </div>
+                </mat-expansion-panel>
+              </div>   
+            </div>  
+          </div>
         </div>
       </div>
-      <div class="mt-4 d-flex flex-column flex-md-row justify-content-around">
-        <div ngClass="col-4" *ngFor="let i of businessFlowSales" class="block-item-wrapper">
 
-          <!-- <div class="dashed-line"></div> -->
-          <div class="block_item sales">
-            <p class="need"><span class="bg"><span class="icon">{{ i.procresses }}</span></span></p>
-  
-            <div *ngIf="i.transaction.length >0" class="block_subitem">
-              <mat-expansion-panel *ngFor="let transaction of i.transaction" hideToggle>
-                <mat-expansion-panel-header>
-                  <mat-panel-title>
-                    {{transaction.step}}
-                  </mat-panel-title>
-                  <!-- <mat-panel-description>
-                    This is a summary of the content
-                  </mat-panel-description> -->
-                </mat-expansion-panel-header>
-                <div class="expansion-content">
+      <div class="col-4 d-flex justify-content-center align-items-center">
+        <div class="mt-4">
+          <div ngClass="col-4"  class="block-item-wrapper">
 
-                    <mat-panel-description *ngFor="let dr of transaction.dr">
-                      DR {{dr.description}}
-                    </mat-panel-description>
+            <!-- <div class="dashed-line"></div> -->
+            <div class="block_item">
+              <p class="need"><span class="bg"><span class="icon"></span></span></p>
+    
+              <div  class="block_subitem">
+                <mat-expansion-panel  hideToggle>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      General Ledger
+                    </mat-panel-title>
+                    <!-- <mat-panel-description>
+                      This is a summary of the content
+                    </mat-panel-description> -->
+                  </mat-expansion-panel-header>
+                  <div class="expansion-content">
+
+                      <mat-panel-description >
+                        DR 
+                      </mat-panel-description>
+                      
+                      <mat-panel-description style="margin-left: 15px;">
+                        CR
+                      </mat-panel-description>
                     
-                    <mat-panel-description style="margin-left: 15px;" *ngFor="let cr of transaction.cr">
-                      CR {{cr.description}}
-                    </mat-panel-description>
-                  
-                </div>
-              </mat-expansion-panel>
-            </div>   
-          </div>  
+                  </div>
+                </mat-expansion-panel>
+              </div>   
+            </div>  
+          </div>
         </div>
-
       </div>
     </div>
   </section>
-</body>
