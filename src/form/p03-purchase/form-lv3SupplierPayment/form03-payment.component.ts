@@ -161,7 +161,11 @@ export class Form03PaymentComponent implements OnInit {
         this.resetPayment();
       },
       error => {
-        Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+        if(error.error.meta){
+                Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+            }else{
+                Swal.fire(JSON.stringify(error.name),error.message,'error')
+            }
       }
     )
     this.transaction.forEach(
@@ -171,7 +175,11 @@ export class Form03PaymentComponent implements OnInit {
 
           },
           error => {
-            Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+            if(error.error.meta){
+                Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+            }else{
+                Swal.fire(JSON.stringify(error.name),error.message,'error')
+            }
           }
         )
       }

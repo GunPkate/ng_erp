@@ -18,7 +18,11 @@ export class UserService{
           this.userBehaviorSubj.setUserList(res)
         },
         error => {
-            Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+            if(error.error.meta){
+                Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+            }else{
+                Swal.fire(JSON.stringify(error.name),error.message,'error')
+            }
         })
     }
     
@@ -28,7 +32,11 @@ export class UserService{
             this.userTypeBehaviorSubj.setUserList(res)
         },
         error => {
-            Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+            if(error.error.meta){
+                Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+            }else{
+                Swal.fire(JSON.stringify(error.name),error.message,'error')
+            }
         })
     }
 }

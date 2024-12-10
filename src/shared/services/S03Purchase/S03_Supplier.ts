@@ -22,7 +22,11 @@ export class SupplierService{
             this.supplierBehaviorSubj.setSupplierList(res)
         },
         error => {
-            Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+            if(error.error.meta){
+                Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+            }else{
+                Swal.fire(JSON.stringify(error.name),error.message,'error')
+            }
         })
     }
 
@@ -31,7 +35,11 @@ export class SupplierService{
             this.supplierInvoiceBehaviorSubj.setSupplierInvoiceList(res)
         },
         error => {
-            Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+            if(error.error.meta){
+                Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+            }else{
+                Swal.fire(JSON.stringify(error.name),error.message,'error')
+            }
         })
     }
 
@@ -40,7 +48,11 @@ export class SupplierService{
             this.supplierInvoiceDetailBehaviorSubj.setSupplierInvoiceDetailList(res)
         },
         error => {
-            Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+            if(error.error.meta){
+                Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+            }else{
+                Swal.fire(JSON.stringify(error.name),error.message,'error')
+            }
         })
     }
 
@@ -49,7 +61,11 @@ export class SupplierService{
             this.supplierPaymentBehaviorSubj.setSupplierPaymentList(res)
         },
         error => {
-            Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+            if(error.error.meta){
+                Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+            }else{
+                Swal.fire(JSON.stringify(error.name),error.message,'error')
+            }
         })
     }
 }

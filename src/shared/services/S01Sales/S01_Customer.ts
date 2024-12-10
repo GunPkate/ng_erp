@@ -17,7 +17,11 @@ export class CustomerService{
             this.customerBehaviorSubj.setCustomerList(res)
         },
         error => {
-            Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+            if(error.error.meta){
+                Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+            }else{
+                Swal.fire(JSON.stringify(error.name),error.message,'error')
+            }
         }
     )
     }
