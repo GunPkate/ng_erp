@@ -278,7 +278,7 @@ export class Form03PaymentComponent implements OnInit {
     }
     transaction.transaction_title = title
     transaction.transaction_date = this.currentSupplierPayment.date
-    transaction.description = "Purchase Payment:" + title
+    transaction.description = this.title05+ ":" + title
     return transaction
   }
 
@@ -329,7 +329,7 @@ export class Form03PaymentComponent implements OnInit {
       this.currentSupplierPayment.invoiceNo = rowData.id
       this.currentSupplierPayment.userId = '22d38441-b515-4a82-ae00-6207faa165b6'
 
-      this.transaction.push( this.setTransaction('dr','Inventory','1','104','101','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+      this.transaction.push( this.setTransaction('dr','Account Payable','5','502','101','8ff68454-c507-4784-9b83-7f11c1c649d4') )
       this.transaction.push( this.setTransaction('cr','Cash Payment','5','502','101','8ff68454-c507-4784-9b83-7f11c1c649d4') )
       console.log('this.transaction',this.transaction)
     }

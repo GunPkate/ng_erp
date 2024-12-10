@@ -27,6 +27,7 @@ import { SupplierInvoiceDetailBehaviorSubj } from 'src/shared/behaviorsubject/Su
 import { DateFormatPipe } from "../../../shared/services/Pipe/DatePipte";
 import Swal from 'sweetalert2';
 import { catchError, throwError } from 'rxjs';
+import { InitialTransaction, Transaction } from 'src/shared/interface/P07Transaction/Transaction';
 
 
 @Component({
@@ -47,6 +48,7 @@ export class Form03SupplierinvoiceComponent implements OnInit {
   // ];
   currentSupplierInvoice: SupplierInvoice = InitialSupplierInvoice.InitialSupplierInvoiceObj()
   currentSupplierInvoiceDetail: SupplierInvoiceDetail = InitialSupplierInvoiceDetail.InitialSupplierInvoiceDetailObj()
+  transaction: Transaction[] = []
   selectInvoice: string = ''
   selectInvoiceDetail: string = ''
 
@@ -201,12 +203,31 @@ export class Form03SupplierinvoiceComponent implements OnInit {
   }
 
   registerDetails(){
+    this.transaction = [];
     this.currentSupplierInvoiceDetail.id = uuidv4()
     this.http.post('http://localhost:3000/supplierinvoicedetail/create',this.currentSupplierInvoiceDetail).subscribe(res=>{
       this.loadSupplierInvoice()
       // this.clearDetails()
       this.loadInvoiceDetail()
     })
+    this.transaction.push( this.setTransaction('dr','Inventory','1','104','101','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+    this.transaction.push( this.setTransaction('cr','Account Payable','5','502','101','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+    this.transaction.forEach(
+      x => {
+        this.http.post('http://localhost:3000/transaction/create',x).pipe(catchError(error => throwError(error))).subscribe(
+          response => { 
+
+          },
+          error => {
+            if(error.error.meta){
+                Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+            }else{
+                Swal.fire(JSON.stringify(error.name),error.message,'error')
+            }
+          }
+        )
+      }
+    )
     // this.dataSourceDetails.push(this.currentSupplierInvoiceDetail)
   }
 
@@ -305,5 +326,25 @@ export class Form03SupplierinvoiceComponent implements OnInit {
       this.currentSupplierInvoiceDetail = rowData
     }
     console.log(id, 'page', this.selectInvoiceDetail)
+  }
+
+  setTransaction(acctype: string, title: string, accHead: string, accControl: string, accSubcontrol: string, year: string){
+    let transaction = InitialTransaction.InitialTransactionObj(); 
+    transaction.id = uuidv4()
+    transaction.financialYearId = year
+    transaction.accountHeadCode = accHead
+    transaction.accountControlCode = accControl
+    transaction.accountSubcontrolCode = accSubcontrol
+    transaction.invoiceNo = this.currentSupplierInvoice.invoiceNo 
+    transaction.userId = this.currentSupplierInvoice.userId
+    if(acctype == 'dr'){
+      transaction.debit = this.currentSupplierInvoiceDetail.purchaseQty * this.currentSupplierInvoiceDetail.purchaseUnitPrice
+    } else{
+      transaction.credit = this.currentSupplierInvoiceDetail.purchaseQty * this.currentSupplierInvoiceDetail.purchaseUnitPrice
+    }
+    transaction.transaction_title = title
+    transaction.transaction_date = this.currentSupplierInvoice.date
+    transaction.description = this.title05+ ":" + title
+    return transaction
   }
 }
