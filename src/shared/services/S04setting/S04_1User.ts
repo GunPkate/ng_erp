@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { InitialUserType, UserType } from "src/shared/interface/P04Setting/User/UserType";
 import { UserBehaviorSubj } from "src/shared/behaviorsubject/User";
 import { UserTypeBehaviorSubj } from "src/shared/behaviorsubject/UserType";
+import Swal from "sweetalert2";
 
 @Injectable()
 export class UserService{
@@ -15,6 +16,9 @@ export class UserService{
     loadUser(){
         this.http.get('http://localhost:3000/user/all').subscribe((res: any)=> {
           this.userBehaviorSubj.setUserList(res)
+        },
+        error => {
+            Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
         })
     }
     
@@ -22,6 +26,9 @@ export class UserService{
         this.http.get('http://localhost:3000/usertype/all').subscribe((res:any)=> {
             let UserTypList: UserType[];
             this.userTypeBehaviorSubj.setUserList(res)
+        },
+        error => {
+            Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
         })
     }
 }

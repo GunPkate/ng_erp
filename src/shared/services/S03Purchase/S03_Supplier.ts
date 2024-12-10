@@ -1,9 +1,11 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { catchError, throwError } from "rxjs";
 import { SupplierBehaviorSubj } from "src/shared/behaviorsubject/Supplier";
 import { SupplierInvoiceBehaviorSubj } from "src/shared/behaviorsubject/SupplierInvoice";
 import { SupplierInvoiceDetailBehaviorSubj } from "src/shared/behaviorsubject/SupplierInvoiceDetail";
 import { SupplierPaymentBehaviorSubj } from "src/shared/behaviorsubject/SupplierInvoicePayment";
+import Swal from "sweetalert2";
 
 @Injectable()
 export class SupplierService{
@@ -16,26 +18,38 @@ export class SupplierService{
     ){}
 
     loadSupplier(){
-        this.http.get('http://localhost:3000/supplier/all').subscribe( (res:any)=>{
+        this.http.get('http://localhost:3000/supplier/all').pipe(catchError(error => throwError(error))).subscribe( (res:any)=>{
             this.supplierBehaviorSubj.setSupplierList(res)
+        },
+        error => {
+            Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
         })
     }
 
     loadSupplierInvoice(){
-        this.http.get('http://localhost:3000/supplierinvoice/all').subscribe( (res:any)=>{
+        this.http.get('http://localhost:3000/supplierinvoice/all').pipe(catchError(error => throwError(error))).subscribe( (res:any)=>{
             this.supplierInvoiceBehaviorSubj.setSupplierInvoiceList(res)
+        },
+        error => {
+            Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
         })
     }
 
     loadSupplierInvoiceDetail(invoiceNo: string){
-        this.http.get('http://localhost:3000/supplierinvoicedetail/all:'+invoiceNo).subscribe( (res:any)=>{
+        this.http.get('http://localhost:3000/supplierinvoicedetail/all:'+invoiceNo).pipe(catchError(error => throwError(error))).subscribe( (res:any)=>{
             this.supplierInvoiceDetailBehaviorSubj.setSupplierInvoiceDetailList(res)
+        },
+        error => {
+            Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
         })
     }
 
     loadSupplierInvoicePayment(invoiceNo: string){
-        this.http.get('http://localhost:3000/supplierpayment/all:'+invoiceNo).subscribe( (res:any)=>{
+        this.http.get('http://localhost:3000/supplierpayment/all:'+invoiceNo).pipe(catchError(error => throwError(error))).subscribe( (res:any)=>{
             this.supplierPaymentBehaviorSubj.setSupplierPaymentList(res)
+        },
+        error => {
+            Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
         })
     }
 }

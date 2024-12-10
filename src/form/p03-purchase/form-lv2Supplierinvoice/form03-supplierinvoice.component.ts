@@ -188,7 +188,7 @@ export class Form03SupplierinvoiceComponent implements OnInit {
       this.currentSupplierInvoice.id = uuidv4()
     }
     this.currentSupplierInvoiceDetail.supplierInvoiceId = this.currentSupplierInvoice.id
-    this.http.post('http://localhost:3000/supplierinvoice/create',this.currentSupplierInvoice).pipe(catchError(error => throwError(error))).subscribe(
+    this.http.post('http://localhost:3000/supplierinvoice/create',this.currentSupplierInvoice).subscribe(
       response => { this.loadSupplierInvoice() },
       error => {
         Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
