@@ -13,7 +13,7 @@ import { Product, InitialProduct } from 'src/shared/interface/P05Stock/Product';
 import { StockService } from 'src/shared/services/S05Stocks/S05_Category';
 import { CategoryBehaviorSubj } from 'src/shared/behaviorsubject/Category';
 import { v4 as uuidv4 } from 'uuid';
-import { NgFor, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { InitialSupplierInvoice, SupplierInvoice } from 'src/shared/interface/P03Purchases/Purchase/SupplierInvoice';
 import { SupplierBehaviorSubj } from 'src/shared/behaviorsubject/Supplier';
 import { SupplierService } from 'src/shared/services/S03Purchase/S03_Supplier';
@@ -29,13 +29,14 @@ import Swal from 'sweetalert2';
 import { catchError, throwError } from 'rxjs';
 import { InitialSupplierPayment, SupplierPayment } from 'src/shared/interface/P03Purchases/Purchase/SupplierPayment';
 import { SupplierPaymentBehaviorSubj } from 'src/shared/behaviorsubject/SupplierInvoicePayment';
+import { Transaction,InitialTransaction } from 'src/shared/interface/P07Transaction/Transaction';
 
 
 @Component({
   selector: 'app-form03-payment',
   templateUrl: './form03-payment.component.html',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatSortModule, MatTableModule, NgFor, NgIf, DateFormatPipe],
+  imports: [MatFormFieldModule, MatInputModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatSortModule, MatTableModule, NgIf, DateFormatPipe],
   styleUrls: ['./form03-payment.component.css']
 })
 
@@ -45,6 +46,7 @@ export class Form03PaymentComponent implements OnInit {
 
   currentSupplierInvoice: SupplierInvoice = InitialSupplierInvoice.InitialSupplierInvoiceObj()
   currentSupplierPayment: SupplierPayment = InitialSupplierPayment.InitialSupplierPaymentObj()
+  transaction: Transaction[] = []
 
   selectInvoice: string = ''
   selectInvoiceDetail: string = ''
@@ -161,7 +163,19 @@ export class Form03PaymentComponent implements OnInit {
       error => {
         Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
       }
-  )
+    )
+    this.transaction.forEach(
+      x => {
+        this.http.post('http://localhost:3000/transaction/create',x).pipe(catchError(error => throwError(error))).subscribe(
+          response => { 
+
+          },
+          error => {
+            Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+          }
+        )
+      }
+    )
   }
 
   clear(){
@@ -240,6 +254,26 @@ export class Form03PaymentComponent implements OnInit {
     this.currentSupplierPayment.date = new Date
   }
 
+  setTransaction(acctype: string, title: string, accHead: string, accControl: string, accSubcontrol: string, year: string){
+    let transaction = InitialTransaction.InitialTransactionObj(); 
+    transaction.id = uuidv4()
+    transaction.financialYearId = year
+    transaction.accountHeadCode = accHead
+    transaction.accountControlCode = accControl
+    transaction.accountSubcontrolCode = accSubcontrol
+    transaction.invoiceNo = this.currentSupplierPayment.supplierInvoiceNo 
+    transaction.userId = this.currentSupplierPayment.userId
+    if(acctype == 'dr'){
+      transaction.debit = this.currentSupplierPayment.paymentAmount
+    } else{
+      transaction.credit = this.currentSupplierPayment.paymentAmount
+    }
+    transaction.transaction_title = title
+    transaction.transaction_date = this.currentSupplierPayment.date
+    transaction.description = "Purchase Payment:" + title
+    return transaction
+  }
+
   getName(value: string, field: string){
     if(field == 'supplier'){
       for (let i = 0; i < this.supplierDropDown.length; i++) {
@@ -261,6 +295,7 @@ export class Form03PaymentComponent implements OnInit {
   }
 
   clickCurrentPayment(id: string, rowData: SupplierInvoiceDetail){
+    this.transaction = []
     this.validate = []
     let sum = 0; 
     this.dataSourceDetails.forEach(x => sum += x.purchaseQty * x.purchaseUnitPrice)
@@ -284,6 +319,11 @@ export class Form03PaymentComponent implements OnInit {
       this.currentSupplierPayment.remainBalance = sum - this.currentSupplierPayment.paymentAmount
       this.currentSupplierPayment.totalAmount = sum
       this.currentSupplierPayment.invoiceNo = rowData.id
+      this.currentSupplierPayment.userId = '22d38441-b515-4a82-ae00-6207faa165b6'
+
+      this.transaction.push( this.setTransaction('dr','Inventory','1','104','101','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+      this.transaction.push( this.setTransaction('cr','Cash Payment','5','502','101','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+      console.log('this.transaction',this.transaction)
     }
 
   }
