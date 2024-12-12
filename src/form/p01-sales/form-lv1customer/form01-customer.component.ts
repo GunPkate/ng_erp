@@ -13,14 +13,14 @@ import { CustomerService } from 'src/shared/services/S01Sales/S01_Customer';
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({
-  selector: 'app-form03-customer',
-  templateUrl: './form03-customer.component.html',
+  selector: 'app-form01-customer',
+  templateUrl: './form01-customer.component.html',
   standalone: true,
   imports: [ MatFormFieldModule, MatInputModule,MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatSortModule, MatTableModule, ],
-  styleUrls: ['./form03-customer.component.css']
+  styleUrls: ['./form01-customer.component.css']
 })
 
-export class Form03CustomerComponent implements OnInit {
+export class Form01CustomerComponent implements OnInit {
   
   title03 = "Customer"
   displayedColumns: string[] = ["customerId","customerName","address","email","contactNo","description"];

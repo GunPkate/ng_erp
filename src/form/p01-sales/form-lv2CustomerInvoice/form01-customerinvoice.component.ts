@@ -31,14 +31,14 @@ import { InitialTransaction, Transaction } from 'src/shared/interface/P07Transac
 
 
 @Component({
-  selector: 'app-form03-supplierinvoice',
-  templateUrl: './form03-supplierinvoice.component.html',
+  selector: 'app-form01-customerinvoice',
+  templateUrl: './form01-customerinvoice.component.html',
   standalone: true,
   imports: [MatFormFieldModule, MatInputModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatSortModule, MatTableModule, NgFor, NgIf, DateFormatPipe],
-  styleUrls: ['./form03-supplierinvoice.component.css']
+  styleUrls: ['./form01-customerinvoice.component.css']
 })
 
-export class Form03SupplierinvoiceComponent implements OnInit {
+export class Form01CustomerinvoiceComponent implements OnInit {
 
   title05 = 'Supplier Invoice'
   // displayedColumns: string[] = ['id',
