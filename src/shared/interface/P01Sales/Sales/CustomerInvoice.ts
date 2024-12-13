@@ -3,30 +3,30 @@ import { CustomerPayment } from "./CustomerPayment"
 
 export interface CustomerInvoice{
     id: string
-    supplierId: string
+    customerId: string
     userId: string
     invoiceNo: string
     title: string
     totalAmount: number
     date: Date
     description: string
-    supplierInvoiceDetail: CustomerInvoiceDetail[]
-    supplierPayment: CustomerPayment[]
+    customerInvoiceDetail: CustomerInvoiceDetail[]
+    customerPayment: CustomerPayment[]
 }
 
 export class InitialCustomerInvoice{
     static InitialCustomerInvoiceObj(){
         return {
             id: "",
-            supplierId: "",
+            customerId: "",
             userId: "",
             invoiceNo: "",
             title: "",
             totalAmount: 0,
             date: new Date,
             description: "",
-            supplierInvoiceDetail: [],
-            supplierPayment: []
+            customerInvoiceDetail: [],
+            customerPayment: []
         }
     }
 }

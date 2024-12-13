@@ -14,20 +14,20 @@ import { StockService } from 'src/shared/services/S05Stocks/S05_Category';
 import { CategoryBehaviorSubj } from 'src/shared/behaviorsubject/Category';
 import { v4 as uuidv4 } from 'uuid';
 import { NgFor, NgIf } from '@angular/common';
-import { InitialSupplierInvoice, SupplierInvoice } from 'src/shared/interface/P03Purchases/Purchase/SupplierInvoice';
-import { SupplierBehaviorSubj } from 'src/shared/behaviorsubject/Supplier';
-import { SupplierService } from 'src/shared/services/S03Purchase/S03_Supplier';
-import { Supplier } from 'src/shared/interface/P03Purchases/Supplier/Supplier';
+import { CustomerInvoice, InitialCustomerInvoice } from 'src/shared/interface/P01Sales/Sales/CustomerInvoice';
+import { CustomerBehaviorSubj } from 'src/shared/behaviorsubject/Customer';
+import { CustomerService } from 'src/shared/services/S01Sales/S01_Customer';
+import { Customer } from 'src/shared/interface/P01Sales/Customer/Customer';
 import { AccountService } from 'src/shared/services/S04setting/S04_2Account';
 import { AccountControl } from 'src/shared/interface/P04Setting/Account/AccountControl';
 import { AccountControlBehaviorSubj } from 'src/shared/behaviorsubject/AccountConrtol';
-import { SupplierInvoiceBehaviorSubj } from 'src/shared/behaviorsubject/SupplierInvoice';
-import { InitialSupplierInvoiceDetail, SupplierInvoiceDetail } from 'src/shared/interface/P03Purchases/Purchase/SupplierInvoiceDetail';
-import { SupplierInvoiceDetailBehaviorSubj } from 'src/shared/behaviorsubject/SupplierInvoiceDetail';
+import { CustomerInvoiceBehaviorSubj } from 'src/shared/behaviorsubject/CustomerInvoice';
+import { CustomerInvoiceDetail, InitialCustomerInvoiceDetail } from 'src/shared/interface/P01Sales/Sales/CustomerInvoiceDetails';
 import { DateFormatPipe } from "../../../shared/services/Pipe/DatePipte";
 import Swal from 'sweetalert2';
 import { catchError, throwError } from 'rxjs';
 import { InitialTransaction, Transaction } from 'src/shared/interface/P07Transaction/Transaction';
+import { CustomerInvoiceDetailBehaviorSubj } from 'src/shared/behaviorsubject/CustomerInvoiceDetail';
 
 
 @Component({
@@ -40,59 +40,58 @@ import { InitialTransaction, Transaction } from 'src/shared/interface/P07Transac
 
 export class Form01CustomerinvoiceComponent implements OnInit {
 
-  title05 = 'Supplier Invoice'
+  title05 = 'Customer Invoice'
   // displayedColumns: string[] = ['id',
   //   // 'productId',
-  //   'catagoryId','productName','quantity','salePrice','currentPurchasePrice','description',
+  //   'catagoryId','productName','quantity','salePrice','currentSalePrice','description',
   //   // 'expiryDate','manuDate','stockThresholdQty','userId'
   // ];
-  currentSupplierInvoice: SupplierInvoice = InitialSupplierInvoice.InitialSupplierInvoiceObj()
-  currentSupplierInvoiceDetail: SupplierInvoiceDetail = InitialSupplierInvoiceDetail.InitialSupplierInvoiceDetailObj()
+  currentCustomerInvoice: CustomerInvoice = InitialCustomerInvoice.InitialCustomerInvoiceObj()
+  currentCustomerInvoiceDetail: CustomerInvoiceDetail = InitialCustomerInvoiceDetail.InitialCustomerInvoiceDetailObj()
   transaction: Transaction[] = []
   selectInvoice: string = ''
   selectInvoiceDetail: string = ''
 
-  dataSource :SupplierInvoice[] = []
-  dataSourceDetails :SupplierInvoiceDetail[] = []
+  dataSource :CustomerInvoice[] = []
+  dataSourceDetails :CustomerInvoiceDetail[] = []
 
   categoryDropDown: Category[] = []
-  supplierDropDown: Supplier[] = []
-  supplierInvoiceDropdown: SupplierInvoice[] = []
+  customerDropDown: Customer[] = []
+  customerInvoiceDropdown: CustomerInvoice[] = []
   productDropDown: Product[] = []
   accountControlDropDown: AccountControl[] = []
   
 
   invoiceDate: Date = new Date
 
-  searchSupplierInvoice: SupplierInvoice[] = [];
+  searchCustomerInvoice: CustomerInvoice[] = [];
   page:string = "list"
   subpage:string = ''
 
-  displayedColumns: string[] = [ 'supplierId',  'invoiceNo', 'title', 'totalAmount', 'date', 'description', 'userId', 'action'];
-  displayedColumnsDetails: string[] = [ 'productId',  'supplierInvoiceId', 'purchaseQty', 'purchaseUnitPrice', 'action'];
+  displayedColumns: string[] = [ 'customerId',  'invoiceNo', 'title', 'totalAmount', 'date', 'description', 'userId', 'action'];
+  displayedColumnsDetails: string[] = [ 'productId',  'customerInvoiceId', 'saleQty', 'saleUnitPrice', 'action'];
  
-
   constructor(
     private http: HttpClient,
     private stockService: StockService,
-    private supplierService: SupplierService,
+    private customerService: CustomerService,
     private accountService: AccountService,
 
     private productBehaviorSubj: ProductBehaviorSubj,
     private categoryBehaviorSubj: CategoryBehaviorSubj,
-    private supplierBehaviorSubj: SupplierBehaviorSubj,
-    private supplierInvoiceBehaviorSubj: SupplierInvoiceBehaviorSubj,
-    private supplierInvoiceDetailBehaviorSubj: SupplierInvoiceDetailBehaviorSubj, 
+    private customerBehaviorSubj: CustomerBehaviorSubj,
+    private customerInvoiceBehaviorSubj: CustomerInvoiceBehaviorSubj,
+    private customerInvoiceDetailBehaviorSubj: CustomerInvoiceDetailBehaviorSubj, 
     private accountControlBehaviorSubj: AccountControlBehaviorSubj,
   ) { 
     this.stockService.loadCategory();
     this.stockService.loadProduct();
-    this.supplierService.loadSupplierInvoice();
-    this.supplierService.loadSupplier();
+    this.customerService.loadCustomerInvoice();
+    this.customerService.loadCustomer();
     this.accountService.loadAccountControl();
 
-    this.supplierBehaviorSubj.getSupplierList().subscribe((res)=>{ this.supplierDropDown = res})
-    this.supplierInvoiceBehaviorSubj.getSupplierInvoiceList().subscribe((res)=>{ this.dataSource = res })
+    this.customerBehaviorSubj.getCustomerList().subscribe((res)=>{ this.customerDropDown = res})
+    this.customerInvoiceBehaviorSubj.getCustomerInvoiceList().subscribe((res)=>{ this.dataSource = res })
     this.categoryBehaviorSubj.getCategoryList().subscribe((res)=>{ this.categoryDropDown = res  } )
     this.productBehaviorSubj.getProductList().subscribe((res)=>{ this.productDropDown = res })
     this.accountControlBehaviorSubj.getAccountControlList().subscribe((res)=>{ this.accountControlDropDown = res})
@@ -109,67 +108,67 @@ export class Form01CustomerinvoiceComponent implements OnInit {
     // } )
   }
   ngOnInit(): void {
-    this.currentSupplierInvoice.id = '',
-    this.currentSupplierInvoice.invoiceNo = 'INV123'
-    this.currentSupplierInvoice.supplierId = ''
-    this.currentSupplierInvoice.date = new Date
-    this.currentSupplierInvoice.title = 'Purchase #1'
-    this.currentSupplierInvoice.description = 'Purchase #1'
-    this.currentSupplierInvoice.userId  = '22d38441-b515-4a82-ae00-6207faa165b6'
+    this.currentCustomerInvoice.id = '',
+    this.currentCustomerInvoice.invoiceNo = 'INV123'
+    this.currentCustomerInvoice.customerId = ''
+    this.currentCustomerInvoice.date = new Date
+    this.currentCustomerInvoice.title = 'Sale #1'
+    this.currentCustomerInvoice.description = 'Sale #1'
+    this.currentCustomerInvoice.userId  = '22d38441-b515-4a82-ae00-6207faa165b6'
  
-    // this.currentSupplierInvoiceDetail.supplierInvoiceId = this.currentSupplierInvoice.invoiceNo
-    this.currentSupplierInvoiceDetail.purchaseQty = 10
-    this.currentSupplierInvoiceDetail.purchaseUnitPrice = 100
+    // this.currentCustomerInvoiceDetail.customerInvoiceId = this.currentCustomerInvoice.invoiceNo
+    this.currentCustomerInvoiceDetail.saleQty = 10
+    this.currentCustomerInvoiceDetail.saleUnitPrice = 100
   }
 
-  supplierChange( event : any){
-    this.currentSupplierInvoice.supplierId = event;
-    console.log(this.currentSupplierInvoice)
+  customerChange( event : any){
+    this.currentCustomerInvoice.customerId = event;
+    console.log(this.currentCustomerInvoice)
   }
 
   productChange( event : any){
-    this.currentSupplierInvoiceDetail.productId = event;
-    console.log(this.currentSupplierInvoiceDetail)
+    this.currentCustomerInvoiceDetail.productId = event;
+    console.log(this.currentCustomerInvoiceDetail)
   }
 
   invoiceNoChange( event : any){
-    this.currentSupplierInvoice.invoiceNo = event.target.value;
-    // this.currentSupplierInvoiceDetail.supplierInvoiceId = this.currentSupplierInvoice.invoiceNo
-    console.log(this.currentSupplierInvoice)
+    this.currentCustomerInvoice.invoiceNo = event.target.value;
+    // this.currentCustomerInvoiceDetail.customerInvoiceId = this.currentCustomerInvoice.invoiceNo
+    console.log(this.currentCustomerInvoice)
   }
 
   titleChange( event : any){
-    this.currentSupplierInvoice.title = event.target.value;
-    console.log(this.currentSupplierInvoice)
+    this.currentCustomerInvoice.title = event.target.value;
+    console.log(this.currentCustomerInvoice)
   }
 
   // categoryChange( event : any){
-  //   this.currentSupplierInvoice.catagoryId = event;
-  //   console.log(this.currentSupplierInvoice)
+  //   this.currentCustomerInvoice.catagoryId = event;
+  //   console.log(this.currentCustomerInvoice)
   // }
 
   descriptionChange( event : any){
-    this.currentSupplierInvoice.description = this.validateInput(event.target.value);
-    console.log(this.currentSupplierInvoice)
+    this.currentCustomerInvoice.description = this.validateInput(event.target.value);
+    console.log(this.currentCustomerInvoice)
   }
 
   dateChange( event : any){
     console.log(event)
     this.invoiceDate = this.validateInput(event);
-    this.currentSupplierInvoice.date = this.invoiceDate;
-    console.log(this.currentSupplierInvoice)
+    this.currentCustomerInvoice.date = this.invoiceDate;
+    console.log(this.currentCustomerInvoice)
   }
 
 
-  purchaseQtyChange(event: any){
-    this.currentSupplierInvoiceDetail.purchaseQty = parseInt(this.validateInput(event.target.value));
-    console.log(this.currentSupplierInvoiceDetail)
+  saleQtyChange(event: any){
+    this.currentCustomerInvoiceDetail.saleQty = parseInt(this.validateInput(event.target.value));
+    console.log(this.currentCustomerInvoiceDetail)
   }
 
   
-  purchaseUnitPriceChange(event: any){
-    this.currentSupplierInvoiceDetail.purchaseUnitPrice = parseInt(this.validateInput(event.target.value));
-    console.log(this.currentSupplierInvoiceDetail)
+  saleUnitPriceChange(event: any){
+    this.currentCustomerInvoiceDetail.saleUnitPrice = parseInt(this.validateInput(event.target.value));
+    console.log(this.currentCustomerInvoiceDetail)
   }
 
   validateInput(data: any){
@@ -180,18 +179,18 @@ export class Form01CustomerinvoiceComponent implements OnInit {
     }
   }
 
-  loadSupplierInvoice(){
-    this.supplierService.loadSupplierInvoice();
+  loadCustomerInvoice(){
+    this.customerService.loadCustomerInvoice();
   }
 
 
   register(){
-    if(this.currentSupplierInvoice.id == ''|| this.currentSupplierInvoice.id == null){
-      this.currentSupplierInvoice.id = uuidv4()
+    if(this.currentCustomerInvoice.id == ''|| this.currentCustomerInvoice.id == null){
+      this.currentCustomerInvoice.id = uuidv4()
     }
-    this.currentSupplierInvoiceDetail.supplierInvoiceId = this.currentSupplierInvoice.id
-    this.http.post('http://localhost:3000/supplierinvoice/create',this.currentSupplierInvoice).subscribe(
-      response => { this.loadSupplierInvoice() },
+    this.currentCustomerInvoiceDetail.customerInvoiceId = this.currentCustomerInvoice.id
+    this.http.post('http://localhost:3000/customerinvoice/create',this.currentCustomerInvoice).subscribe(
+      response => { this.loadCustomerInvoice() },
       error => {
         if(error.error.meta){
                 Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
@@ -204,12 +203,20 @@ export class Form01CustomerinvoiceComponent implements OnInit {
 
   registerDetails(){
     this.transaction = [];
-    this.currentSupplierInvoiceDetail.id = uuidv4()
-    this.http.post('http://localhost:3000/supplierinvoicedetail/create',this.currentSupplierInvoiceDetail).subscribe(res=>{
-      this.loadSupplierInvoice()
-      // this.clearDetails()
-      this.loadInvoiceDetail()
-    })
+    this.currentCustomerInvoiceDetail.id = uuidv4()
+    this.http.post('http://localhost:3000/customerinvoicedetail/create',this.currentCustomerInvoiceDetail).subscribe(
+      res=>{
+        this.loadCustomerInvoice()
+        // this.clearDetails()
+        this.loadInvoiceDetail()
+      },error => {
+        if(error.error.meta){
+            Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+        }else{
+            Swal.fire(JSON.stringify(error.name),error.message,'error')
+        }
+      }
+    )
     this.transaction.push( this.setTransaction('dr','Inventory','1','104','101','8ff68454-c507-4784-9b83-7f11c1c649d4') )
     this.transaction.push( this.setTransaction('cr','Account Payable','5','502','101','8ff68454-c507-4784-9b83-7f11c1c649d4') )
     this.transaction.forEach(
@@ -228,28 +235,28 @@ export class Form01CustomerinvoiceComponent implements OnInit {
         )
       }
     )
-    // this.dataSourceDetails.push(this.currentSupplierInvoiceDetail)
+    // this.dataSourceDetails.push(this.currentCustomerInvoiceDetail)
   }
 
   clear(){
-    this.currentSupplierInvoice = InitialSupplierInvoice.InitialSupplierInvoiceObj();
-    this.currentSupplierInvoice.userId  = '22d38441-b515-4a82-ae00-6207faa165b6'
+    this.currentCustomerInvoice = InitialCustomerInvoice.InitialCustomerInvoiceObj();
+    this.currentCustomerInvoice.userId  = '22d38441-b515-4a82-ae00-6207faa165b6'
     this.dataSourceDetails = [];
   }
 
   clearDetails(){
-    this.currentSupplierInvoiceDetail = InitialSupplierInvoiceDetail.InitialSupplierInvoiceDetailObj();
-    if(this.selectInvoice) this.currentSupplierInvoiceDetail.supplierInvoiceId = this.selectInvoice;
-    // this.currentSupplierInvoiceDetail.supplierInvoiceId = this.currentSupplierInvoice.invoiceNo;
+    this.currentCustomerInvoiceDetail = InitialCustomerInvoiceDetail.InitialCustomerInvoiceDetailObj();
+    if(this.selectInvoice) this.currentCustomerInvoiceDetail.customerInvoiceId = this.selectInvoice;
+    // this.currentCustomerInvoiceDetail.customerInvoiceId = this.currentCustomerInvoice.invoiceNo;
   }
 
   deleteData(id: string){
     let body = this.dataSource.filter(x=>x.id == id)
     console.log(body)
-    this.currentSupplierInvoice = body[0]
-    this.http.post('http://localhost:3000/supplierinvoice/delete',this.currentSupplierInvoice).subscribe(
+    this.currentCustomerInvoice = body[0]
+    this.http.post('http://localhost:3000/customerinvoice/delete',this.currentCustomerInvoice).subscribe(
       (res) =>{
-        this.loadSupplierInvoice()
+        this.loadCustomerInvoice()
         this.clear()
         this.resetInvoice()
         this.dataSourceDetails = []
@@ -257,8 +264,8 @@ export class Form01CustomerinvoiceComponent implements OnInit {
     )
   }
 
-  deleteDetailData(id: string, data: SupplierInvoiceDetail){
-    this.http.post('http://localhost:3000/supplierinvoicedetail/delete',data).subscribe(
+  deleteDetailData(id: string, data: CustomerInvoiceDetail){
+    this.http.post('http://localhost:3000/customerinvoicedetail/delete',data).subscribe(
       (res) =>{
         this.clearDetails()
         this.loadInvoiceDetail()
@@ -268,10 +275,10 @@ export class Form01CustomerinvoiceComponent implements OnInit {
 
   updateData(id: string){
     console.log(id)
-    this.currentSupplierInvoice.userId = id
-    this.http.post('http://localhost:3000/supplierinvoice/update',this.currentSupplierInvoice).subscribe(
+    this.currentCustomerInvoice.userId = id
+    this.http.post('http://localhost:3000/customerinvoice/update',this.currentCustomerInvoice).subscribe(
       (res) =>{
-        this.loadSupplierInvoice()
+        this.loadCustomerInvoice()
         this.clear()
       }
     )
@@ -280,7 +287,7 @@ export class Form01CustomerinvoiceComponent implements OnInit {
   changePage(navPage: string) {
     this.page = navPage;
     this.subpage = ''
-    this.loadSupplierInvoice()
+    this.loadCustomerInvoice()
   }
 
   setSubpage(subPage: string){
@@ -289,41 +296,42 @@ export class Form01CustomerinvoiceComponent implements OnInit {
   }
 
   loadInvoiceDetail(){
+    console.log(this.selectInvoice)
     if(this.selectInvoice === ''){
-      this.supplierService.loadSupplierInvoiceDetail(this.currentSupplierInvoice.id)
+      this.customerService.loadCustomerInvoiceDetail(this.currentCustomerInvoice.id)
     }else{
-      this.supplierService.loadSupplierInvoiceDetail(this.selectInvoice)
+      this.customerService.loadCustomerInvoiceDetail(this.selectInvoice)
     }
-    this.supplierInvoiceDetailBehaviorSubj.getSupplierInvoiceDetailList().subscribe((res) => this.dataSourceDetails = res)
+    this.customerInvoiceDetailBehaviorSubj.getCustomerInvoiceDetailList().subscribe((res) => this.dataSourceDetails = res)
   }
 
-  clickCurrentInvoice(id: string, rowData: SupplierInvoice){
+  clickCurrentInvoice(id: string, rowData: CustomerInvoice){
     if(this.selectInvoice == id)  {
       this.resetInvoice()
       this.dataSourceDetails = []
     }
     else{
       this.selectInvoice = id
-      this.currentSupplierInvoice = rowData
-      this.currentSupplierInvoiceDetail.supplierInvoiceId = this.currentSupplierInvoice.id
-      this.dataSourceDetails = rowData.supplierInvoiceDetail
+      this.currentCustomerInvoice = rowData
+      this.currentCustomerInvoiceDetail.customerInvoiceId = this.currentCustomerInvoice.id
+      this.dataSourceDetails = rowData.customerInvoiceDetail
 
     }
   }
 
   resetInvoice(){
     this.selectInvoice = ''
-    this.currentSupplierInvoice = InitialSupplierInvoice.InitialSupplierInvoiceObj()
-    this.currentSupplierInvoiceDetail = InitialSupplierInvoiceDetail.InitialSupplierInvoiceDetailObj()
+    this.currentCustomerInvoice = InitialCustomerInvoice.InitialCustomerInvoiceObj()
+    this.currentCustomerInvoiceDetail = InitialCustomerInvoiceDetail.InitialCustomerInvoiceDetailObj()
   }
 
-  clickCurrentDetail(id: string, rowData: SupplierInvoiceDetail){
+  clickCurrentDetail(id: string, rowData: CustomerInvoiceDetail){
     if(this.selectInvoiceDetail == id){
       this.selectInvoiceDetail = ''
       this.clearDetails()
     }else{
       this.selectInvoiceDetail = id
-      this.currentSupplierInvoiceDetail = rowData
+      this.currentCustomerInvoiceDetail = rowData
     }
     console.log(id, 'page', this.selectInvoiceDetail)
   }
@@ -335,16 +343,16 @@ export class Form01CustomerinvoiceComponent implements OnInit {
     transaction.accountHeadCode = accHead
     transaction.accountControlCode = accControl
     transaction.accountSubcontrolCode = accSubcontrol
-    transaction.invoiceNo = this.currentSupplierInvoice.invoiceNo 
-    transaction.userId = this.currentSupplierInvoice.userId
+    transaction.invoiceNo = this.currentCustomerInvoice.invoiceNo 
+    transaction.userId = this.currentCustomerInvoice.userId
     if(acctype == 'dr'){
-      transaction.debit = this.currentSupplierInvoiceDetail.purchaseQty * this.currentSupplierInvoiceDetail.purchaseUnitPrice
+      transaction.debit = this.currentCustomerInvoiceDetail.saleQty * this.currentCustomerInvoiceDetail.saleUnitPrice
     } else{
-      transaction.credit = this.currentSupplierInvoiceDetail.purchaseQty * this.currentSupplierInvoiceDetail.purchaseUnitPrice
+      transaction.credit = this.currentCustomerInvoiceDetail.saleQty * this.currentCustomerInvoiceDetail.saleUnitPrice
     }
     transaction.transaction_title = title
-    transaction.transaction_date = this.currentSupplierInvoice.date
-    transaction.description = `${this.title05}: ${title} ${this.currentSupplierInvoice.id}`
+    transaction.transaction_date = this.currentCustomerInvoice.date
+    transaction.description = `${this.title05}: ${title} ${this.currentCustomerInvoice.id}`
     return transaction
   }
 }

@@ -1,19 +1,19 @@
 export interface CustomerInvoiceDetail{
     id: string
-    supplierInvoiceId: string
+    customerInvoiceId: string
     productId: string
-    purchaseQty: number
-    purchaseUnitPrice: number
+    saleQty: number
+    saleUnitPrice: number
 }
 
 export class InitialCustomerInvoiceDetail{
     static InitialCustomerInvoiceDetailObj(){
         return {
             id: "",
-            supplierInvoiceId: "",
+            customerInvoiceId: "",
             productId: "",
-            purchaseQty: 0,
-            purchaseUnitPrice: 0,
+            saleQty: 0,
+            saleUnitPrice: 0,
         }
     }
 }

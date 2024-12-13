@@ -11,6 +11,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { CustomerService } from 'src/shared/services/S01Sales/S01_Customer';
 import { CustomerBehaviorSubj } from 'src/shared/behaviorsubject/Customer';
 import { P00MainComponent } from '../p00-main/p00-main.component';
+import { CustomerInvoiceBehaviorSubj } from 'src/shared/behaviorsubject/CustomerInvoice';
+import { CustomerPaymentBehaviorSubj } from 'src/shared/behaviorsubject/CustomerInvoicePayment';
+import { CustomerInvoiceDetailBehaviorSubj } from 'src/shared/behaviorsubject/CustomerInvoiceDetail';
 
 export const p01routes: Routes = [
   { 
@@ -42,7 +45,7 @@ export const p01routes: Routes = [
     MatFormFieldModule,
     MatInputModule
   ],
-  providers: [CustomerService, CustomerBehaviorSubj ],
+  providers: [CustomerService, CustomerBehaviorSubj, CustomerInvoiceBehaviorSubj, CustomerInvoiceDetailBehaviorSubj, CustomerPaymentBehaviorSubj ],
 
 })
 export class P01SalesModule { }
