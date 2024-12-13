@@ -69,7 +69,7 @@ export class Form01CustomerinvoiceComponent implements OnInit {
   subpage:string = ''
 
   displayedColumns: string[] = [ 'customerId',  'invoiceNo', 'title', 'totalAmount', 'date', 'description', 'userId', 'action'];
-  displayedColumnsDetails: string[] = [ 'productId',  'customerInvoiceId', 'saleQty', 'saleUnitPrice', 'action'];
+  displayedColumnsDetails: string[] = [ 'id', 'productId', 'saleQty', 'saleUnitPrice', 'action'];
  
   constructor(
     private http: HttpClient,
@@ -354,5 +354,19 @@ export class Form01CustomerinvoiceComponent implements OnInit {
     transaction.transaction_date = this.currentCustomerInvoice.date
     transaction.description = `${this.title05}: ${title} ${this.currentCustomerInvoice.id}`
     return transaction
+  }
+
+  getName(value: string, field: string){
+    if(field == 'customer'){
+      for (let i = 0; i < this.customerDropDown.length; i++) {
+        if( this.customerDropDown[i].customerId == value ) return this.customerDropDown[i].customerName
+      }
+    }
+    if(field == 'product'){
+      for (let i = 0; i < this.productDropDown.length; i++) {
+        if( this.productDropDown[i].productId == value ) return this.productDropDown[i].productName
+      }
+    }
+    return 'No Data'
   }
 }

@@ -347,4 +347,18 @@ export class Form03SupplierinvoiceComponent implements OnInit {
     transaction.description = `${this.title05}: ${title} ${this.currentSupplierInvoice.id}`
     return transaction
   }
+
+  getName(value: string, field: string){
+    if(field == 'supplier'){
+      for (let i = 0; i < this.supplierDropDown.length; i++) {
+        if( this.supplierDropDown[i].supplierId == value ) return this.supplierDropDown[i].supplierName
+      }
+    }
+    if(field == 'product'){
+      for (let i = 0; i < this.productDropDown.length; i++) {
+        if( this.productDropDown[i].productId == value ) return this.productDropDown[i].productName
+      }
+    }
+    return 'No Data'
+  }
 }
