@@ -1,7 +1,7 @@
 export interface CustomerPayment{
     paymentId: string
-    supplierId: string
-    supplierInvoiceNo: string
+    customerId: string
+    customerInvoiceNo: string
     userId: string
     invoiceNo: string
     totalAmount: number
@@ -14,8 +14,8 @@ export class InitialCustomerPayment{
     static InitialCustomerPaymentObj(){
         return {
             paymentId: "",
-            supplierId: "",
-            supplierInvoiceNo: "",
+            customerId: "",
+            customerInvoiceNo: "",
             userId: "",
             invoiceNo: "",
             totalAmount: 0,

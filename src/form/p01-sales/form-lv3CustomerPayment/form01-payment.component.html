@@ -14,7 +14,7 @@
     <div class="col-12">  
         <mat-form-field class="col-12" appearance="fill">
             <mat-label>ID</mat-label>
-            <input [value]="currentSupplierInvoice.id" disabled matInput>
+            <input [value]="currentCustomerInvoice.id" disabled matInput>
         </mat-form-field>
 
         <mat-form-field class="col-12" appearance="fill">
@@ -35,9 +35,9 @@
             <!-- Position Column -->
         
             <!-- Name Column -->
-            <ng-container matColumnDef="supplierId">
+            <ng-container matColumnDef="customerId">
             <th mat-header-cell *matHeaderCellDef>Customer Name </th>
-            <td mat-cell *matCellDef="let element">  {{element.supplierId}} </td>
+            <td mat-cell *matCellDef="let element">  {{element.customerId}} </td>
             </ng-container>
         
             <!-- Weight Column -->
@@ -76,7 +76,7 @@
             <th mat-header-cell *matHeaderCellDef> Invoice Details </th>
             <td mat-cell  *matCellDef="let element">  
                 <span class="btn btn-info">
-                  {{element.supplierInvoiceDetail.length}}
+                  {{element.customerInvoiceDetail.length}}
                 </span>
                 <!-- <button  class="btn btn-outline-danger" (click)="deleteData(element.id)"> <i class="fas fa-trash-alt">Delete</i></button> -->
                 <!-- &nbsp; <button  class="btn btn-outline-info" (click)="updateData(element.id)"> <i class="fas fa-trash-alt">Update</i></button> -->
@@ -97,23 +97,23 @@
         <div class="col-12">  
             <mat-form-field class="col-12" appearance="fill">
                 <mat-label>ID</mat-label>
-                <input [value]="currentSupplierInvoice.id" disabled matInput>
+                <input [value]="currentCustomerInvoice.id" disabled matInput>
             </mat-form-field>
 
             <mat-form-field class="col-12" appearance="fill">
                 <mat-label>Customer </mat-label>
-                <input [value]="getName(selectName, 'supplier')" disabled="" matInput>
+                <input [value]="getName(selectName, 'customer')" disabled="" matInput>
             </mat-form-field>
 
             <div>
                 <mat-form-field class="col-4" appearance="fill">
                     <mat-label>Invoice No</mat-label>
-                    <input [value]="currentSupplierPayment.supplierInvoiceNo" disabled matInput>
+                    <input [value]="currentCustomerPayment.customerInvoiceNo" disabled matInput>
                 </mat-form-field>
             
                 <mat-form-field class="col-4" appearance="fill">
                     <mat-label>Invoice Detail No</mat-label>
-                    <input [value]="currentSupplierPayment.invoiceNo" disabled matInput>
+                    <input [value]="currentCustomerPayment.invoiceNo" disabled matInput>
                 </mat-form-field>
             
                 <mat-form-field class="col-4" appearance="fill">
@@ -128,17 +128,17 @@
             <div>
                 <mat-form-field class="col-4" appearance="fill">
                     <mat-label>Total Amount</mat-label>
-                    <input [value]="currentSupplierPayment.totalAmount" disabled matInput>
+                    <input [value]="currentCustomerPayment.totalAmount" disabled matInput>
                 </mat-form-field>
             
                 <mat-form-field class="col-4" appearance="fill">
                     <mat-label>Payment Amount</mat-label>
-                    <input [value]="currentSupplierPayment.paymentAmount" (blur)="paymentAmountChange($event)" matInput>
+                    <input [value]="currentCustomerPayment.paymentAmount" (blur)="paymentAmountChange($event)" matInput>
                 </mat-form-field>
 
                 <mat-form-field class="col-4" appearance="fill">
                     <mat-label>Remain Amount</mat-label>
-                    <input [value]="currentSupplierPayment.remainBalance" disabled matInput>
+                    <input [value]="currentCustomerPayment.remainBalance" disabled matInput>
                 </mat-form-field>
             </div>
 
@@ -176,14 +176,14 @@
                 </ng-container>
             
                 <!-- Symbol Column -->
-                <ng-container matColumnDef="purchaseQty">
+                <ng-container matColumnDef="saleQty">
                 <th mat-header-cell *matHeaderCellDef> Purchase Qty </th>
-                <td mat-cell *matCellDef="let element"> {{element.purchaseQty}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.saleQty}} </td>
                 </ng-container>
     
-                <ng-container matColumnDef="purchaseUnitPrice">
-                <th mat-header-cell *matHeaderCellDef> purchaseUnitPrice </th>
-                <td mat-cell *matCellDef="let element"> {{element.purchaseUnitPrice}} </td>
+                <ng-container matColumnDef="saleUnitPrice">
+                <th mat-header-cell *matHeaderCellDef> saleUnitPrice </th>
+                <td mat-cell *matCellDef="let element"> {{element.saleUnitPrice}} </td>
                 </ng-container>
 
                 <!-- <ng-container matColumnDef="action">
@@ -211,9 +211,9 @@
                 <td mat-cell *matCellDef="let element">  {{element.paymentId}} </td>
                 </ng-container>
 
-                <ng-container matColumnDef="supplierInvoiceNo">
+                <ng-container matColumnDef="customerInvoiceNo">
                 <th mat-header-cell *matHeaderCellDef>Invoice No </th>
-                <td mat-cell *matCellDef="let element">  {{element.supplierInvoiceNo}} </td>
+                <td mat-cell *matCellDef="let element">  {{element.customerInvoiceNo}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="invoiceNo">
@@ -221,14 +221,14 @@
                 <td mat-cell *matCellDef="let element">  {{element.invoiceNo}} </td>
                 </ng-container>
 
-                <ng-container matColumnDef="supplierId">
+                <ng-container matColumnDef="customerId">
                 <th mat-header-cell *matHeaderCellDef>Customer Name </th>
-                <td mat-cell *matCellDef="let element">  {{getName(selectName, 'supplier')}} </td>
+                <td mat-cell *matCellDef="let element">  {{getName(selectName, 'customer')}} </td>
                 </ng-container>
 
-                <ng-container matColumnDef="supplierInvoiceId">
+                <ng-container matColumnDef="customerInvoiceId">
                 <th mat-header-cell *matHeaderCellDef>Customer Name </th>
-                <td mat-cell *matCellDef="let element">  {{element.supplierInvoiceId}} </td>
+                <td mat-cell *matCellDef="let element">  {{element.customerInvoiceId}} </td>
                 </ng-container>
             
                 <!-- Weight Column -->

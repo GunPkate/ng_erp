@@ -14,22 +14,22 @@ import { StockService } from 'src/shared/services/S05Stocks/S05_Category';
 import { CategoryBehaviorSubj } from 'src/shared/behaviorsubject/Category';
 import { v4 as uuidv4 } from 'uuid';
 import { NgIf } from '@angular/common';
-import { InitialSupplierInvoice, SupplierInvoice } from 'src/shared/interface/P03Purchases/Purchase/SupplierInvoice';
-import { SupplierBehaviorSubj } from 'src/shared/behaviorsubject/Supplier';
-import { SupplierService } from 'src/shared/services/S03Purchase/S03_Supplier';
-import { Supplier } from 'src/shared/interface/P03Purchases/Supplier/Supplier';
+import { CustomerBehaviorSubj } from 'src/shared/behaviorsubject/Customer';
 import { AccountService } from 'src/shared/services/S04setting/S04_2Account';
 import { AccountControl } from 'src/shared/interface/P04Setting/Account/AccountControl';
 import { AccountControlBehaviorSubj } from 'src/shared/behaviorsubject/AccountConrtol';
-import { SupplierInvoiceBehaviorSubj } from 'src/shared/behaviorsubject/SupplierInvoice';
-import { InitialSupplierInvoiceDetail, SupplierInvoiceDetail } from 'src/shared/interface/P03Purchases/Purchase/SupplierInvoiceDetail';
-import { SupplierInvoiceDetailBehaviorSubj } from 'src/shared/behaviorsubject/SupplierInvoiceDetail';
+import { CustomerInvoiceBehaviorSubj } from 'src/shared/behaviorsubject/CustomerInvoice';
+import { CustomerInvoiceDetailBehaviorSubj } from 'src/shared/behaviorsubject/CustomerInvoiceDetail';
 import { DateFormatPipe } from "../../../shared/services/Pipe/DatePipte";
 import Swal from 'sweetalert2';
 import { catchError, throwError } from 'rxjs';
-import { InitialSupplierPayment, SupplierPayment } from 'src/shared/interface/P03Purchases/Purchase/SupplierPayment';
-import { SupplierPaymentBehaviorSubj } from 'src/shared/behaviorsubject/SupplierInvoicePayment';
+import { CustomerPaymentBehaviorSubj } from 'src/shared/behaviorsubject/CustomerInvoicePayment';
 import { Transaction,InitialTransaction } from 'src/shared/interface/P07Transaction/Transaction';
+import { Customer } from 'src/shared/interface/P01Sales/Customer/Customer';
+import { CustomerInvoice, InitialCustomerInvoice } from 'src/shared/interface/P01Sales/Sales/CustomerInvoice';
+import { CustomerInvoiceDetail } from 'src/shared/interface/P01Sales/Sales/CustomerInvoiceDetails';
+import { CustomerPayment, InitialCustomerPayment } from 'src/shared/interface/P01Sales/Sales/CustomerPayment';
+import { CustomerService } from 'src/shared/services/S01Sales/S01_Customer';
 
 
 @Component({
@@ -42,10 +42,10 @@ import { Transaction,InitialTransaction } from 'src/shared/interface/P07Transact
 
 export class Form01PaymentComponent implements OnInit {
 
-  title05 = 'Supplier Payment'
+  title05 = 'Customer Payment'
 
-  currentSupplierInvoice: SupplierInvoice = InitialSupplierInvoice.InitialSupplierInvoiceObj()
-  currentSupplierPayment: SupplierPayment = InitialSupplierPayment.InitialSupplierPaymentObj()
+  currentCustomerInvoice: CustomerInvoice = InitialCustomerInvoice.InitialCustomerInvoiceObj()
+  currentCustomerPayment: CustomerPayment = InitialCustomerPayment.InitialCustomerPaymentObj()
   transaction: Transaction[] = []
 
   selectInvoice: string = ''
@@ -53,50 +53,50 @@ export class Form01PaymentComponent implements OnInit {
   selectPayment: string = ''
   selectName: string = '';
 
-  dataSource :SupplierInvoice[] = []
-  dataSourceDetails :SupplierInvoiceDetail[] = []
-  dataSourcePayment :SupplierPayment[] = []
+  dataSource :CustomerInvoice[] = []
+  dataSourceDetails :CustomerInvoiceDetail[] = []
+  dataSourcePayment :CustomerPayment[] = []
 
   categoryDropDown: Category[] = []
-  supplierDropDown: Supplier[] = []
-  supplierInvoiceDropdown: SupplierInvoice[] = []
+  customerDropDown: Customer[] = []
+  customerInvoiceDropdown: CustomerInvoice[] = []
   productDropDown: Product[] = []
   accountControlDropDown: AccountControl[] = []
 
   invoiceDate: Date = new Date
 
-  searchSupplierInvoice: SupplierInvoice[] = [];
+  searchCustomerInvoice: CustomerInvoice[] = [];
   page:string = "list"
   subpage:string = ''
 
-  displayedColumns: string[] = [ 'supplierId',  'invoiceNo', 'title', 'totalAmount', 'date', 'description', 'userId', 'action'];
-  displayedColumnsDetails: string[] = [ 'id', 'productId', 'purchaseQty', 'purchaseUnitPrice'];
-  displayedColumnsPayment: string[] = [ 'paymentId', 'supplierId', 'supplierInvoiceNo', 'invoiceNo', 'totalAmount', 'paymentAmount', 'remainBalance', 'date', 'userId', 'action']; 
+  displayedColumns: string[] = [ 'customerId',  'invoiceNo', 'title', 'totalAmount', 'date', 'description', 'userId', 'action'];
+  displayedColumnsDetails: string[] = [ 'id', 'productId', 'saleQty', 'saleUnitPrice'];
+  displayedColumnsPayment: string[] = [ 'paymentId', 'customerId', 'customerInvoiceNo', 'invoiceNo', 'totalAmount', 'paymentAmount', 'remainBalance', 'date', 'userId', 'action']; 
 
   validate: string[] = []
 
   constructor(
     private http: HttpClient,
     private stockService: StockService,
-    private supplierService: SupplierService,
+    private customerService: CustomerService,
     private accountService: AccountService,
 
     private productBehaviorSubj: ProductBehaviorSubj,
     private categoryBehaviorSubj: CategoryBehaviorSubj,
-    private supplierBehaviorSubj: SupplierBehaviorSubj,
-    private supplierInvoiceBehaviorSubj: SupplierInvoiceBehaviorSubj,
-    private supplierInvoiceDetailBehaviorSubj: SupplierInvoiceDetailBehaviorSubj, 
-    private supplierPaymentBehaviorSubj: SupplierPaymentBehaviorSubj, 
+    private customerBehaviorSubj: CustomerBehaviorSubj,
+    private customerInvoiceBehaviorSubj: CustomerInvoiceBehaviorSubj,
+    private customerInvoiceDetailBehaviorSubj: CustomerInvoiceDetailBehaviorSubj, 
+    private customerPaymentBehaviorSubj: CustomerPaymentBehaviorSubj, 
     private accountControlBehaviorSubj: AccountControlBehaviorSubj,
   ) { 
     this.stockService.loadCategory();
     this.stockService.loadProduct();
-    this.supplierService.loadSupplierInvoice();
-    this.supplierService.loadSupplier();
+    this.customerService.loadCustomerInvoice();
+    this.customerService.loadCustomer();
     this.accountService.loadAccountControl();
 
-    this.supplierBehaviorSubj.getSupplierList().subscribe((res)=>{ this.supplierDropDown = res})
-    this.supplierInvoiceBehaviorSubj.getSupplierInvoiceList().subscribe((res)=>{ this.dataSource = res })
+    this.customerBehaviorSubj.getCustomerList().subscribe((res)=>{ this.customerDropDown = res})
+    this.customerInvoiceBehaviorSubj.getCustomerInvoiceList().subscribe((res)=>{ this.dataSource = res })
     this.categoryBehaviorSubj.getCategoryList().subscribe((res)=>{ this.categoryDropDown = res  } )
     this.productBehaviorSubj.getProductList().subscribe((res)=>{ this.productDropDown = res })
     this.accountControlBehaviorSubj.getAccountControlList().subscribe((res)=>{ this.accountControlDropDown = res})
@@ -104,32 +104,32 @@ export class Form01PaymentComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  supplierChange( event : any){
-    this.currentSupplierInvoice.supplierId = event;
-    console.log(this.currentSupplierInvoice)
+  customerChange( event : any){
+    this.currentCustomerInvoice.customerId = event;
+    console.log(this.currentCustomerInvoice)
   }
 
 
   invoiceNoChange( event : any){
-    this.currentSupplierInvoice.invoiceNo = event.target.value;
-    console.log(this.currentSupplierInvoice)
+    this.currentCustomerInvoice.invoiceNo = event.target.value;
+    console.log(this.currentCustomerInvoice)
   }
 
   titleChange( event : any){
-    this.currentSupplierInvoice.title = event.target.value;
-    console.log(this.currentSupplierInvoice)
+    this.currentCustomerInvoice.title = event.target.value;
+    console.log(this.currentCustomerInvoice)
   }
 
   paymentAmountChange( event : any){
-    this.currentSupplierPayment.paymentAmount = this.validateInput(event.target.value);
-    console.log(this.currentSupplierPayment)
+    this.currentCustomerPayment.paymentAmount = this.validateInput(event.target.value);
+    console.log(this.currentCustomerPayment)
   }
 
   dateChange( event : any){
     console.log(event)
     this.invoiceDate = this.validateInput(event);
-    this.currentSupplierPayment.date = this.invoiceDate;
-    console.log(this.currentSupplierInvoice)
+    this.currentCustomerPayment.date = this.invoiceDate;
+    console.log(this.currentCustomerInvoice)
   }
 
   validateInput(data: any){
@@ -140,24 +140,24 @@ export class Form01PaymentComponent implements OnInit {
     }
   }
 
-  loadSupplierInvoice(){
-    this.supplierService.loadSupplierInvoice();
+  loadCustomerInvoice(){
+    this.customerService.loadCustomerInvoice();
   }
 
-  loadSupplierPayment(){
-    this.supplierService.loadSupplierInvoicePayment(this.selectPayment);
-    this.supplierPaymentBehaviorSubj.getSupplierPaymentList().subscribe(x=>this.dataSourcePayment = x)
+  loadCustomerPayment(){
+    this.customerService.loadCustomerInvoicePayment(this.selectPayment);
+    this.customerPaymentBehaviorSubj.getCustomerPaymentList().subscribe(x=>this.dataSourcePayment = x)
   }
 
 
   register(){
-    if(this.currentSupplierPayment.paymentId == ''|| this.currentSupplierPayment.paymentId == null){
-      this.currentSupplierPayment.paymentId = uuidv4()
+    if(this.currentCustomerPayment.paymentId == ''|| this.currentCustomerPayment.paymentId == null){
+      this.currentCustomerPayment.paymentId = uuidv4()
     }
-    this.http.post('http://localhost:3000/supplierpayment/create',this.currentSupplierPayment).pipe(catchError(error => throwError(error))).subscribe(
+    this.http.post('http://localhost:3000/customerpayment/create',this.currentCustomerPayment).pipe(catchError(error => throwError(error))).subscribe(
       response => { 
-        this.currentSupplierPayment.paymentId == ''
-        this.loadSupplierPayment();
+        this.currentCustomerPayment.paymentId == ''
+        this.loadCustomerPayment();
         this.resetPayment();
       },
       error => {
@@ -187,16 +187,16 @@ export class Form01PaymentComponent implements OnInit {
   }
 
   clear(){
-    this.currentSupplierInvoice = InitialSupplierInvoice.InitialSupplierInvoiceObj();
-    this.currentSupplierInvoice.userId  = '22d38441-b515-4a82-ae00-6207faa165b6'
+    this.currentCustomerInvoice = InitialCustomerInvoice.InitialCustomerInvoiceObj();
+    this.currentCustomerInvoice.userId  = '22d38441-b515-4a82-ae00-6207faa165b6'
     this.dataSourceDetails = [];
     this.dataSourcePayment = [];
   }
 
-  deletePaymentData(id: string, data: SupplierPayment){
-    this.http.post('http://localhost:3000/supplierpayment/delete',data).subscribe(
+  deletePaymentData(id: string, data: CustomerPayment){
+    this.http.post('http://localhost:3000/customerpayment/delete',data).subscribe(
       (res) =>{
-        this.loadSupplierPayment()
+        this.loadCustomerPayment()
         this.validate = []
       }
     )
@@ -204,10 +204,10 @@ export class Form01PaymentComponent implements OnInit {
 
   updateData(id: string){
     console.log(id)
-    this.currentSupplierInvoice.userId = id
-    this.http.post('http://localhost:3000/supplierpayment/update',this.currentSupplierInvoice).subscribe(
+    this.currentCustomerInvoice.userId = id
+    this.http.post('http://localhost:3000/customerpayment/update',this.currentCustomerInvoice).subscribe(
       (res) =>{
-        this.loadSupplierInvoice()
+        this.loadCustomerInvoice()
         this.clear()
       }
     )
@@ -216,23 +216,23 @@ export class Form01PaymentComponent implements OnInit {
   changePage(navPage: string) {
     this.page = navPage;
     this.subpage = ''
-    this.supplierService.loadSupplierInvoicePayment(this.selectPayment);
-    this.loadSupplierInvoice()
-    if(navPage == 'new') this.loadSupplierPayment()
-    if(this.currentSupplierPayment.paymentAmount == 0) this.validate.push('No Payment value')
+    this.customerService.loadCustomerInvoicePayment(this.selectPayment);
+    this.loadCustomerInvoice()
+    if(navPage == 'new') this.loadCustomerPayment()
+    if(this.currentCustomerPayment.paymentAmount == 0) this.validate.push('No Payment value')
   }
 
 
   loadInvoiceDetail(){
     if(this.selectInvoice === ''){
-      this.supplierService.loadSupplierInvoiceDetail(this.currentSupplierInvoice.id)
+      this.customerService.loadCustomerInvoiceDetail(this.currentCustomerInvoice.id)
     }else{
-      this.supplierService.loadSupplierInvoiceDetail(this.selectInvoice)
+      this.customerService.loadCustomerInvoiceDetail(this.selectInvoice)
     }
-    this.supplierInvoiceDetailBehaviorSubj.getSupplierInvoiceDetailList().subscribe((res) => this.dataSourceDetails = res)
+    this.customerInvoiceDetailBehaviorSubj.getCustomerInvoiceDetailList().subscribe((res) => this.dataSourceDetails = res)
   }
 
-  clickCurrentInvoice(id: string, rowData: SupplierInvoice){
+  clickCurrentInvoice(id: string, rowData: CustomerInvoice){
     if(this.selectInvoice == id)  {
       this.resetInvoice()
       this.dataSourceDetails = []
@@ -242,24 +242,24 @@ export class Form01PaymentComponent implements OnInit {
     else{
       this.selectInvoice = id
       this.selectPayment = rowData.invoiceNo
-      // this.currentSupplierInvoice = rowData
-      this.dataSourceDetails = rowData.supplierInvoiceDetail
-      this.selectName = rowData.supplierId
-      // console.log(this.supplierDropDown)
+      // this.currentCustomerInvoice = rowData
+      this.dataSourceDetails = rowData.customerInvoiceDetail
+      this.selectName = rowData.customerId
+      // console.log(this.customerDropDown)
       this.setInitiaPayment(rowData)
     }
   }
 
-  setInitiaPayment(rowData: SupplierInvoice){
-    this.currentSupplierPayment.paymentId = ''
-    this.currentSupplierPayment.supplierId = rowData.supplierId
-    this.currentSupplierPayment.supplierInvoiceNo = rowData.invoiceNo
-    this.currentSupplierPayment.userId = rowData.userId
-    this.currentSupplierPayment.invoiceNo = ''
-    this.currentSupplierPayment.totalAmount = 0
-    this.currentSupplierPayment.paymentAmount = 0
-    this.currentSupplierPayment.remainBalance = 0
-    this.currentSupplierPayment.date = new Date
+  setInitiaPayment(rowData: CustomerInvoice){
+    this.currentCustomerPayment.paymentId = ''
+    this.currentCustomerPayment.customerId = rowData.customerId
+    this.currentCustomerPayment.customerInvoiceNo = rowData.invoiceNo
+    this.currentCustomerPayment.userId = rowData.userId
+    this.currentCustomerPayment.invoiceNo = ''
+    this.currentCustomerPayment.totalAmount = 0
+    this.currentCustomerPayment.paymentAmount = 0
+    this.currentCustomerPayment.remainBalance = 0
+    this.currentCustomerPayment.date = new Date
   }
 
   setTransaction(acctype: string, title: string, accHead: string, accControl: string, accSubcontrol: string, year: string){
@@ -269,23 +269,23 @@ export class Form01PaymentComponent implements OnInit {
     transaction.accountHeadCode = accHead
     transaction.accountControlCode = accControl
     transaction.accountSubcontrolCode = accSubcontrol
-    transaction.invoiceNo = this.currentSupplierPayment.supplierInvoiceNo 
-    transaction.userId = this.currentSupplierPayment.userId
+    transaction.invoiceNo = this.currentCustomerPayment.customerInvoiceNo 
+    transaction.userId = this.currentCustomerPayment.userId
     if(acctype == 'dr'){
-      transaction.debit = this.currentSupplierPayment.paymentAmount
+      transaction.debit = this.currentCustomerPayment.paymentAmount
     } else{
-      transaction.credit = this.currentSupplierPayment.paymentAmount
+      transaction.credit = this.currentCustomerPayment.paymentAmount
     }
     transaction.transaction_title = title
-    transaction.transaction_date = this.currentSupplierPayment.date
+    transaction.transaction_date = this.currentCustomerPayment.date
     transaction.description = this.title05+ ":" + title
     return transaction
   }
 
   getName(value: string, field: string){
-    if(field == 'supplier'){
-      for (let i = 0; i < this.supplierDropDown.length; i++) {
-        if( this.supplierDropDown[i].supplierId == value ) return this.supplierDropDown[i].supplierName
+    if(field == 'customer'){
+      for (let i = 0; i < this.customerDropDown.length; i++) {
+        if( this.customerDropDown[i].customerId == value ) return this.customerDropDown[i].customerName
       }
     }
     if(field == 'product'){
@@ -299,14 +299,14 @@ export class Form01PaymentComponent implements OnInit {
   resetInvoice(){
     this.selectInvoice = ''
     this.selectPayment = ''
-    this.currentSupplierInvoice = InitialSupplierInvoice.InitialSupplierInvoiceObj()
+    this.currentCustomerInvoice = InitialCustomerInvoice.InitialCustomerInvoiceObj()
   }
 
-  clickCurrentPayment(id: string, rowData: SupplierInvoiceDetail){
+  clickCurrentPayment(id: string, rowData: CustomerInvoiceDetail){
     this.transaction = []
     this.validate = []
     let sum = 0; 
-    this.dataSourceDetails.forEach(x => sum += x.purchaseQty * x.purchaseUnitPrice)
+    this.dataSourceDetails.forEach(x => sum += x.saleQty * x.saleUnitPrice)
     if(this.dataSourcePayment.length > 0){
       this.dataSourcePayment.forEach(x => sum -= x.paymentAmount)
     }
@@ -323,11 +323,11 @@ export class Form01PaymentComponent implements OnInit {
       this.resetPayment();
     }else{
       this.selectInvoiceDetail = id
-      this.currentSupplierPayment.paymentAmount = rowData.purchaseQty * rowData.purchaseUnitPrice
-      this.currentSupplierPayment.remainBalance = sum - this.currentSupplierPayment.paymentAmount
-      this.currentSupplierPayment.totalAmount = sum
-      this.currentSupplierPayment.invoiceNo = rowData.id
-      this.currentSupplierPayment.userId = '22d38441-b515-4a82-ae00-6207faa165b6'
+      this.currentCustomerPayment.paymentAmount = rowData.saleQty * rowData.saleUnitPrice
+      this.currentCustomerPayment.remainBalance = sum - this.currentCustomerPayment.paymentAmount
+      this.currentCustomerPayment.totalAmount = sum
+      this.currentCustomerPayment.invoiceNo = rowData.id
+      this.currentCustomerPayment.userId = '22d38441-b515-4a82-ae00-6207faa165b6'
 
       this.transaction.push( this.setTransaction('dr','Account Payable','5','502','101','8ff68454-c507-4784-9b83-7f11c1c649d4') )
       this.transaction.push( this.setTransaction('cr','Cash Payment','5','502','101','8ff68454-c507-4784-9b83-7f11c1c649d4') )
@@ -338,10 +338,10 @@ export class Form01PaymentComponent implements OnInit {
 
   resetPayment(){
     this.selectInvoiceDetail = ''
-    this.currentSupplierPayment.totalAmount = 0;
-    this.currentSupplierPayment.paymentAmount = 0;
-    this.currentSupplierPayment.remainBalance = 0;
-    this.currentSupplierPayment.invoiceNo = ''
+    this.currentCustomerPayment.totalAmount = 0;
+    this.currentCustomerPayment.paymentAmount = 0;
+    this.currentCustomerPayment.remainBalance = 0;
+    this.currentCustomerPayment.invoiceNo = ''
   }
 
   checkValidate(){
