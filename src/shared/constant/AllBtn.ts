@@ -161,7 +161,7 @@ export const AllBtn: Btn[] = [
       title : 'Transactions',
       inputBtn : [
         {
-          btnTitleName: "Print Invoice",
+          btnTitleName: "Transaction List",
           subMenu: "1",
           subBtn:[]
         },

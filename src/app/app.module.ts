@@ -14,6 +14,7 @@ import { P01SalesModule } from 'src/pages/p01-sales/p01-sales.module';
 import { P03PurchaseModule } from 'src/pages/p03-purchase/p03-purchase.module';
 import { P04SettingModule } from 'src/pages/p04-setting/p04-setting.module';
 import { P05StockModule } from 'src/pages/p05-stock/p05-stock.module';
+import { P07TransactionsModule } from 'src/pages/p07-transactions/p07-transactions.module';
 
 const routes :Routes = [
   {path:'',component: P00MainComponent},
@@ -35,7 +36,10 @@ const routes :Routes = [
     loadChildren: () => import('../pages/p04-setting/p04-setting.module').then(e=>e.P04SettingModule)
   }, 
   {path:'reports', component: P00MainComponent}, 
-  {path:'transactions', component: P00MainComponent},
+  {
+    path:'transactions', 
+    loadChildren: () => import('../pages/p07-transactions/p07-transactions.module').then(e=>e.P07TransactionsModule)
+  },
 
 ]
 
@@ -53,6 +57,7 @@ const routes :Routes = [
     P03PurchaseModule,
     P04SettingModule,
     P05StockModule,
+    P07TransactionsModule,
     RouterModule.forRoot(routes),
     BrowserAnimationsModule,
   ],
