@@ -27,65 +27,51 @@
         </div>
 
     <div class="col-12">
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 col-12">
+        <table mat-table [dataSource]="dataSourceT" class="mat-elevation-z8 col-12">
 
             <!--- Note that these columns can be defined in any order.
                 The actual rendered columns are set as a property on the row definition" -->
         
-            <!-- Position Column -->
-        
-            <!-- Name Column -->
-            <ng-container matColumnDef="supplierId">
-            <th mat-header-cell *matHeaderCellDef>Supplier Name </th>
-            <td mat-cell *matCellDef="let element"> {{getName(element.supplierId, 'supplier')}} </td>
+
+            <ng-container matColumnDef="transaction_date">
+            <th mat-header-cell *matHeaderCellDef> Date </th>
+            <td mat-cell *matCellDef="let element"> {{element.transaction_date | dateFormatPipe}} </td>
             </ng-container>
-        
-            <!-- Weight Column -->
+
+            <ng-container matColumnDef="accountControlCode">
+            <th mat-header-cell *matHeaderCellDef> Account </th>
+            <td mat-cell *matCellDef="let element"> {{element.accountControlCode}} </td>
+            </ng-container>
+
             <ng-container matColumnDef="invoiceNo">
             <th mat-header-cell *matHeaderCellDef> Invoice No </th>
             <td mat-cell *matCellDef="let element"> {{element.invoiceNo}} </td>
             </ng-container>
-        
-            <!-- Symbol Column -->
-            <ng-container matColumnDef="title">
-            <th mat-header-cell *matHeaderCellDef> Title </th>
-            <td mat-cell *matCellDef="let element"> {{element.title}} </td>
-            </ng-container>
 
-            <ng-container matColumnDef="totalAmount">
-            <th mat-header-cell *matHeaderCellDef> totalAmount </th>
-            <td mat-cell *matCellDef="let element"> {{element.totalAmount}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="date">
-            <th mat-header-cell *matHeaderCellDef> date </th>
-            <td mat-cell *matCellDef="let element"> {{element.date | dateFormatPipe }} </td>
+            <ng-container matColumnDef="transaction_title">
+            <th mat-header-cell *matHeaderCellDef> Transaction Title </th>
+            <td mat-cell *matCellDef="let element"> {{element.transaction_title}} </td>
             </ng-container>
 
             <ng-container matColumnDef="description">
-            <th mat-header-cell *matHeaderCellDef> description </th>
+            <th mat-header-cell *matHeaderCellDef> Description </th>
             <td mat-cell *matCellDef="let element"> {{element.description}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="userId">
-                <th mat-header-cell *matHeaderCellDef> User </th>
-                <td mat-cell class="" *matCellDef="let element"> {{element.userId}}  </td>
+            <ng-container matColumnDef="debit">
+            <th mat-header-cell *matHeaderCellDef> Debit </th>
+            <td mat-cell *matCellDef="let element"> {{element.debit  }} </td>
             </ng-container>
 
-            <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef> Invoice Details </th>
-            <td mat-cell  *matCellDef="let element">  
-                <span class="btn btn-info">
-                  {{element.supplierInvoiceDetail.length}}
-                </span>
-                <!-- <button  class="btn btn-outline-danger" (click)="deleteData(element.id)"> <i class="fas fa-trash-alt">Delete</i></button> -->
-                <!-- &nbsp; <button  class="btn btn-outline-info" (click)="updateData(element.id)"> <i class="fas fa-trash-alt">Update</i></button> -->
-                &nbsp;      
-            </td>
+            <ng-container matColumnDef="credit">
+            <th mat-header-cell *matHeaderCellDef> Credit </th>
+            <td mat-cell *matCellDef="let element"> {{element.credit  }} </td>
             </ng-container>
+
+
         
-            <tr mat-header-row class="text-center" *matHeaderRowDef="displayedColumns"></tr>
-            <tr (click)="clickCurrentInvoice(row.id,row)" id="{{row.id}}" style="{{row.id== selectInvoice?'background-color: blanchedalmond; transition: 0.8s;':'background-color: white; transition: 0.8s;'}}" ngClass mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr mat-header-row class="text-center" *matHeaderRowDef="displayedColumnsT"></tr>
+            <tr (click)="clickCurrentInvoice(row.id,row)" id="{{row.id}}" style="{{row.id== selectInvoice?'background-color: blanchedalmond; transition: 0.8s;':'background-color: white; transition: 0.8s;'}}" ngClass mat-row *matRowDef="let row; columns: displayedColumnsT;"></tr>
         </table>
     </div>
 </div>
@@ -154,126 +140,7 @@
     </div>
 
 
-    <div class="col-6">
-        <div class="col-12">
-            <table mat-table [dataSource]="dataSourceDetails" class="mat-elevation-z8 col-12">
-    
-                <!--- Note that these columns can be defined in any order.
-                    The actual rendered columns are set as a property on the row definition" -->
-            
-                <!-- Position Column -->
-            
-                <!-- Name Column -->
-                <ng-container matColumnDef="id">
-                <th mat-header-cell *matHeaderCellDef>Invoice Detail </th>
-                <td mat-cell *matCellDef="let element">  {{element.id}} </td>
-                </ng-container>
-            
-                <!-- Weight Column -->
-                <ng-container matColumnDef="productId">
-                <th mat-header-cell *matHeaderCellDef> Product Id </th>
-                <td mat-cell *matCellDef="let element"> {{getName(element.productId, 'product')}} </td>
-                </ng-container>
-            
-                <!-- Symbol Column -->
-                <ng-container matColumnDef="purchaseQty">
-                <th mat-header-cell *matHeaderCellDef> Purchase Qty </th>
-                <td mat-cell *matCellDef="let element"> {{element.purchaseQty}} </td>
-                </ng-container>
-    
-                <ng-container matColumnDef="purchaseUnitPrice">
-                <th mat-header-cell *matHeaderCellDef> purchaseUnitPrice </th>
-                <td mat-cell *matCellDef="let element"> {{element.purchaseUnitPrice}} </td>
-                </ng-container>
-
-                <!-- <ng-container matColumnDef="action">
-                    <th mat-header-cell *matHeaderCellDef> Action </th>
-                    <td mat-cell  *matCellDef="let element">  
-                        <button  class="btn btn-outline-danger" (click)="deleteDetailData(element.id, element)"> <i class="fas fa-trash-alt">Delete</i></button>
-                      &nbsp;      
-                    </td>
-                </ng-container> -->
-            
-                <tr mat-header-row *matHeaderRowDef="displayedColumnsDetails"></tr>
-                <tr (click)="clickCurrentPayment(row.id,row)" id="{{row.id}}" style="{{row.id== selectInvoiceDetail?'background-color: blanchedalmond; transition: 0.8s;':'background-color: white; transition: 0.8s;'}}" ngClass mat-row *matRowDef="let row; columns: displayedColumnsDetails;"></tr>
-            </table>
-        </div>
-    </div>
 
     </div>
 
-    <div class="col-12">
-        <div class="col-12">
-            <table mat-table [dataSource]="dataSourcePayment" class="mat-elevation-z8 col-12">
-    
-                <ng-container matColumnDef="paymentId">
-                <th mat-header-cell *matHeaderCellDef>Id </th>
-                <td mat-cell *matCellDef="let element">  {{element.paymentId}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="supplierInvoiceNo">
-                <th mat-header-cell *matHeaderCellDef>Invoice No </th>
-                <td mat-cell *matCellDef="let element">  {{element.supplierInvoiceNo}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="invoiceNo">
-                <th mat-header-cell *matHeaderCellDef>Invoice No </th>
-                <td mat-cell *matCellDef="let element">  {{element.invoiceNo}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="supplierId">
-                <th mat-header-cell *matHeaderCellDef>Supplier Name </th>
-                <td mat-cell *matCellDef="let element">  {{getName(selectName, 'supplier')}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="supplierInvoiceId">
-                <th mat-header-cell *matHeaderCellDef>Supplier Name </th>
-                <td mat-cell *matCellDef="let element">  {{element.supplierInvoiceId}} </td>
-                </ng-container>
-            
-                <!-- Weight Column -->
-                <ng-container matColumnDef="productId">
-                <th mat-header-cell *matHeaderCellDef> Product Id </th>
-                <td mat-cell *matCellDef="let element"> {{element.productId}} </td>
-                </ng-container>
-            
-                <!-- Symbol Column -->
-                <ng-container matColumnDef="totalAmount">
-                <th mat-header-cell *matHeaderCellDef> Total Amount </th>
-                <td mat-cell *matCellDef="let element"> {{element.totalAmount}} </td>
-                </ng-container>
-    
-                <ng-container matColumnDef="paymentAmount">
-                <th mat-header-cell *matHeaderCellDef> Payment Amount </th>
-                <td mat-cell *matCellDef="let element"> {{element.paymentAmount}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="remainBalance">
-                <th mat-header-cell *matHeaderCellDef> Remain Balance </th>
-                <td mat-cell *matCellDef="let element"> {{element.remainBalance}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="date">
-                <th mat-header-cell *matHeaderCellDef> Date </th>
-                <td mat-cell *matCellDef="let element"> {{element.date | dateFormatPipe}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="userId">
-                <th mat-header-cell *matHeaderCellDef> User Id </th>
-                <td mat-cell *matCellDef="let element"> {{element.userId}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="action">
-                    <th mat-header-cell *matHeaderCellDef> Action </th>
-                    <td mat-cell  *matCellDef="let element">  
-                        <button  class="btn btn-outline-danger" (click)="deletePaymentData(element.id, element)"> <i class="fas fa-trash-alt">Delete</i></button>
-                      &nbsp;      
-                    </td>
-                </ng-container>
-            
-                <tr mat-header-row *matHeaderRowDef="displayedColumnsPayment"></tr>
-                <tr style="{{row.id== selectPayment?'background-color: blanchedalmond; transition: 0.8s;':'background-color: white; transition: 0.8s;'}}" ngClass mat-row *matRowDef="let row; columns: displayedColumnsPayment;"></tr>
-            </table>
-        </div>
-    </div>
 </div>

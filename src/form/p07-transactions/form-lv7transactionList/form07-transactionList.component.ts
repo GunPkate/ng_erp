@@ -30,6 +30,8 @@ import { catchError, throwError } from 'rxjs';
 import { InitialSupplierPayment, SupplierPayment } from 'src/shared/interface/P03Purchases/Purchase/SupplierPayment';
 import { SupplierPaymentBehaviorSubj } from 'src/shared/behaviorsubject/SupplierInvoicePayment';
 import { Transaction,InitialTransaction } from 'src/shared/interface/P07Transaction/Transaction';
+import { TransactionService } from 'src/shared/services/S07transactions/S07_Transactions';
+import { TransactionBehaviorSubj } from 'src/shared/behaviorsubject/Transaction';
 
 
 @Component({
@@ -54,6 +56,7 @@ export class Form07TransactionListComponent implements OnInit {
   selectName: string = '';
 
   dataSource :SupplierInvoice[] = []
+  dataSourceT :Transaction[] = []
   dataSourceDetails :SupplierInvoiceDetail[] = []
   dataSourcePayment :SupplierPayment[] = []
 
@@ -70,6 +73,11 @@ export class Form07TransactionListComponent implements OnInit {
   subpage:string = ''
 
   displayedColumns: string[] = [ 'supplierId',  'invoiceNo', 'title', 'totalAmount', 'date', 'description', 'userId', 'action'];
+  displayedColumnsT: string[] = [ 'transaction_date', 'accountControlCode',  'invoiceNo', 'transaction_title',  'description', 'debit',  'credit', ];
+  
+
+
+
   displayedColumnsDetails: string[] = [ 'id', 'productId', 'purchaseQty', 'purchaseUnitPrice'];
   displayedColumnsPayment: string[] = [ 'paymentId', 'supplierId', 'supplierInvoiceNo', 'invoiceNo', 'totalAmount', 'paymentAmount', 'remainBalance', 'date', 'userId', 'action']; 
 
@@ -79,6 +87,7 @@ export class Form07TransactionListComponent implements OnInit {
     private http: HttpClient,
     private stockService: StockService,
     private supplierService: SupplierService,
+    private transactionService: TransactionService,
     private accountService: AccountService,
 
     private productBehaviorSubj: ProductBehaviorSubj,
@@ -88,12 +97,14 @@ export class Form07TransactionListComponent implements OnInit {
     private supplierInvoiceDetailBehaviorSubj: SupplierInvoiceDetailBehaviorSubj, 
     private supplierPaymentBehaviorSubj: SupplierPaymentBehaviorSubj, 
     private accountControlBehaviorSubj: AccountControlBehaviorSubj,
+    private transactionBehaviorSubj: TransactionBehaviorSubj,
   ) { 
     this.stockService.loadCategory();
     this.stockService.loadProduct();
     this.supplierService.loadSupplierInvoice();
     this.supplierService.loadSupplier();
     this.accountService.loadAccountControl();
+    this.loadTransaction()
 
     this.supplierBehaviorSubj.getSupplierList().subscribe((res)=>{ this.supplierDropDown = res})
     this.supplierInvoiceBehaviorSubj.getSupplierInvoiceList().subscribe((res)=>{ this.dataSource = res })
@@ -147,6 +158,14 @@ export class Form07TransactionListComponent implements OnInit {
   loadSupplierPayment(){
     this.supplierService.loadSupplierInvoicePayment(this.selectPayment);
     this.supplierPaymentBehaviorSubj.getSupplierPaymentList().subscribe(x=>this.dataSourcePayment = x)
+  }
+
+  loadTransaction(){
+    this.transactionService.loadTransaction()
+    this.transactionBehaviorSubj.getTransactionList().subscribe(x=>{
+      this.dataSourceT = x
+      console.log(x)
+    })    
   }
 
 

@@ -9,6 +9,8 @@ import { CategoryBehaviorSubj } from 'src/shared/behaviorsubject/Category';
 import { ProductBehaviorSubj } from 'src/shared/behaviorsubject/Product';
 import { P07TransactionListComponent } from './p07-transactions.component';
 import { Form07TransactionListComponent } from 'src/form/p07-transactions/form-lv7transactionList/form07-transactionList.component';
+import { TransactionBehaviorSubj } from 'src/shared/behaviorsubject/Transaction';
+import { TransactionService } from 'src/shared/services/S07transactions/S07_Transactions';
 
 export const p07routes: Routes = [
   { 
@@ -34,8 +36,7 @@ export const p07routes: Routes = [
     MatInputModule
   ],
   providers: [
-    StockService, CategoryBehaviorSubj
-    ,ProductBehaviorSubj
+    TransactionService, TransactionBehaviorSubj 
    ],
 
 })
