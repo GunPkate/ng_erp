@@ -71,7 +71,11 @@
 
         
             <tr mat-header-row class="text-center" *matHeaderRowDef="displayedColumnsT"></tr>
-            <tr (click)="clickCurrentInvoice(row.id,row)" id="{{row.id}}" style="{{row.id== selectInvoice?'background-color: blanchedalmond; transition: 0.8s;':'background-color: white; transition: 0.8s;'}}" ngClass mat-row *matRowDef="let row; columns: displayedColumnsT;"></tr>
+            <tr (click)="clickCurrentInvoice(row.id,row)" id="{{row.id}}" ngClass mat-row *matRowDef="let row; columns: displayedColumnsT;"
+                style="{{
+                    setTransactionStyle(row)
+                }}"
+            ></tr>
         </table>
     </div>
 </div>

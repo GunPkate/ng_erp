@@ -43,6 +43,18 @@ import { TransactionBehaviorSubj } from 'src/shared/behaviorsubject/Transaction'
 })
 
 export class Form07TransactionListComponent implements OnInit {
+setTransactionStyle(row: Transaction) {
+  let style = '';
+  let color = '';
+  if( row.debit > 0 ){
+    color = '#D8EFD3'
+  }else{
+    color = '#FFC6C6'
+  }
+  style += row.id == this.selectInvoice?'background-color: blanchedalmond; transition: 0.8s;':`background-color: ${color}; transition: 0.8s;`
+  
+  return style;
+}
 
   title07 = 'Transaction List'
 
