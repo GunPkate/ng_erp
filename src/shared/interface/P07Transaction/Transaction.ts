@@ -3,13 +3,12 @@ export interface Transaction {
     financialYearId: string
     accountHeadCode: string
     accountControlCode: string
-    accountSubcontrolCode: string
     invoiceNo: string
     userId: string
     credit: number
     debit: number
-    transaction_date: Date
-    transaction_title: string
+    transactionDate: Date
+    transactionTitle: string
     description: string
 }
 
@@ -20,13 +19,12 @@ export class InitialTransaction{
             financialYearId: "",
             accountHeadCode: "",
             accountControlCode: "",
-            accountSubcontrolCode: "",
             invoiceNo: "",
             userId: "",
             credit: 0,
             debit: 0,
-            transaction_date: new Date,
-            transaction_title: "",
+            transactionDate: new Date,
+            transactionTitle: "",
             description: "",
         }
     }
