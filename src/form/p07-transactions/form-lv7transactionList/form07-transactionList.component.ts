@@ -293,13 +293,12 @@ setTransactionStyle(row: Transaction) {
     this.currentSupplierPayment.date = new Date
   }
 
-  setTransaction(acctype: string, title: string, accHead: string, accControl: string, accSubcontrol: string, year: string){
+  setTransaction(acctype: string, title: string, accHead: string, accControl: string, year: string){
     let transaction = InitialTransaction.InitialTransactionObj(); 
     transaction.id = uuidv4()
     transaction.financialYearId = year
     transaction.accountHeadCode = accHead
     transaction.accountControlCode = accControl
-    transaction.accountSubcontrolCode = accSubcontrol
     transaction.invoiceNo = this.currentSupplierPayment.supplierInvoiceNo 
     transaction.userId = this.currentSupplierPayment.userId
     if(acctype == 'dr'){
@@ -307,8 +306,8 @@ setTransactionStyle(row: Transaction) {
     } else{
       transaction.credit = this.currentSupplierPayment.paymentAmount
     }
-    transaction.transaction_title = title
-    transaction.transaction_date = this.currentSupplierPayment.date
+    transaction.transactionTitle = title
+    transaction.transactionDate = this.currentSupplierPayment.date
     transaction.description = this.title07+ ":" + title
     return transaction
   }
@@ -360,8 +359,8 @@ setTransactionStyle(row: Transaction) {
       this.currentSupplierPayment.invoiceNo = rowData.id
       this.currentSupplierPayment.userId = '22d38441-b515-4a82-ae00-6207faa165b6'
 
-      this.transaction.push( this.setTransaction('dr','Account Payable','5','502','101','8ff68454-c507-4784-9b83-7f11c1c649d4') )
-      this.transaction.push( this.setTransaction('cr','Cash Payment','5','502','101','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+      this.transaction.push( this.setTransaction('dr','Account Payable','5','502','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+      this.transaction.push( this.setTransaction('cr','Cash Payment','5','502','8ff68454-c507-4784-9b83-7f11c1c649d4') )
       console.log('this.transaction',this.transaction)
     }
 

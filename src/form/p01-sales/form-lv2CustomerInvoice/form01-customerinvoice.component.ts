@@ -217,8 +217,8 @@ export class Form01CustomerinvoiceComponent implements OnInit {
         }
       }
     )
-    this.transaction.push( this.setTransaction('dr','Inventory','1','104','101','8ff68454-c507-4784-9b83-7f11c1c649d4') )
-    this.transaction.push( this.setTransaction('cr','Account Payable','5','502','101','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+    this.transaction.push( this.setTransaction('dr','Inventory','1','104','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+    this.transaction.push( this.setTransaction('cr','Account Payable','5','502','8ff68454-c507-4784-9b83-7f11c1c649d4') )
     this.transaction.forEach(
       x => {
         this.http.post('http://localhost:3000/transaction/create',x).pipe(catchError(error => throwError(error))).subscribe(
@@ -336,13 +336,12 @@ export class Form01CustomerinvoiceComponent implements OnInit {
     console.log(id, 'page', this.selectInvoiceDetail)
   }
 
-  setTransaction(acctype: string, title: string, accHead: string, accControl: string, accSubcontrol: string, year: string){
+  setTransaction(acctype: string, title: string, accHead: string, accControl: string, year: string){
     let transaction = InitialTransaction.InitialTransactionObj(); 
     transaction.id = uuidv4()
     transaction.financialYearId = year
     transaction.accountHeadCode = accHead
     transaction.accountControlCode = accControl
-    transaction.accountSubcontrolCode = accSubcontrol
     transaction.invoiceNo = this.currentCustomerInvoice.invoiceNo 
     transaction.userId = this.currentCustomerInvoice.userId
     if(acctype == 'dr'){
@@ -350,8 +349,8 @@ export class Form01CustomerinvoiceComponent implements OnInit {
     } else{
       transaction.credit = this.currentCustomerInvoiceDetail.saleQty * this.currentCustomerInvoiceDetail.saleUnitPrice
     }
-    transaction.transaction_title = title
-    transaction.transaction_date = this.currentCustomerInvoice.date
+    transaction.transactionTitle = title
+    transaction.transactionDate = this.currentCustomerInvoice.date
     transaction.description = `${this.title05}: ${title} ${this.currentCustomerInvoice.id}`
     return transaction
   }

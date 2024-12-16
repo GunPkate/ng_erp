@@ -210,8 +210,8 @@ export class Form03SupplierinvoiceComponent implements OnInit {
       // this.clearDetails()
       this.loadInvoiceDetail()
     })
-    this.transaction.push( this.setTransaction('dr','Inventory','1','104','101','8ff68454-c507-4784-9b83-7f11c1c649d4') )
-    this.transaction.push( this.setTransaction('cr','Account Payable','5','502','101','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+    this.transaction.push( this.setTransaction('dr','Inventory','1','104','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+    this.transaction.push( this.setTransaction('cr','Account Payable','5','502','8ff68454-c507-4784-9b83-7f11c1c649d4') )
     this.transaction.forEach(
       x => {
         this.http.post('http://localhost:3000/transaction/create',x).pipe(catchError(error => throwError(error))).subscribe(
@@ -328,13 +328,12 @@ export class Form03SupplierinvoiceComponent implements OnInit {
     console.log(id, 'page', this.selectInvoiceDetail)
   }
 
-  setTransaction(acctype: string, title: string, accHead: string, accControl: string, accSubcontrol: string, year: string){
+  setTransaction(acctype: string, title: string, accHead: string, accControl: string, year: string){
     let transaction = InitialTransaction.InitialTransactionObj(); 
     transaction.id = uuidv4()
     transaction.financialYearId = year
     transaction.accountHeadCode = accHead
-    transaction.accountControlCode = accControl
-    transaction.accountSubcontrolCode = accSubcontrol
+    transaction.accountControlCode = accControl 
     transaction.invoiceNo = this.currentSupplierInvoice.invoiceNo 
     transaction.userId = this.currentSupplierInvoice.userId
     if(acctype == 'dr'){
@@ -342,8 +341,8 @@ export class Form03SupplierinvoiceComponent implements OnInit {
     } else{
       transaction.credit = this.currentSupplierInvoiceDetail.purchaseQty * this.currentSupplierInvoiceDetail.purchaseUnitPrice
     }
-    transaction.transaction_title = title
-    transaction.transaction_date = this.currentSupplierInvoice.date
+    transaction.transactionTitle = title
+    transaction.transactionDate = this.currentSupplierInvoice.date
     transaction.description = `${this.title05}: ${title} ${this.currentSupplierInvoice.id}`
     return transaction
   }

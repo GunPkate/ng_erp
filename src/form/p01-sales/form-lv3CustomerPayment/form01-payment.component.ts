@@ -262,13 +262,12 @@ export class Form01PaymentComponent implements OnInit {
     this.currentCustomerPayment.date = new Date
   }
 
-  setTransaction(acctype: string, title: string, accHead: string, accControl: string, accSubcontrol: string, year: string){
+  setTransaction(acctype: string, title: string, accHead: string, accControl: string, year: string){
     let transaction = InitialTransaction.InitialTransactionObj(); 
     transaction.id = uuidv4()
     transaction.financialYearId = year
     transaction.accountHeadCode = accHead
-    transaction.accountControlCode = accControl
-    transaction.accountSubcontrolCode = accSubcontrol
+    transaction.accountControlCode = accControl 
     transaction.invoiceNo = this.currentCustomerPayment.customerInvoiceNo 
     transaction.userId = this.currentCustomerPayment.userId
     if(acctype == 'dr'){
@@ -276,8 +275,8 @@ export class Form01PaymentComponent implements OnInit {
     } else{
       transaction.credit = this.currentCustomerPayment.paymentAmount
     }
-    transaction.transaction_title = title
-    transaction.transaction_date = this.currentCustomerPayment.date
+    transaction.transactionTitle = title
+    transaction.transactionDate = this.currentCustomerPayment.date
     transaction.description = this.title05+ ":" + title
     return transaction
   }
@@ -329,8 +328,8 @@ export class Form01PaymentComponent implements OnInit {
       this.currentCustomerPayment.invoiceNo = rowData.id
       this.currentCustomerPayment.userId = '22d38441-b515-4a82-ae00-6207faa165b6'
 
-      this.transaction.push( this.setTransaction('dr','Account Payable','5','502','101','8ff68454-c507-4784-9b83-7f11c1c649d4') )
-      this.transaction.push( this.setTransaction('cr','Cash Payment','5','502','101','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+      this.transaction.push( this.setTransaction('dr','Account Payable','5','502','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+      this.transaction.push( this.setTransaction('cr','Cash Payment','5','502','8ff68454-c507-4784-9b83-7f11c1c649d4') )
       console.log('this.transaction',this.transaction)
     }
 

@@ -124,7 +124,6 @@ export const AllBtn: Btn[] = [
           subBtn: [
             {btnTitleName: "Account Head"},
             {btnTitleName: "Account Control"},
-            {btnTitleName: "Account SubControl"},
             {btnTitleName: "Fiscal Year"},
           ]
         },    
