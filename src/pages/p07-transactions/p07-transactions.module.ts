@@ -9,6 +9,7 @@ import { Form07TransactionListComponent } from 'src/form/p07-transactions/form-l
 import { TransactionBehaviorSubj } from 'src/shared/behaviorsubject/Transaction';
 import { TransactionService } from 'src/shared/services/S07transactions/S07_Transactions';
 import { Draggable } from 'src/components/draggable/draggable.component';
+import { AccountFilterBehaviorSubj } from 'src/shared/behaviorsubject/AccountFilter';
 
 export const p07routes: Routes = [
   { 
@@ -35,7 +36,7 @@ export const p07routes: Routes = [
     MatInputModule
   ],
   providers: [
-    TransactionService, TransactionBehaviorSubj 
+    TransactionService, TransactionBehaviorSubj, AccountFilterBehaviorSubj
    ],
 
 })

@@ -1,7 +1,22 @@
 <div class="example-boundary">
-    <div *ngFor="let i of accList" class="example-box" cdkDragBoundary=".example-boundary" cdkDrag>
-      {{i.acc}}
+  <!-- <div *ngFor="let i of accList" class="example-box" cdkDragBoundary=".example-boundary" cdkDrag> -->
+  <!-- {{i.acc}} -->
+  <div *ngFor="let j of accFilter" class="example-box" cdkDragBoundary=".example-boundary" cdkDrag>
+    <div class="d-flex flex-column">
+      <div>
+        {{j.headCode}}
+      </div> 
+      <!-- <div *ngFor="let i of j.accountControl">
+        {{i.accountControlName}}
+      </div> -->
     </div>
   </div>
-  
-  
+
+  <div *ngFor="let i of accFilter">
+    {{ i.controlcode }}
+  </div>
+  <div *ngFor="let i of accList">
+    {{ i.acc }}
+  </div>
+  <!-- </div> -->
+</div>
