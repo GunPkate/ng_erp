@@ -1,9 +1,9 @@
 import { AccountControl } from "../P04Setting/Account/AccountControl"
 
 export interface AccountFilter{
-    accountHeadName: string,
-    headCode: string
-    accountControlName: string,
+    accountheadname: string,
+    headcode: string
+    accountcontrolname: string,
     controlcode: string
     title: string
     debit: number
@@ -13,9 +13,9 @@ export interface AccountFilter{
 export class InitialAccountFilter {
     static InitialAccountFilterObj(){
         return {
-            accountHeadName: "",
-            headCode: "",
-            accountControlName: "",
+            accountheadname: "",
+            headcode: "",
+            accountcontrolname: "",
             controlcode: "",
             title: "",
             debit: 0,
