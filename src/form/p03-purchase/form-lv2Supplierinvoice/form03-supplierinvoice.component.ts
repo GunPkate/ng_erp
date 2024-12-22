@@ -211,7 +211,7 @@ export class Form03SupplierinvoiceComponent implements OnInit {
       this.loadInvoiceDetail()
     })
     this.transaction.push( this.setTransaction('dr','Inventory','1','104','8ff68454-c507-4784-9b83-7f11c1c649d4') )
-    this.transaction.push( this.setTransaction('cr','Account Payable','5','502','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+    this.transaction.push( this.setTransaction('cr','Account Payable','2','201','8ff68454-c507-4784-9b83-7f11c1c649d4') )
     this.transaction.forEach(
       x => {
         this.http.post('http://localhost:3000/transaction/create',x).pipe(catchError(error => throwError(error))).subscribe(
