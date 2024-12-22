@@ -1,14 +1,14 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {DragDropModule} from '@angular/cdk/drag-drop'; 
 import { AccList } from 'src/shared/interface/P07Transaction/AccList';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { AccountFilter } from 'src/shared/interface/P07Transaction/AccountFilter';
 
 
 @Component({
   selector: 'app-draggable',
   standalone: true,
-  imports: [DragDropModule, NgFor],
+  imports: [DragDropModule, NgFor, NgIf],
   templateUrl: './draggable.component.html',
   styleUrls: ['./draggable.component.css']
 })
