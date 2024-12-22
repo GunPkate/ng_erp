@@ -1,12 +1,17 @@
 <div class="example-boundary">
   <div *ngFor="let j of accList" class="example-box" cdkDragBoundary=".example-boundary" cdkDrag>
     <div class="d-flex flex-column row col-12">
-      <div>
+      <h2>
         {{j.acc}}
-      </div>
+      </h2>
       <div *ngFor="let i of accFilter" class="row justify-content-center">
-          <div *ngIf="i.accountheadname === j.acc" class="row w-100  col-12">
-            {{ i.title }} {{ i.controlcode }}
+          <div *ngIf="i.accountheadname === j.acc" class="row w-100 col-12 d-flex justify-content-between">
+            <div>
+              {{ i.title }}
+            </div>
+            <div>
+              {{ i.controlcode }}
+            </div>
           </div>
           <div *ngIf="i.accountheadname === j.acc" class="d-flex row col-12">
             <div class="btn-primary col-6">
