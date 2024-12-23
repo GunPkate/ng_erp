@@ -7,10 +7,10 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatTableModule  } from '@angular/material/table';
 import { MatSortModule  } from '@angular/material/sort';
 import { HttpClient } from '@angular/common/http';
-import { CategoryBehaviorSubj } from 'src/shared/behaviorsubject/Category';
-import { Category, InitialCategory } from 'src/shared/interface/P05Stock/Category';
 import { v4 as uuidv4 } from 'uuid';
 import { StockService } from 'src/shared/services/S05Stocks/S05_Category';
+import { InitialProduct, Product } from 'src/shared/interface/P05Stock/Product';
+import { ProductBehaviorSubj } from 'src/shared/behaviorsubject/Product';
 
 @Component({
   selector: 'app-form05-product',
@@ -23,14 +23,14 @@ import { StockService } from 'src/shared/services/S05Stocks/S05_Category';
 export class Form05ProductComponent implements OnInit {
   
   title = 'Product List'
-  displayedColumns: string[] = ['id', 'categoryName'];
-  dataSource :Category[] = []
-  currentCategory: Category = InitialCategory.InitialCategoryObj();
+  displayedColumns: string[] = ['id', 'productName', 'stockThresholdQty'];
+  dataSource :Product[] = []
+  currentProduct: Product = InitialProduct.InitialProductObj();
 
   constructor(
     private http: HttpClient,
-    private categoryService: StockService,
-    private categoryBehaviorSubj: CategoryBehaviorSubj,
+    private stocService: StockService,
+    private productBehaviorSubj: ProductBehaviorSubj,
   ) { 
     this.loadProduct()
   }
@@ -40,17 +40,17 @@ export class Form05ProductComponent implements OnInit {
   }
 
   register(){
-    this.currentCategory.id = uuidv4()
-    this.http.post('http://localhost:3000/stock/genproduct',this.currentCategory).subscribe((res)=>{this.loadProduct()})    
+    this.currentProduct.id = uuidv4()
+    this.http.post('http://localhost:3000/stock/genproduct',this.currentProduct).subscribe((res)=>{this.loadProduct()})    
   }
 
   loadProduct() {
-    this.categoryService.loadProduct();
-    this.categoryBehaviorSubj.getCategoryList().subscribe((res)=>{ this.dataSource = res  } )
+    this.stocService.loadProduct();
+    this.productBehaviorSubj.getProductList().subscribe((res)=>{ this.dataSource = res  } )
   }
 
   clear(){
-    this.currentCategory = InitialCategory.InitialCategoryObj();
+    this.currentProduct = InitialProduct.InitialProductObj();
   }
 
   validateInput(data: any){
@@ -62,24 +62,24 @@ export class Form05ProductComponent implements OnInit {
   }
 
   IdChange( event : any){
-    this.currentCategory.id = this.validateInput(event.target.value);
-    console.log(this.currentCategory)
+    this.currentProduct.id = this.validateInput(event.target.value);
+    console.log(this.currentProduct)
   }
 
   productNameChange( event : any){
-    this.currentCategory.categoryName = this.validateInput(event.target.value);
-    console.log(this.currentCategory)
+    this.currentProduct.productName = this.validateInput(event.target.value);
+    console.log(this.currentProduct)
   }
 
   qtyChange( event : any){
-    this.currentCategory.categoryName = this.validateInput(event.target.value);
-    console.log(this.currentCategory)
+    this.currentProduct.stockThresholdQty = parseInt(this.validateInput(event.target.value));
+    console.log(this.currentProduct)
   }
 
   deleteData(id: string){
     console.log(id)
-    this.currentCategory.id = id
-    this.http.post('http://localhost:3000/category/delete',this.currentCategory).subscribe(
+    this.currentProduct.id = id
+    this.http.post('http://localhost:3000/stock/productdelete',this.currentProduct).subscribe(
       (res) =>{
         this.loadProduct()
         this.clear()
@@ -88,14 +88,14 @@ export class Form05ProductComponent implements OnInit {
   }
 
   updateData(id: string){
-    console.log(id)
-    this.currentCategory.id = id
-    this.http.post('http://localhost:3000/category/update',this.currentCategory).subscribe(
-      (res) =>{
-        this.loadProduct()
-        this.clear()
-      }
-    )
+    // console.log(id)
+    // this.currentProduct.id = id
+    // this.http.post('http://localhost:3000/category/update',this.currentProduct).subscribe(
+    //   (res) =>{
+    //     this.loadProduct()
+    //     this.clear()
+    //   }
+    // )
   }
 
 }

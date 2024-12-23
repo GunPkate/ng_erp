@@ -10,6 +10,7 @@ import { Form05CategoryComponent } from 'src/form/p05-stock/form-lv1category/for
 import { StockService } from 'src/shared/services/S05Stocks/S05_Category';
 import { CategoryBehaviorSubj } from 'src/shared/behaviorsubject/Category';
 import { StockBehaviorSubj } from 'src/shared/behaviorsubject/Stock';
+import { ProductBehaviorSubj } from 'src/shared/behaviorsubject/Product';
 
 export const p05routes: Routes = [
   { 
@@ -37,7 +38,7 @@ export const p05routes: Routes = [
     MatInputModule
   ],
   providers: [
-    StockService, CategoryBehaviorSubj
+    StockService, CategoryBehaviorSubj, ProductBehaviorSubj 
     ,StockBehaviorSubj
    ],
 

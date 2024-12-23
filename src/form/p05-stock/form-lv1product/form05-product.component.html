@@ -5,7 +5,7 @@
         <div>
             <mat-form-field class="col-12" appearance="fill">
                 <mat-label>Id</mat-label>
-                <input [value]="currentCategory.id"(change)="IdChange($event)" matInput>
+                <input [value]="currentProduct.id"(change)="IdChange($event)" matInput disabled>
             </mat-form-field>
         </div>
     </div>
@@ -15,7 +15,7 @@
         <div>
             <mat-form-field class="col-12" appearance="fill">
                 <mat-label>Product Name</mat-label>
-                <input [value]="currentCategory.categoryName"(change)="productNameChange($event)" matInput>
+                <input [value]="currentProduct.productName"(change)="productNameChange($event)" matInput>
             </mat-form-field>
         </div>
     </div>
@@ -23,7 +23,7 @@
         <div>
             <mat-form-field class="col-12" appearance="fill">
                 <mat-label>Stock Threshold</mat-label>
-                <input [value]="currentCategory.id"(change)="IdChange($event)" matInput>
+                <input [value]="currentProduct.stockThresholdQty"(change)="qtyChange($event)" matInput>
             </mat-form-field>
         </div>
     </div>
@@ -54,11 +54,14 @@
   
         </ng-container>
 
+        <ng-container matColumnDef="productName">
+            <th mat-header-cell *matHeaderCellDef> ProductName </th>
+            <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
+        </ng-container>
 
-        <!-- Name Column -->
-        <ng-container matColumnDef="categoryName">
-            <th mat-header-cell *matHeaderCellDef> category </th>
-            <td mat-cell *matCellDef="let element"> {{element.categoryName}} </td>
+        <ng-container matColumnDef="stockThresholdQty">
+            <th mat-header-cell *matHeaderCellDef> Threshold Qty </th>
+            <td mat-cell *matCellDef="let element"> {{element.stockThresholdQty}} </td>
         </ng-container>
                 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

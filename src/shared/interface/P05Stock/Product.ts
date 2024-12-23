@@ -9,8 +9,8 @@ export class InitialProduct{
     static InitialProductObj(){ 
         return {
             id: "",
-            productId: "",
             productName: "",
+            stockThresholdQty: 0,
             // userId: "",
         }
     }
