@@ -32,7 +32,7 @@ export class Form05ProductComponent implements OnInit {
     private categoryService: StockService,
     private categoryBehaviorSubj: CategoryBehaviorSubj,
   ) { 
-    this.loadUser()
+    this.loadProduct()
   }
 
   ngOnInit(): void {
@@ -41,11 +41,11 @@ export class Form05ProductComponent implements OnInit {
 
   register(){
     this.currentCategory.id = uuidv4()
-    this.http.post('http://localhost:3000/category/create',this.currentCategory).subscribe((res)=>{this.loadUser()})    
+    this.http.post('http://localhost:3000/stock/genproduct',this.currentCategory).subscribe((res)=>{this.loadProduct()})    
   }
 
-  loadUser() {
-    this.categoryService.loadCategory();
+  loadProduct() {
+    this.categoryService.loadProduct();
     this.categoryBehaviorSubj.getCategoryList().subscribe((res)=>{ this.dataSource = res  } )
   }
 
@@ -81,7 +81,7 @@ export class Form05ProductComponent implements OnInit {
     this.currentCategory.id = id
     this.http.post('http://localhost:3000/category/delete',this.currentCategory).subscribe(
       (res) =>{
-        this.loadUser()
+        this.loadProduct()
         this.clear()
       }
     )
@@ -92,7 +92,7 @@ export class Form05ProductComponent implements OnInit {
     this.currentCategory.id = id
     this.http.post('http://localhost:3000/category/update',this.currentCategory).subscribe(
       (res) =>{
-        this.loadUser()
+        this.loadProduct()
         this.clear()
       }
     )

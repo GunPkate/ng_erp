@@ -3,7 +3,7 @@ import { BehaviorSubject } from "rxjs";
 import { Stock, InitialStock } from "../interface/P05Stock/Stock";
 
 @Injectable()
-export class ProductBehaviorSubj {
+export class StockBehaviorSubj {
     private ProductSubject = new BehaviorSubject<Stock>(InitialStock.InitialStockObj())
     private ProductListSubject = new BehaviorSubject<Stock[]>([])
 

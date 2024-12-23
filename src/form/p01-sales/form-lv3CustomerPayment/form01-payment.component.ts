@@ -8,7 +8,7 @@ import { MatTableModule  } from '@angular/material/table';
 import { MatSortModule  } from '@angular/material/sort';
 import { Category } from 'src/shared/interface/P05Stock/Category';
 import { HttpClient } from '@angular/common/http';
-import { ProductBehaviorSubj } from 'src/shared/behaviorsubject/Product';
+import { StockBehaviorSubj } from 'src/shared/behaviorsubject/Product';
 import { Stock, InitialStock } from 'src/shared/interface/P05Stock/Stock';
 import { StockService } from 'src/shared/services/S05Stocks/S05_Category';
 import { CategoryBehaviorSubj } from 'src/shared/behaviorsubject/Category';
@@ -81,7 +81,7 @@ export class Form01PaymentComponent implements OnInit {
     private customerService: CustomerService,
     private accountService: AccountService,
 
-    private productBehaviorSubj: ProductBehaviorSubj,
+    private productBehaviorSubj: StockBehaviorSubj,
     private categoryBehaviorSubj: CategoryBehaviorSubj,
     private customerBehaviorSubj: CustomerBehaviorSubj,
     private customerInvoiceBehaviorSubj: CustomerInvoiceBehaviorSubj,
@@ -90,7 +90,7 @@ export class Form01PaymentComponent implements OnInit {
     private accountControlBehaviorSubj: AccountControlBehaviorSubj,
   ) { 
     this.stockService.loadCategory();
-    this.stockService.loadProduct();
+    this.stockService.loadStock();
     this.customerService.loadCustomerInvoice();
     this.customerService.loadCustomer();
     this.accountService.loadAccountControl();

@@ -8,7 +8,7 @@ import { MatTableModule  } from '@angular/material/table';
 import { MatSortModule  } from '@angular/material/sort';
 import { Category } from 'src/shared/interface/P05Stock/Category';
 import { HttpClient } from '@angular/common/http';
-import { ProductBehaviorSubj } from 'src/shared/behaviorsubject/Product';
+import { StockBehaviorSubj } from 'src/shared/behaviorsubject/Product';
 import { Stock, InitialStock } from 'src/shared/interface/P05Stock/Stock';
 import { StockService } from 'src/shared/services/S05Stocks/S05_Category';
 import { CategoryBehaviorSubj } from 'src/shared/behaviorsubject/Category';
@@ -102,7 +102,7 @@ setTransactionStyle(row: Transaction) {
     private transactionService: TransactionService,
     private accountService: AccountService,
 
-    private productBehaviorSubj: ProductBehaviorSubj,
+    private productBehaviorSubj: StockBehaviorSubj,
     private categoryBehaviorSubj: CategoryBehaviorSubj,
     private supplierBehaviorSubj: SupplierBehaviorSubj,
     private supplierInvoiceBehaviorSubj: SupplierInvoiceBehaviorSubj,
@@ -112,7 +112,7 @@ setTransactionStyle(row: Transaction) {
     private transactionBehaviorSubj: TransactionBehaviorSubj,
   ) { 
     this.stockService.loadCategory();
-    this.stockService.loadProduct();
+    this.stockService.loadStock();
     this.supplierService.loadSupplierInvoice();
     this.supplierService.loadSupplier();
     this.accountService.loadAccountControl();

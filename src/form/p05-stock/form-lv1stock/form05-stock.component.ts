@@ -8,7 +8,7 @@ import { MatTableModule  } from '@angular/material/table';
 import { MatSortModule  } from '@angular/material/sort';
 import { Category } from 'src/shared/interface/P05Stock/Category';
 import { HttpClient } from '@angular/common/http';
-import { ProductBehaviorSubj } from 'src/shared/behaviorsubject/Product';
+import { StockBehaviorSubj } from 'src/shared/behaviorsubject/Product';
 import { Stock, InitialStock } from 'src/shared/interface/P05Stock/Stock';
 import { StockService } from 'src/shared/services/S05Stocks/S05_Category';
 import { CategoryBehaviorSubj } from 'src/shared/behaviorsubject/Category';
@@ -39,11 +39,11 @@ export class Form05StockComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private stockService: StockService,
-    private productBehaviorSubj: ProductBehaviorSubj,
+    private productBehaviorSubj: StockBehaviorSubj,
     private categoryBehaviorSubj: CategoryBehaviorSubj,
   ) { 
     this.stockService.loadCategory();
-    this.stockService.loadProduct();
+    this.stockService.loadStock();
     this.categoryBehaviorSubj.getCategoryList().subscribe((res)=>{ this.categoryDropDown = res  } )
     this.productBehaviorSubj.getProductList().subscribe((res)=>{ 
       this.categoryBehaviorSubj.getCategoryList().subscribe((res2)=>{
@@ -123,13 +123,13 @@ export class Form05StockComponent implements OnInit {
   }
 
   loadProduct(){
-    this.stockService.loadProduct();
+    this.stockService.loadStock();
   }
 
 
   register(){
     this.currentProduct.id = uuidv4()
-    this.http.post('http://localhost:3000/product/create',this.currentProduct).subscribe(res=>{
+    this.http.post('http://localhost:3000/stock/create',this.currentProduct).subscribe(res=>{
       this.loadProduct()
       this.clear()
     })
@@ -141,7 +141,7 @@ export class Form05StockComponent implements OnInit {
   deleteData(id: string){
     console.log(id)
     this.currentProduct.id = id
-    this.http.post('http://localhost:3000/product/delete',this.currentProduct).subscribe(
+    this.http.post('http://localhost:3000/stock/delete',this.currentProduct).subscribe(
       (res) =>{
         this.loadProduct()
         this.clear()
