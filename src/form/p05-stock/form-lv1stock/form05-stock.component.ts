@@ -45,7 +45,7 @@ export class Form05StockComponent implements OnInit {
     this.stockService.loadCategory();
     this.stockService.loadStock();
     this.categoryBehaviorSubj.getCategoryList().subscribe((res)=>{ this.categoryDropDown = res  } )
-    this.productBehaviorSubj.getProductList().subscribe((res)=>{ 
+    this.productBehaviorSubj.getStockList().subscribe((res)=>{ 
       this.categoryBehaviorSubj.getCategoryList().subscribe((res2)=>{
         for (let i = 0; i < res2.length; i++) {
           for (let y = 0; y < res.length; y++) {

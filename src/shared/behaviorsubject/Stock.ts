@@ -4,22 +4,22 @@ import { Stock, InitialStock } from "../interface/P05Stock/Stock";
 
 @Injectable()
 export class StockBehaviorSubj {
-    private ProductSubject = new BehaviorSubject<Stock>(InitialStock.InitialStockObj())
-    private ProductListSubject = new BehaviorSubject<Stock[]>([])
+    private StockSubject = new BehaviorSubject<Stock>(InitialStock.InitialStockObj())
+    private StockListSubject = new BehaviorSubject<Stock[]>([])
 
-    getProduct(){
-        return this.ProductSubject;
+    getStock(){
+        return this.StockSubject;
     }
 
-    setProduct(Product: Stock){
-        this.ProductSubject.next(Product)
+    setStock(Stock: Stock){
+        this.StockSubject.next(Stock)
     }
 
-    getProductList(){
-        return this.ProductListSubject;
+    getStockList(){
+        return this.StockListSubject;
     }
 
-    setProductList(ProductList: Stock[]){
-        this.ProductListSubject.next(ProductList)
+    setStockList(StockList: Stock[]){
+        this.StockListSubject.next(StockList)
     }
 }

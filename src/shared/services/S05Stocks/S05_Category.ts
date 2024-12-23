@@ -27,7 +27,7 @@ export class StockService{
 
     loadStock(){
         this.http.get('http://localhost:3000/stock/all').subscribe( (res:any)=>{
-            this.productBehaviorSubj.setProductList(res)
+            this.productBehaviorSubj.setStockList(res)
         },
         error => {
             if(error.error.meta){
@@ -40,7 +40,7 @@ export class StockService{
 
     loadProduct(){
         this.http.get('http://localhost:3000/stock/productlist').subscribe( (res:any)=>{
-            this.productBehaviorSubj.setProductList(res)
+            this.productBehaviorSubj.setStockList(res)
         },
         error => {
             if(error.error.meta){
