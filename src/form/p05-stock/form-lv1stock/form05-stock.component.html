@@ -14,7 +14,7 @@
 
             <mat-form-field appearance="fill">
                 <mat-label>product Name</mat-label>
-                <input [value]="currentProduct.productName" (blur)="productNameChange($event)" matInput>
+                <input [value]="currentProduct.productId" (blur)="productNameChange($event)" matInput>
             </mat-form-field>
 
             <mat-form-field appearance="fill">
@@ -23,19 +23,11 @@
             </mat-form-field>
             
             <mat-form-field appearance="fill">
-                <mat-label>Sale Unit Price</mat-label>
-                <input [value]="currentProduct.salePrice" (blur)="salePriceChange($event)" matInput>
+                <mat-label>Price</mat-label>
+                <input [value]="currentProduct.price" (blur)="salePriceChange($event)" matInput>
             </mat-form-field>
             
-            <mat-form-field appearance="fill">
-                <mat-label>Purchase Unit Price</mat-label>
-                <input [value]="currentProduct.currentPurchasePrice" (blur)="currentPriceChange($event)" matInput>
-            </mat-form-field>
             
-            <mat-form-field appearance="fill">
-                <mat-label>Stock Threshold</mat-label>
-                <input [value]="currentProduct.stockThresholdQty" (blur)="thresholdChange($event)" matInput>
-            </mat-form-field>
         </div>
     </div>
 

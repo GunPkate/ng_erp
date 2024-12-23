@@ -1,4 +1,4 @@
-export interface Product{
+export interface Stock{
     id: string
     productId: string
     catagoryId: string
@@ -13,8 +13,8 @@ export interface Product{
     userId: string
 }
 
-export class InitialProduct{
-    static InitialProductObj(){ 
+export class InitialStock{
+    static InitialStockObj(){ 
         return {
         id: "",
         productId: "",

@@ -1,17 +1,17 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { Product, InitialProduct } from "../interface/P05Stock/Product";
+import { Stock, InitialStock } from "../interface/P05Stock/Stock";
 
 @Injectable()
 export class ProductBehaviorSubj {
-    private ProductSubject = new BehaviorSubject<Product>(InitialProduct.InitialProductObj())
-    private ProductListSubject = new BehaviorSubject<Product[]>([])
+    private ProductSubject = new BehaviorSubject<Stock>(InitialStock.InitialStockObj())
+    private ProductListSubject = new BehaviorSubject<Stock[]>([])
 
     getProduct(){
         return this.ProductSubject;
     }
 
-    setProduct(Product: Product){
+    setProduct(Product: Stock){
         this.ProductSubject.next(Product)
     }
 
@@ -19,7 +19,7 @@ export class ProductBehaviorSubj {
         return this.ProductListSubject;
     }
 
-    setProductList(ProductList: Product[]){
+    setProductList(ProductList: Stock[]){
         this.ProductListSubject.next(ProductList)
     }
 }

@@ -66,7 +66,12 @@ export class Form05ProductComponent implements OnInit {
     console.log(this.currentCategory)
   }
 
-  categoryNameChange( event : any){
+  productNameChange( event : any){
+    this.currentCategory.categoryName = this.validateInput(event.target.value);
+    console.log(this.currentCategory)
+  }
+
+  qtyChange( event : any){
     this.currentCategory.categoryName = this.validateInput(event.target.value);
     console.log(this.currentCategory)
   }

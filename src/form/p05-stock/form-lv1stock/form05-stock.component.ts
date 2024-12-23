@@ -9,7 +9,7 @@ import { MatSortModule  } from '@angular/material/sort';
 import { Category } from 'src/shared/interface/P05Stock/Category';
 import { HttpClient } from '@angular/common/http';
 import { ProductBehaviorSubj } from 'src/shared/behaviorsubject/Product';
-import { Product, InitialProduct } from 'src/shared/interface/P05Stock/Product';
+import { Stock, InitialStock } from 'src/shared/interface/P05Stock/Stock';
 import { StockService } from 'src/shared/services/S05Stocks/S05_Category';
 import { CategoryBehaviorSubj } from 'src/shared/behaviorsubject/Category';
 import { v4 as uuidv4 } from 'uuid';
@@ -31,9 +31,9 @@ export class Form05StockComponent implements OnInit {
     'catagoryId','productName','quantity','salePrice','currentPurchasePrice','description',
     // 'expiryDate','manuDate','stockThresholdQty','userId'
   ];
-  dataSource :Product[] = []
+  dataSource :Stock[] = []
   categoryDropDown: Category[] = []
-  currentProduct: Product = InitialProduct.InitialProductObj()
+  currentProduct: Stock = InitialStock.InitialStockObj()
   manuDate: Date = new Date
   expiryDate: Date = new Date
   constructor(
@@ -62,14 +62,11 @@ export class Form05StockComponent implements OnInit {
     this.currentProduct.id  = '',
     this.currentProduct.productId  = '123,'
     this.currentProduct.catagoryId  = '',
-    this.currentProduct.productName  = 'Bufen'
     this.currentProduct.quantity  = 40,
-    this.currentProduct.salePrice  = 50,
-    this.currentProduct.currentPurchasePrice  = 30,
+    this.currentProduct.price  = 50,
     this.currentProduct.description  = 'Bufen lot 1'
     // this.currentProduct.expiryDate  = Date.now(),
     // this.currentProduct.manuDate  = Date.now(),
-    this.currentProduct.stockThresholdQty  = 10,
     this.currentProduct.userId  = '22d38441-b515-4a82-ae00-6207faa165b6'
   }
 
@@ -79,27 +76,18 @@ export class Form05StockComponent implements OnInit {
   }
 
   productNameChange( event : any){
-    this.currentProduct.productName = this.validateInput(event.target.value);
+    this.currentProduct.productId = this.validateInput(event.target.value);
     console.log(this.currentProduct)
   }
 
-  currentPriceChange( event : any){
-    this.currentProduct.currentPurchasePrice = this.validateInput(event.target.value);
-    console.log(this.currentProduct)
-  }
 
   quantityChange( event : any){
     this.currentProduct.quantity = this.validateInput(event.target.value);
     console.log(this.currentProduct)
   }
 
-  thresholdChange( event : any){
-    this.currentProduct.stockThresholdQty = event;
-    console.log(this.currentProduct)
-  }
-
   salePriceChange( event : any){
-    this.currentProduct.salePrice = event;
+    this.currentProduct.price = event;
     console.log(this.currentProduct)
   }
 
@@ -147,7 +135,7 @@ export class Form05StockComponent implements OnInit {
     })
   }
   clear(){
-    this.currentProduct = InitialProduct.InitialProductObj();
+    this.currentProduct = InitialStock.InitialStockObj();
   }
 
   deleteData(id: string){

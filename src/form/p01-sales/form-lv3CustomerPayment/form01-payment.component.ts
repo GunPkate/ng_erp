@@ -9,7 +9,7 @@ import { MatSortModule  } from '@angular/material/sort';
 import { Category } from 'src/shared/interface/P05Stock/Category';
 import { HttpClient } from '@angular/common/http';
 import { ProductBehaviorSubj } from 'src/shared/behaviorsubject/Product';
-import { Product, InitialProduct } from 'src/shared/interface/P05Stock/Product';
+import { Stock, InitialStock } from 'src/shared/interface/P05Stock/Stock';
 import { StockService } from 'src/shared/services/S05Stocks/S05_Category';
 import { CategoryBehaviorSubj } from 'src/shared/behaviorsubject/Category';
 import { v4 as uuidv4 } from 'uuid';
@@ -60,7 +60,7 @@ export class Form01PaymentComponent implements OnInit {
   categoryDropDown: Category[] = []
   customerDropDown: Customer[] = []
   customerInvoiceDropdown: CustomerInvoice[] = []
-  productDropDown: Product[] = []
+  productDropDown: Stock[] = []
   accountControlDropDown: AccountControl[] = []
 
   invoiceDate: Date = new Date
@@ -289,7 +289,7 @@ export class Form01PaymentComponent implements OnInit {
     }
     if(field == 'product'){
       for (let i = 0; i < this.productDropDown.length; i++) {
-        if( this.productDropDown[i].productId == value ) return this.productDropDown[i].productName
+        if( this.productDropDown[i].productId == value ) return this.productDropDown[i].productId
       }
     }
     return 'No Data'
