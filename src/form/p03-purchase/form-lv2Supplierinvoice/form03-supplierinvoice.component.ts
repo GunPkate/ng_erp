@@ -8,8 +8,6 @@ import { MatTableModule  } from '@angular/material/table';
 import { MatSortModule  } from '@angular/material/sort';
 import { Category } from 'src/shared/interface/P05Stock/Category';
 import { HttpClient } from '@angular/common/http';
-import { StockBehaviorSubj } from 'src/shared/behaviorsubject/Stock';
-import { Stock, InitialStock } from 'src/shared/interface/P05Stock/Stock';
 import { StockService } from 'src/shared/services/S05Stocks/S05_Category';
 import { CategoryBehaviorSubj } from 'src/shared/behaviorsubject/Category';
 import { v4 as uuidv4 } from 'uuid';
@@ -28,6 +26,8 @@ import { DateFormatPipe } from "../../../shared/services/Pipe/DatePipte";
 import Swal from 'sweetalert2';
 import { catchError, throwError } from 'rxjs';
 import { InitialTransaction, Transaction } from 'src/shared/interface/P07Transaction/Transaction';
+import { ProductBehaviorSubj } from 'src/shared/behaviorsubject/Product';
+import { Product } from 'src/shared/interface/P05Stock/Product';
 
 
 @Component({
@@ -58,7 +58,7 @@ export class Form03SupplierinvoiceComponent implements OnInit {
   categoryDropDown: Category[] = []
   supplierDropDown: Supplier[] = []
   supplierInvoiceDropdown: SupplierInvoice[] = []
-  productDropDown: Stock[] = []
+  productDropDown: Product[] = []
   accountControlDropDown: AccountControl[] = []
   
 
@@ -78,7 +78,7 @@ export class Form03SupplierinvoiceComponent implements OnInit {
     private supplierService: SupplierService,
     private accountService: AccountService,
 
-    private productBehaviorSubj: StockBehaviorSubj,
+    private productBehaviorSubj: ProductBehaviorSubj,
     private categoryBehaviorSubj: CategoryBehaviorSubj,
     private supplierBehaviorSubj: SupplierBehaviorSubj,
     private supplierInvoiceBehaviorSubj: SupplierInvoiceBehaviorSubj,
@@ -86,7 +86,7 @@ export class Form03SupplierinvoiceComponent implements OnInit {
     private accountControlBehaviorSubj: AccountControlBehaviorSubj,
   ) { 
     this.stockService.loadCategory();
-    this.stockService.loadStock();
+    this.stockService.loadProduct();
     this.supplierService.loadSupplierInvoice();
     this.supplierService.loadSupplier();
     this.accountService.loadAccountControl();
@@ -94,7 +94,7 @@ export class Form03SupplierinvoiceComponent implements OnInit {
     this.supplierBehaviorSubj.getSupplierList().subscribe((res)=>{ this.supplierDropDown = res})
     this.supplierInvoiceBehaviorSubj.getSupplierInvoiceList().subscribe((res)=>{ this.dataSource = res })
     this.categoryBehaviorSubj.getCategoryList().subscribe((res)=>{ this.categoryDropDown = res  } )
-    this.productBehaviorSubj.getStockList().subscribe((res)=>{ this.productDropDown = res })
+    this.productBehaviorSubj.getProductList().subscribe((res)=>{ this.productDropDown = res })
     this.accountControlBehaviorSubj.getAccountControlList().subscribe((res)=>{ this.accountControlDropDown = res})
     //   this.categoryBehaviorSubj.getCategoryList().subscribe((res2)=>{
     //     for (let i = 0; i < res2.length; i++) {
@@ -348,14 +348,16 @@ export class Form03SupplierinvoiceComponent implements OnInit {
   }
 
   getName(value: string, field: string){
+    console.log("Product",value)
     if(field == 'supplier'){
       for (let i = 0; i < this.supplierDropDown.length; i++) {
         if( this.supplierDropDown[i].supplierId == value ) return this.supplierDropDown[i].supplierName
       }
     }
+
     if(field == 'product'){
       for (let i = 0; i < this.productDropDown.length; i++) {
-        if( this.productDropDown[i].productId == value ) return this.productDropDown[i].productId
+        if( this.productDropDown[i].id == value ) return this.productDropDown[i].productName
       }
     }
     return 'No Data'
