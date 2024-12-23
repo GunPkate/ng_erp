@@ -9,7 +9,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { Form05CategoryComponent } from 'src/form/p05-stock/form-lv1category/form05-category.component';
 import { StockService } from 'src/shared/services/S05Stocks/S05_Category';
 import { CategoryBehaviorSubj } from 'src/shared/behaviorsubject/Category';
-import { StockBehaviorSubj } from 'src/shared/behaviorsubject/Product';
+import { StockBehaviorSubj } from 'src/shared/behaviorsubject/Stock';
 
 export const p05routes: Routes = [
   { 

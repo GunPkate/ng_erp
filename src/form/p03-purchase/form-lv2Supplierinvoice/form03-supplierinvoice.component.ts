@@ -8,7 +8,7 @@ import { MatTableModule  } from '@angular/material/table';
 import { MatSortModule  } from '@angular/material/sort';
 import { Category } from 'src/shared/interface/P05Stock/Category';
 import { HttpClient } from '@angular/common/http';
-import { StockBehaviorSubj } from 'src/shared/behaviorsubject/Product';
+import { StockBehaviorSubj } from 'src/shared/behaviorsubject/Stock';
 import { Stock, InitialStock } from 'src/shared/interface/P05Stock/Stock';
 import { StockService } from 'src/shared/services/S05Stocks/S05_Category';
 import { CategoryBehaviorSubj } from 'src/shared/behaviorsubject/Category';

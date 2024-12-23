@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { CategoryBehaviorSubj } from "src/shared/behaviorsubject/Category";
-import { StockBehaviorSubj } from "src/shared/behaviorsubject/Product";
+import { StockBehaviorSubj } from "src/shared/behaviorsubject/Stock";
 import Swal from "sweetalert2";
 
 @Injectable()
