@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { ButtonMenuComponent } from 'src/components/button-menu/button-menu.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FormProductComponent  } from 'src/form/p05-stock/form-lv1product/form05-product.component';
 import { RouterModule, Routes } from '@angular/router';
 import { P07TransactionListComponent } from './p07-transactions.component';
 import { Form07TransactionListComponent } from 'src/form/p07-transactions/form-lv7transactionList/form07-transactionList.component';
@@ -17,7 +16,6 @@ export const p07routes: Routes = [
     component:  P07TransactionListComponent,
     children: [
       {path: 'transactionlist', component: Form07TransactionListComponent},
-      {path: 'products', component: FormProductComponent},
     ]
   }
 ]
@@ -28,7 +26,6 @@ export const p07routes: Routes = [
   ],
   imports: [
     ButtonMenuComponent,
-    FormProductComponent,
     RouterModule.forChild(p07routes),
     Draggable,
 
