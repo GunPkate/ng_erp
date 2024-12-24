@@ -112,7 +112,7 @@ setTransactionStyle(row: Transaction) {
     private transactionBehaviorSubj: TransactionBehaviorSubj,
   ) { 
     this.stockService.loadCategory();
-    this.stockService.loadStock();
+    this.stockService.loadProduct();
     this.supplierService.loadSupplierInvoice();
     this.supplierService.loadSupplier();
     this.accountService.loadAccountControl();

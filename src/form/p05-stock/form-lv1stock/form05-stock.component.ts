@@ -43,7 +43,7 @@ export class Form05StockComponent implements OnInit {
     private categoryBehaviorSubj: CategoryBehaviorSubj,
   ) { 
     this.stockService.loadCategory();
-    this.stockService.loadStock();
+    this.stockService.loadProduct();
     this.categoryBehaviorSubj.getCategoryList().subscribe((res)=>{ this.categoryDropDown = res  } )
     this.productBehaviorSubj.getStockList().subscribe((res)=>{ 
       this.categoryBehaviorSubj.getCategoryList().subscribe((res2)=>{
@@ -123,7 +123,7 @@ export class Form05StockComponent implements OnInit {
   }
 
   loadProduct(){
-    this.stockService.loadStock();
+    this.stockService.loadProduct();
   }
 
 

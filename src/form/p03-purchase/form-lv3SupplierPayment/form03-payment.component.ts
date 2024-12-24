@@ -30,6 +30,8 @@ import { catchError, throwError } from 'rxjs';
 import { InitialSupplierPayment, SupplierPayment } from 'src/shared/interface/P03Purchases/Purchase/SupplierPayment';
 import { SupplierPaymentBehaviorSubj } from 'src/shared/behaviorsubject/SupplierInvoicePayment';
 import { Transaction,InitialTransaction } from 'src/shared/interface/P07Transaction/Transaction';
+import { Product } from 'src/shared/interface/P05Stock/Product';
+import { ProductBehaviorSubj } from 'src/shared/behaviorsubject/Product';
 
 
 @Component({
@@ -60,7 +62,7 @@ export class Form03PaymentComponent implements OnInit {
   categoryDropDown: Category[] = []
   supplierDropDown: Supplier[] = []
   supplierInvoiceDropdown: SupplierInvoice[] = []
-  productDropDown: Stock[] = []
+  productDropDown: Product[] = []
   accountControlDropDown: AccountControl[] = []
 
   invoiceDate: Date = new Date
@@ -81,7 +83,8 @@ export class Form03PaymentComponent implements OnInit {
     private supplierService: SupplierService,
     private accountService: AccountService,
 
-    private productBehaviorSubj: StockBehaviorSubj,
+    private stockBehaviorSubj: StockBehaviorSubj,
+    private productBehaviorSubj: ProductBehaviorSubj,
     private categoryBehaviorSubj: CategoryBehaviorSubj,
     private supplierBehaviorSubj: SupplierBehaviorSubj,
     private supplierInvoiceBehaviorSubj: SupplierInvoiceBehaviorSubj,
@@ -90,7 +93,7 @@ export class Form03PaymentComponent implements OnInit {
     private accountControlBehaviorSubj: AccountControlBehaviorSubj,
   ) { 
     this.stockService.loadCategory();
-    this.stockService.loadStock();
+    this.stockService.loadProduct();
     this.supplierService.loadSupplierInvoice();
     this.supplierService.loadSupplier();
     this.accountService.loadAccountControl();
@@ -98,7 +101,7 @@ export class Form03PaymentComponent implements OnInit {
     this.supplierBehaviorSubj.getSupplierList().subscribe((res)=>{ this.supplierDropDown = res})
     this.supplierInvoiceBehaviorSubj.getSupplierInvoiceList().subscribe((res)=>{ this.dataSource = res })
     this.categoryBehaviorSubj.getCategoryList().subscribe((res)=>{ this.categoryDropDown = res  } )
-    this.productBehaviorSubj.getStockList().subscribe((res)=>{ this.productDropDown = res })
+    this.productBehaviorSubj.getProductList().subscribe((res)=>{ this.productDropDown = res })
     this.accountControlBehaviorSubj.getAccountControlList().subscribe((res)=>{ this.accountControlDropDown = res})
   }
   ngOnInit(): void {
@@ -289,7 +292,7 @@ export class Form03PaymentComponent implements OnInit {
     }
     if(field == 'product'){
       for (let i = 0; i < this.productDropDown.length; i++) {
-        if( this.productDropDown[i].productId == value ) return this.productDropDown[i].productId
+        if( this.productDropDown[i].id == value ) return this.productDropDown[i].productName
       }
     }
     return 'No Data'

@@ -85,7 +85,7 @@ export class Form01CustomerinvoiceComponent implements OnInit {
     private accountControlBehaviorSubj: AccountControlBehaviorSubj,
   ) { 
     this.stockService.loadCategory();
-    this.stockService.loadStock();
+    this.stockService.loadProduct();
     this.customerService.loadCustomerInvoice();
     this.customerService.loadCustomer();
     this.accountService.loadAccountControl();
