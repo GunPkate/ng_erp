@@ -28,6 +28,7 @@ import { catchError, throwError } from 'rxjs';
 import { InitialTransaction, Transaction } from 'src/shared/interface/P07Transaction/Transaction';
 import { ProductBehaviorSubj } from 'src/shared/behaviorsubject/Product';
 import { Product } from 'src/shared/interface/P05Stock/Product';
+import { InitialStock } from 'src/shared/interface/P05Stock/Stock';
 
 
 @Component({
@@ -63,6 +64,8 @@ export class Form03SupplierinvoiceComponent implements OnInit {
   
 
   invoiceDate: Date = new Date
+  manuDate: Date = new Date
+  expDate: Date = new Date
 
   searchSupplierInvoice: SupplierInvoice[] = [];
   page:string = "list"
@@ -160,6 +163,18 @@ export class Form03SupplierinvoiceComponent implements OnInit {
     console.log(this.currentSupplierInvoice)
   }
 
+  dateManuChange( event : any){
+    console.log(event)
+    this.manuDate = this.validateInput(event);
+    console.log(this.manuDate)
+  }
+
+  dateExpChange( event : any){
+    console.log(event)
+    this.expDate = this.validateInput(event);
+    console.log(this.expDate)
+  }
+
 
   purchaseQtyChange(event: any){
     this.currentSupplierInvoiceDetail.purchaseQty = parseInt(this.validateInput(event.target.value));
@@ -209,6 +224,13 @@ export class Form03SupplierinvoiceComponent implements OnInit {
       this.loadSupplierInvoice()
       // this.clearDetails()
       this.loadInvoiceDetail()
+    },error => {
+      if(error.error.meta){
+          Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+      }else{
+          Swal.fire(JSON.stringify(error.name),error.message,'error')
+      }
+      return ;
     })
     this.transaction.push( this.setTransaction('dr','Inventory','1','104','8ff68454-c507-4784-9b83-7f11c1c649d4') )
     this.transaction.push( this.setTransaction('cr','Account Payable','2','201','8ff68454-c507-4784-9b83-7f11c1c649d4') )
@@ -224,8 +246,31 @@ export class Form03SupplierinvoiceComponent implements OnInit {
             }else{
                 Swal.fire(JSON.stringify(error.name),error.message,'error')
             }
+            return ;
           }
         )
+      }
+    )
+
+    let stock = InitialStock.InitialStockObj();
+    stock.id = uuidv4()
+    stock.productId = this.currentSupplierInvoiceDetail.productId
+    stock.status = "Purchase"
+    stock.quantity = this.currentSupplierInvoiceDetail.purchaseQty
+    stock.price = this.currentSupplierInvoiceDetail.purchaseUnitPrice
+    stock.description = ""
+    stock.expiryDate = this.expDate
+    stock.manuDate = this.manuDate
+    stock.userId = this.currentSupplierInvoice.userId
+    this.http.post('http://localhost:3000/stock/create',stock).subscribe(
+      res=>{
+        this.clear()
+      },error => {
+        if(error.error.meta){
+                Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+            }else{
+                Swal.fire(JSON.stringify(error.name),error.message,'error')
+            }
       }
     )
     // this.dataSourceDetails.push(this.currentSupplierInvoiceDetail)
@@ -253,6 +298,13 @@ export class Form03SupplierinvoiceComponent implements OnInit {
         this.clear()
         this.resetInvoice()
         this.dataSourceDetails = []
+      },
+      error => {
+        if(error.error.meta){
+                Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+            }else{
+                Swal.fire(JSON.stringify(error.name),error.message,'error')
+            }
       }
     )
   }
@@ -262,6 +314,13 @@ export class Form03SupplierinvoiceComponent implements OnInit {
       (res) =>{
         this.clearDetails()
         this.loadInvoiceDetail()
+      },
+      error => {
+        if(error.error.meta){
+                Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+            }else{
+                Swal.fire(JSON.stringify(error.name),error.message,'error')
+            }
       }
     )
   }
@@ -273,6 +332,13 @@ export class Form03SupplierinvoiceComponent implements OnInit {
       (res) =>{
         this.loadSupplierInvoice()
         this.clear()
+      },
+      error => {
+        if(error.error.meta){
+                Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+            }else{
+                Swal.fire(JSON.stringify(error.name),error.message,'error')
+            }
       }
     )
   }

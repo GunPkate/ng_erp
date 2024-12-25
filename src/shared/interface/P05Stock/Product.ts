@@ -2,6 +2,7 @@ export interface Product{
     id: string
     productName: string
     stockThresholdQty: number
+    catagoryId: string
     // userId: string
 }
 
@@ -11,6 +12,7 @@ export class InitialProduct{
             id: "",
             productName: "",
             stockThresholdQty: 0,
+            catagoryId: ""
             // userId: "",
         }
     }

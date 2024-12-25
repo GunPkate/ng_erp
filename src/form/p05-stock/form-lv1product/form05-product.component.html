@@ -11,7 +11,7 @@
     </div>
 </div>
 <div class="d-flex">  
-    <div class="col-6">    
+    <div class="col-4">    
         <div>
             <mat-form-field class="col-12" appearance="fill">
                 <mat-label>Product Name</mat-label>
@@ -19,7 +19,7 @@
             </mat-form-field>
         </div>
     </div>
-    <div class="col-6">     
+    <div class="col-4">     
         <div>
             <mat-form-field class="col-12" appearance="fill">
                 <mat-label>Stock Threshold</mat-label>
@@ -28,6 +28,16 @@
         </div>
     </div>
 
+    <div class="col-4">   
+    <mat-form-field class="col-12" appearance="fill">
+        <mat-label>Select Supplier</mat-label>
+        <mat-select [value]="currentProduct.catagoryId" (selectionChange)="categoryChange($event.value)">
+            <div *ngFor="let i of categoryDropDown">
+                <mat-option [value]="i.id	">{{i.categoryName}}</mat-option>
+            </div>
+        </mat-select>
+    </mat-form-field>
+    </div>
 </div>
 <div class="d-flex">
     <div class="ml-4">
@@ -62,6 +72,11 @@
         <ng-container matColumnDef="stockThresholdQty">
             <th mat-header-cell *matHeaderCellDef> Threshold Qty </th>
             <td mat-cell *matCellDef="let element"> {{element.stockThresholdQty}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="catagoryId">
+            <th mat-header-cell *matHeaderCellDef> Catagory Id </th>
+            <td mat-cell *matCellDef="let element"> {{ getName(element.catagoryId,'category') }} </td>
         </ng-container>
                 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

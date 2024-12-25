@@ -182,6 +182,24 @@
             </div>
 
             <div>
+                <mat-form-field class="col-4" appearance="fill">
+                    <mat-label>Manufactured Date</mat-label>
+                    <input (dateInput)="dateManuChange($event.value)" matInput [matDatepicker]="manuDate">
+                    <mat-datepicker-toggle matSuffix [for]="manuDate"></mat-datepicker-toggle>
+                    <mat-datepicker #manuDate></mat-datepicker>
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                </mat-form-field>  
+
+                <mat-form-field class="col-4" appearance="fill">
+                    <mat-label>Expiry Date</mat-label>
+                    <input (dateInput)="dateExpChange($event.value)" matInput [matDatepicker]="expDate">
+                    <mat-datepicker-toggle matSuffix [for]="expDate"></mat-datepicker-toggle>
+                    <mat-datepicker #expDate></mat-datepicker>
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                </mat-form-field>  
+            </div>
+
+            <div>
                 <mat-form-field style="opacity: 0.01" class="col-12" appearance="fill">
                     <mat-label>Description</mat-label>
                     <textarea disabled style="height: 150px;" [value]="currentSupplierInvoice.description" (blur)="descriptionChange($event)" matInput></textarea>

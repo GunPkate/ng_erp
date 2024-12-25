@@ -11,26 +11,31 @@ import { v4 as uuidv4 } from 'uuid';
 import { StockService } from 'src/shared/services/S05Stocks/S05_Category';
 import { InitialProduct, Product } from 'src/shared/interface/P05Stock/Product';
 import { ProductBehaviorSubj } from 'src/shared/behaviorsubject/Product';
+import { Category } from 'src/shared/interface/P05Stock/Category';
+import { CategoryBehaviorSubj } from 'src/shared/behaviorsubject/Category';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-form05-product',
   templateUrl: './form05-product.component.html',
   standalone: true,
-  imports: [ MatFormFieldModule, MatInputModule,MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatSortModule, MatTableModule, ],
+  imports: [ MatFormFieldModule, MatInputModule,MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatSortModule, MatTableModule, NgFor],
   styleUrls: ['./form05-product.component.css']
 })
 
 export class Form05ProductComponent implements OnInit {
   
   title = 'Product List'
-  displayedColumns: string[] = ['id', 'productName', 'stockThresholdQty'];
+  displayedColumns: string[] = ['id', 'productName', 'stockThresholdQty', 'catagoryId'];
   dataSource :Product[] = []
   currentProduct: Product = InitialProduct.InitialProductObj();
+  categoryDropDown: Category[] = []
 
   constructor(
     private http: HttpClient,
-    private stocService: StockService,
+    private stockService: StockService,
     private productBehaviorSubj: ProductBehaviorSubj,
+    private categoryBehaviorSubj: CategoryBehaviorSubj,
   ) { 
     this.loadProduct()
   }
@@ -45,8 +50,10 @@ export class Form05ProductComponent implements OnInit {
   }
 
   loadProduct() {
-    this.stocService.loadProduct();
+    this.stockService.loadProduct();
     this.productBehaviorSubj.getProductList().subscribe((res)=>{ this.dataSource = res  } )
+    this.stockService.loadCategory();
+    this.categoryBehaviorSubj.getCategoryList().subscribe((res=>{ this.categoryDropDown = res }))
   }
 
   clear(){
@@ -74,6 +81,20 @@ export class Form05ProductComponent implements OnInit {
   qtyChange( event : any){
     this.currentProduct.stockThresholdQty = parseInt(this.validateInput(event.target.value));
     console.log(this.currentProduct)
+  }
+
+  categoryChange( event : any){
+    this.currentProduct.catagoryId = this.validateInput(event);
+    console.log(this.currentProduct)
+  }
+
+  getName(value: string, field: string){
+    if(field == 'category'){
+      for (let i = 0; i < this.categoryDropDown.length; i++) {
+        if( this.categoryDropDown[i].id == value ) return this.categoryDropDown[i].categoryName
+      }
+    }
+    return 'No Data'
   }
 
   deleteData(id: string){
