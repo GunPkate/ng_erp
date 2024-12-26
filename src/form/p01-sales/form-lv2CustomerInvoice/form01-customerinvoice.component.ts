@@ -108,8 +108,11 @@ export class Form01CustomerinvoiceComponent implements OnInit {
     // } )
   }
   ngOnInit(): void {
+    let date = new Date()
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1 ;
     this.currentCustomerInvoice.id = '',
-    this.currentCustomerInvoice.invoiceNo = 'INV123'
+    this.currentCustomerInvoice.invoiceNo = 'INVS' + year + month
     this.currentCustomerInvoice.customerId = ''
     this.currentCustomerInvoice.date = new Date
     this.currentCustomerInvoice.title = 'Sale #1'
@@ -217,10 +220,10 @@ export class Form01CustomerinvoiceComponent implements OnInit {
         }
       }
     )
-    this.transaction.push( this.setTransaction('dr','Account Receivable','1','103','8ff68454-c507-4784-9b83-7f11c1c649d4') )
-    this.transaction.push( this.setTransaction('cr','Sale Revenue','4','401','8ff68454-c507-4784-9b83-7f11c1c649d4') )
-    this.transaction.push( this.setTransaction('dr','Cost of Goods Sold','5','502','8ff68454-c507-4784-9b83-7f11c1c649d4') )
-    this.transaction.push( this.setTransaction('cr','Inventory','1','104','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+    this.transaction.push( this.setTransaction(this.currentCustomerInvoiceDetail.id, 'dr','Account Receivable','1','103','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+    this.transaction.push( this.setTransaction(this.currentCustomerInvoiceDetail.id, 'cr','Sale Revenue','4','401','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+    this.transaction.push( this.setTransaction(this.currentCustomerInvoiceDetail.id, 'dr','Cost of Goods Sold','5','502','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+    this.transaction.push( this.setTransaction(this.currentCustomerInvoiceDetail.id, 'cr','Inventory','1','104','8ff68454-c507-4784-9b83-7f11c1c649d4') )
     this.transaction.forEach(
       x => {
         this.http.post('http://localhost:3000/transaction/create',x).pipe(catchError(error => throwError(error))).subscribe(
@@ -338,13 +341,14 @@ export class Form01CustomerinvoiceComponent implements OnInit {
     console.log(id, 'page', this.selectInvoiceDetail)
   }
 
-  setTransaction(acctype: string, title: string, accHead: string, accControl: string, year: string){
+  setTransaction(invoiceDetailsId: string, acctype: string, title: string, accHead: string, accControl: string, year: string){
     let transaction = InitialTransaction.InitialTransactionObj(); 
     transaction.id = uuidv4()
     transaction.financialYearId = year
     transaction.accountHeadCode = accHead
     transaction.accountControlCode = accControl
     transaction.invoiceNo = this.currentCustomerInvoice.invoiceNo 
+    transaction.invoiceDetailsId = invoiceDetailsId
     transaction.userId = this.currentCustomerInvoice.userId
     if(acctype == 'dr'){
       transaction.debit = this.currentCustomerInvoiceDetail.saleQty * this.currentCustomerInvoiceDetail.saleUnitPrice

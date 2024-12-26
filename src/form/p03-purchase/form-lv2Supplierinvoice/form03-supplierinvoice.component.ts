@@ -112,8 +112,11 @@ export class Form03SupplierinvoiceComponent implements OnInit {
     // } )
   }
   ngOnInit(): void {
+    let date = new Date()
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1 ;
     this.currentSupplierInvoice.id = '',
-    this.currentSupplierInvoice.invoiceNo = 'INV123'
+    this.currentSupplierInvoice.invoiceNo = 'INVP' + year + month
     this.currentSupplierInvoice.supplierId = ''
     this.currentSupplierInvoice.date = new Date
     this.currentSupplierInvoice.title = 'Purchase #1'
@@ -232,8 +235,8 @@ export class Form03SupplierinvoiceComponent implements OnInit {
       }
       return ;
     })
-    this.transaction.push( this.setTransaction('dr','Inventory','1','104','8ff68454-c507-4784-9b83-7f11c1c649d4') )
-    this.transaction.push( this.setTransaction('cr','Account Payable','2','201','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+    this.transaction.push( this.setTransaction(this.currentSupplierInvoiceDetail.id,'dr','Inventory','1','104','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+    this.transaction.push( this.setTransaction(this.currentSupplierInvoiceDetail.id,'cr','Account Payable','2','201','8ff68454-c507-4784-9b83-7f11c1c649d4') )
     this.transaction.forEach(
       x => {
         this.http.post('http://localhost:3000/transaction/create',x).pipe(catchError(error => throwError(error))).subscribe(
@@ -394,13 +397,14 @@ export class Form03SupplierinvoiceComponent implements OnInit {
     console.log(id, 'page', this.selectInvoiceDetail)
   }
 
-  setTransaction(acctype: string, title: string, accHead: string, accControl: string, year: string){
+  setTransaction(invoiceDetailsId: string, acctype: string, title: string, accHead: string, accControl: string, year: string){
     let transaction = InitialTransaction.InitialTransactionObj(); 
     transaction.id = uuidv4()
     transaction.financialYearId = year
     transaction.accountHeadCode = accHead
     transaction.accountControlCode = accControl 
     transaction.invoiceNo = this.currentSupplierInvoice.invoiceNo 
+    transaction.invoiceDetailsId = invoiceDetailsId
     transaction.userId = this.currentSupplierInvoice.userId
     if(acctype == 'dr'){
       transaction.debit = this.currentSupplierInvoiceDetail.purchaseQty * this.currentSupplierInvoiceDetail.purchaseUnitPrice
