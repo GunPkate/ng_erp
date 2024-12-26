@@ -28,6 +28,8 @@ import Swal from 'sweetalert2';
 import { catchError, throwError } from 'rxjs';
 import { InitialTransaction, Transaction } from 'src/shared/interface/P07Transaction/Transaction';
 import { CustomerInvoiceDetailBehaviorSubj } from 'src/shared/behaviorsubject/CustomerInvoiceDetail';
+import { Product } from 'src/shared/interface/P05Stock/Product';
+import { ProductBehaviorSubj } from 'src/shared/behaviorsubject/Product';
 
 
 @Component({
@@ -58,7 +60,7 @@ export class Form01CustomerinvoiceComponent implements OnInit {
   categoryDropDown: Category[] = []
   customerDropDown: Customer[] = []
   customerInvoiceDropdown: CustomerInvoice[] = []
-  productDropDown: Stock[] = []
+  productDropDown: Product[] = []
   accountControlDropDown: AccountControl[] = []
   
 
@@ -77,7 +79,7 @@ export class Form01CustomerinvoiceComponent implements OnInit {
     private customerService: CustomerService,
     private accountService: AccountService,
 
-    private productBehaviorSubj: StockBehaviorSubj,
+    private productBehaviorSubj: ProductBehaviorSubj,
     private categoryBehaviorSubj: CategoryBehaviorSubj,
     private customerBehaviorSubj: CustomerBehaviorSubj,
     private customerInvoiceBehaviorSubj: CustomerInvoiceBehaviorSubj,
@@ -93,7 +95,7 @@ export class Form01CustomerinvoiceComponent implements OnInit {
     this.customerBehaviorSubj.getCustomerList().subscribe((res)=>{ this.customerDropDown = res})
     this.customerInvoiceBehaviorSubj.getCustomerInvoiceList().subscribe((res)=>{ this.dataSource = res })
     this.categoryBehaviorSubj.getCategoryList().subscribe((res)=>{ this.categoryDropDown = res  } )
-    this.productBehaviorSubj.getStockList().subscribe((res)=>{ this.productDropDown = res })
+    this.productBehaviorSubj.getProductList().subscribe((res)=>{ this.productDropDown = res })
     this.accountControlBehaviorSubj.getAccountControlList().subscribe((res)=>{ this.accountControlDropDown = res})
     //   this.categoryBehaviorSubj.getCategoryList().subscribe((res2)=>{
     //     for (let i = 0; i < res2.length; i++) {
@@ -369,7 +371,7 @@ export class Form01CustomerinvoiceComponent implements OnInit {
     }
     if(field == 'product'){
       for (let i = 0; i < this.productDropDown.length; i++) {
-        if( this.productDropDown[i].productId == value ) return this.productDropDown[i].productId
+        if( this.productDropDown[i].id == value ) return this.productDropDown[i].productName
       }
     }
     return 'No Data'
