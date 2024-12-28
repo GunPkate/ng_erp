@@ -162,7 +162,7 @@
                     <mat-label>Select Product</mat-label>
                     <mat-select [value]="currentSupplierInvoice.supplierId" (selectionChange)="productChange($event.value)">
                         <div *ngFor="let i of productDropDown">
-                            <mat-option [value]="i.productId">{{i.productName}}</mat-option>
+                            <mat-option [value]="i.id">{{getName(i.id, 'product')}}</mat-option>
                         </div>
                     </mat-select>
                 </mat-form-field>
@@ -179,6 +179,24 @@
 
     
 
+            </div>
+
+            <div>
+                <mat-form-field class="col-4" appearance="fill">
+                    <mat-label>Manufactured Date</mat-label>
+                    <input (dateInput)="dateManuChange($event.value)" matInput [matDatepicker]="manuDate">
+                    <mat-datepicker-toggle matSuffix [for]="manuDate"></mat-datepicker-toggle>
+                    <mat-datepicker #manuDate></mat-datepicker>
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                </mat-form-field>  
+
+                <mat-form-field class="col-4" appearance="fill">
+                    <mat-label>Expiry Date</mat-label>
+                    <input (dateInput)="dateExpChange($event.value)" matInput [matDatepicker]="expDate">
+                    <mat-datepicker-toggle matSuffix [for]="expDate"></mat-datepicker-toggle>
+                    <mat-datepicker #expDate></mat-datepicker>
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                </mat-form-field>  
             </div>
 
             <div>

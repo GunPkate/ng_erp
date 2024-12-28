@@ -24,7 +24,7 @@ import { StockService } from 'src/shared/services/S05Stocks/S05_Category';
 export class Form05CategoryComponent implements OnInit {
   
 
-  title04 = 'User Type'
+  title = 'Category List'
   displayedColumns: string[] = ['id', 'categoryName'];
   dataSource :Category[] = []
   currentCategory: Category = InitialCategory.InitialCategoryObj();

@@ -8,8 +8,8 @@ import { MatTableModule  } from '@angular/material/table';
 import { MatSortModule  } from '@angular/material/sort';
 import { Category } from 'src/shared/interface/P05Stock/Category';
 import { HttpClient } from '@angular/common/http';
-import { ProductBehaviorSubj } from 'src/shared/behaviorsubject/Product';
-import { Product, InitialProduct } from 'src/shared/interface/P05Stock/Product';
+import { StockBehaviorSubj } from 'src/shared/behaviorsubject/Stock';
+import { Stock, InitialStock } from 'src/shared/interface/P05Stock/Stock';
 import { StockService } from 'src/shared/services/S05Stocks/S05_Category';
 import { CategoryBehaviorSubj } from 'src/shared/behaviorsubject/Category';
 import { v4 as uuidv4 } from 'uuid';
@@ -75,7 +75,7 @@ setTransactionStyle(row: Transaction) {
   categoryDropDown: Category[] = []
   supplierDropDown: Supplier[] = []
   supplierInvoiceDropdown: SupplierInvoice[] = []
-  productDropDown: Product[] = []
+  productDropDown: Stock[] = []
   accountControlDropDown: AccountControl[] = []
 
   invoiceDate: Date = new Date
@@ -102,7 +102,7 @@ setTransactionStyle(row: Transaction) {
     private transactionService: TransactionService,
     private accountService: AccountService,
 
-    private productBehaviorSubj: ProductBehaviorSubj,
+    private productBehaviorSubj: StockBehaviorSubj,
     private categoryBehaviorSubj: CategoryBehaviorSubj,
     private supplierBehaviorSubj: SupplierBehaviorSubj,
     private supplierInvoiceBehaviorSubj: SupplierInvoiceBehaviorSubj,
@@ -121,7 +121,7 @@ setTransactionStyle(row: Transaction) {
     this.supplierBehaviorSubj.getSupplierList().subscribe((res)=>{ this.supplierDropDown = res})
     this.supplierInvoiceBehaviorSubj.getSupplierInvoiceList().subscribe((res)=>{ this.dataSource = res })
     this.categoryBehaviorSubj.getCategoryList().subscribe((res)=>{ this.categoryDropDown = res  } )
-    this.productBehaviorSubj.getProductList().subscribe((res)=>{ this.productDropDown = res })
+    this.productBehaviorSubj.getStockList().subscribe((res)=>{ this.productDropDown = res })
     this.accountControlBehaviorSubj.getAccountControlList().subscribe((res)=>{ this.accountControlDropDown = res})
   }
   ngOnInit(): void {
@@ -320,7 +320,7 @@ setTransactionStyle(row: Transaction) {
     }
     if(field == 'product'){
       for (let i = 0; i < this.productDropDown.length; i++) {
-        if( this.productDropDown[i].productId == value ) return this.productDropDown[i].productName
+        if( this.productDropDown[i].productId == value ) return this.productDropDown[i].productId
       }
     }
     return 'No Data'
@@ -359,8 +359,8 @@ setTransactionStyle(row: Transaction) {
       this.currentSupplierPayment.invoiceNo = rowData.id
       this.currentSupplierPayment.userId = '22d38441-b515-4a82-ae00-6207faa165b6'
 
-      this.transaction.push( this.setTransaction('dr','Account Payable','5','502','8ff68454-c507-4784-9b83-7f11c1c649d4') )
-      this.transaction.push( this.setTransaction('cr','Cash Payment','5','502','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+      this.transaction.push( this.setTransaction('dr','Account Payable','2','201','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+      this.transaction.push( this.setTransaction('cr','Cash Payment','1','101','8ff68454-c507-4784-9b83-7f11c1c649d4') )
       console.log('this.transaction',this.transaction)
     }
 

@@ -4,6 +4,7 @@ export interface Transaction {
     accountHeadCode: string
     accountControlCode: string
     invoiceNo: string
+    invoiceDetailsId: string
     userId: string
     credit: number
     debit: number
@@ -20,6 +21,7 @@ export class InitialTransaction{
             accountHeadCode: "",
             accountControlCode: "",
             invoiceNo: "",
+            invoiceDetailsId: "",
             userId: "",
             credit: 0,
             debit: 0,

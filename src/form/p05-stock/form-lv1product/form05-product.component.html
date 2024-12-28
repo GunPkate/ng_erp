@@ -1,136 +1,86 @@
-<p>form-lv1 works!</p>
+<p>{{title}}</p>
 
-<div class="d-flex">   
-    <div class="col-3">
-        <div class="d-flex flex-column">
-            <mat-form-field appearance="fill">
-                <mat-label>Category</mat-label>
-                <mat-select [value]="currentProduct.catagoryId" (selectionChange)="categoryChange($event.value)">
-                    <div *ngFor="let i of categoryDropDown">
-                        <mat-option [value]="i.id">{{ i.categoryName }}</mat-option>
-                    </div>
-                </mat-select>
+<div class="d-flex">  
+    <div class="col-12">     
+        <div>
+            <mat-form-field class="col-12" appearance="fill">
+                <mat-label>Id</mat-label>
+                <input [value]="currentProduct.id"(change)="IdChange($event)" matInput disabled>
             </mat-form-field>
-
-            <mat-form-field appearance="fill">
-                <mat-label>product Name</mat-label>
-                <input [value]="currentProduct.productName" (blur)="productNameChange($event)" matInput>
+        </div>
+    </div>
+</div>
+<div class="d-flex">  
+    <div class="col-4">    
+        <div>
+            <mat-form-field class="col-12" appearance="fill">
+                <mat-label>Product Name</mat-label>
+                <input [value]="currentProduct.productName"(change)="productNameChange($event)" matInput>
             </mat-form-field>
-
-            <mat-form-field appearance="fill">
-                <mat-label>Quantity</mat-label>
-                <input [value]="currentProduct.quantity" (blur)="quantityChange($event)" matInput>
-            </mat-form-field>
-            
-            <mat-form-field appearance="fill">
-                <mat-label>Sale Unit Price</mat-label>
-                <input [value]="currentProduct.salePrice" (blur)="salePriceChange($event)" matInput>
-            </mat-form-field>
-            
-            <mat-form-field appearance="fill">
-                <mat-label>Purchase Unit Price</mat-label>
-                <input [value]="currentProduct.currentPurchasePrice" (blur)="currentPriceChange($event)" matInput>
-            </mat-form-field>
-            
-            <mat-form-field appearance="fill">
+        </div>
+    </div>
+    <div class="col-4">     
+        <div>
+            <mat-form-field class="col-12" appearance="fill">
                 <mat-label>Stock Threshold</mat-label>
-                <input [value]="currentProduct.stockThresholdQty" (blur)="thresholdChange($event)" matInput>
+                <input [value]="currentProduct.stockThresholdQty"(change)="qtyChange($event)" matInput>
             </mat-form-field>
         </div>
     </div>
 
-    <div class="col-3">
-        <div class="d-flex flex-column">
-
-
-              <mat-form-field appearance="fill">
-                <mat-label>Expiry Date</mat-label>
-                <input (dateInput)="manuDateChange($event.value)" matInput [matDatepicker]="expiryDate">
-                <mat-datepicker-toggle matSuffix [for]="expiryDate"></mat-datepicker-toggle>
-                <mat-datepicker #expiryDate></mat-datepicker>
-                <mat-hint>MM/DD/YYYY</mat-hint>
-              </mat-form-field>  
-              
-              <mat-form-field appearance="fill">
-                <mat-label>ManuFactured Date</mat-label>
-                <input (dateInput)="manuDateChange($event.value)" matInput [matDatepicker]="manuDate">
-                <mat-datepicker-toggle matSuffix [for]="manuDate"></mat-datepicker-toggle>
-                <mat-datepicker #manuDate></mat-datepicker>
-                <mat-hint>MM/DD/YYYY</mat-hint>
-              </mat-form-field>           
-             
-            <mat-form-field appearance="fill">
-                <mat-label>Description</mat-label>
-                <textarea style="height: 150px;" [value]="currentProduct.description" (blur)="descriptionChange($event)" matInput></textarea>
-            </mat-form-field>       
-        </div>
-    </div>
-
-    <div class="d-flex flex-column justify-content-between">
-        <div class="d-flex flex-column">
-            <div><button style="width: 80px;" class="btn btn-primary" (click)="register()" >Save</button></div>
-            <div><button style="width: 80px;" class="btn btn-info" >Update</button></div>
-            <div><button style="width: 80px;" class="btn btn-warning" (click)="clear()">Clear</button></div>
-            <div><button style="width: 80px;" class="btn btn-danger" >Cancel</button></div>
-            
-            
-        </div>
-        
-        <div class="mb-4"><button class="btn btn-danger" >Print Catalog</button></div>
-    </div>
-</div>
-
-<div class="d-flex">
-    <mat-form-field appearance="fill">
-        <mat-label>Search</mat-label>
-        <input matInput>
+    <div class="col-4">   
+    <mat-form-field class="col-12" appearance="fill">
+        <mat-label>Select Supplier</mat-label>
+        <mat-select [value]="currentProduct.catagoryId" (selectionChange)="categoryChange($event.value)">
+            <div *ngFor="let i of categoryDropDown">
+                <mat-option [value]="i.id	">{{i.categoryName}}</mat-option>
+            </div>
+        </mat-select>
     </mat-form-field>
+    </div>
+</div>
+<div class="d-flex">
+    <div class="ml-4">
+        <button class="btn btn-primary" (click)="register()" type="submit">Register</button>
+        <button class="btn btn-danger" (click)="clear()">Clear</button>
+    </div>
 </div>
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 col-12">
 
-    <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
+<div class="col-12">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 col-12">
+        
+        <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+        
+        <!-- Position Column -->
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let element"> 
+                <button  class="btn btn-outline-danger" (click)="deleteData(element.id)"> <i class="fas fa-trash-alt">Delete</i></button>
+                &nbsp; <button  class="btn btn-outline-info" (click)="updateData(element.id)"> <i class="fas fa-trash-alt">Update</i></button>
+                &nbsp; {{element.id}} 
+            </td>
   
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> No. </th>
-      <td mat-cell *matCellDef="let element"> 
-        <button  class="btn btn-outline-danger" (click)="deleteData(element.id)"> <i class="fas fa-trash-alt">Delete</i></button>
-        &nbsp; <button  class="btn btn-outline-info" (click)="updateData(element.id)"> <i class="fas fa-trash-alt">Update</i></button>
-        &nbsp; {{element.id}} 
-      </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="catagoryId">
-      <th mat-header-cell *matHeaderCellDef> catagoryId </th>
-      <td mat-cell *matCellDef="let element"> {{element.catagoryId}} </td>
-    </ng-container>
+        </ng-container>
 
-    <ng-container matColumnDef="productName">
-      <th mat-header-cell *matHeaderCellDef> Product Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="quantity">
-      <th mat-header-cell *matHeaderCellDef> Quantity </th>
-      <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="salePrice">
-      <th mat-header-cell *matHeaderCellDef> SalePrice </th>
-      <td mat-cell *matCellDef="let element"> {{element.salePrice}} </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="currentPurchasePrice">
-      <th mat-header-cell *matHeaderCellDef> Purchase Price </th>
-      <td mat-cell *matCellDef="let element"> {{element.currentPurchasePrice}} </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="description">
-      <th mat-header-cell *matHeaderCellDef> Description </th>
-      <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-    </ng-container>
-  
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+        <ng-container matColumnDef="productName">
+            <th mat-header-cell *matHeaderCellDef> ProductName </th>
+            <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="stockThresholdQty">
+            <th mat-header-cell *matHeaderCellDef> Threshold Qty </th>
+            <td mat-cell *matCellDef="let element"> {{element.stockThresholdQty}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="catagoryId">
+            <th mat-header-cell *matHeaderCellDef> Catagory Id </th>
+            <td mat-cell *matCellDef="let element"> {{ getName(element.catagoryId,'category') }} </td>
+        </ng-container>
+                
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+</div>
+

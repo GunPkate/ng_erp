@@ -8,8 +8,6 @@ import { MatTableModule  } from '@angular/material/table';
 import { MatSortModule  } from '@angular/material/sort';
 import { Category } from 'src/shared/interface/P05Stock/Category';
 import { HttpClient } from '@angular/common/http';
-import { ProductBehaviorSubj } from 'src/shared/behaviorsubject/Product';
-import { Product, InitialProduct } from 'src/shared/interface/P05Stock/Product';
 import { StockService } from 'src/shared/services/S05Stocks/S05_Category';
 import { CategoryBehaviorSubj } from 'src/shared/behaviorsubject/Category';
 import { v4 as uuidv4 } from 'uuid';
@@ -28,6 +26,9 @@ import { DateFormatPipe } from "../../../shared/services/Pipe/DatePipte";
 import Swal from 'sweetalert2';
 import { catchError, throwError } from 'rxjs';
 import { InitialTransaction, Transaction } from 'src/shared/interface/P07Transaction/Transaction';
+import { ProductBehaviorSubj } from 'src/shared/behaviorsubject/Product';
+import { Product } from 'src/shared/interface/P05Stock/Product';
+import { InitialStock } from 'src/shared/interface/P05Stock/Stock';
 
 
 @Component({
@@ -63,6 +64,8 @@ export class Form03SupplierinvoiceComponent implements OnInit {
   
 
   invoiceDate: Date = new Date
+  manuDate: Date = new Date
+  expDate: Date = new Date
 
   searchSupplierInvoice: SupplierInvoice[] = [];
   page:string = "list"
@@ -109,8 +112,11 @@ export class Form03SupplierinvoiceComponent implements OnInit {
     // } )
   }
   ngOnInit(): void {
+    let date = new Date()
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1 ;
     this.currentSupplierInvoice.id = '',
-    this.currentSupplierInvoice.invoiceNo = 'INV123'
+    this.currentSupplierInvoice.invoiceNo = 'INVP' + year + month
     this.currentSupplierInvoice.supplierId = ''
     this.currentSupplierInvoice.date = new Date
     this.currentSupplierInvoice.title = 'Purchase #1'
@@ -158,6 +164,18 @@ export class Form03SupplierinvoiceComponent implements OnInit {
     this.invoiceDate = this.validateInput(event);
     this.currentSupplierInvoice.date = this.invoiceDate;
     console.log(this.currentSupplierInvoice)
+  }
+
+  dateManuChange( event : any){
+    console.log(event)
+    this.manuDate = this.validateInput(event);
+    console.log(this.manuDate)
+  }
+
+  dateExpChange( event : any){
+    console.log(event)
+    this.expDate = this.validateInput(event);
+    console.log(this.expDate)
   }
 
 
@@ -209,9 +227,16 @@ export class Form03SupplierinvoiceComponent implements OnInit {
       this.loadSupplierInvoice()
       // this.clearDetails()
       this.loadInvoiceDetail()
+    },error => {
+      if(error.error.meta){
+          Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+      }else{
+          Swal.fire(JSON.stringify(error.name),error.message,'error')
+      }
+      return ;
     })
-    this.transaction.push( this.setTransaction('dr','Inventory','1','104','8ff68454-c507-4784-9b83-7f11c1c649d4') )
-    this.transaction.push( this.setTransaction('cr','Account Payable','5','502','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+    this.transaction.push( this.setTransaction(this.currentSupplierInvoiceDetail.id,'dr','Inventory','1','104','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+    this.transaction.push( this.setTransaction(this.currentSupplierInvoiceDetail.id,'cr','Account Payable','2','201','8ff68454-c507-4784-9b83-7f11c1c649d4') )
     this.transaction.forEach(
       x => {
         this.http.post('http://localhost:3000/transaction/create',x).pipe(catchError(error => throwError(error))).subscribe(
@@ -224,8 +249,31 @@ export class Form03SupplierinvoiceComponent implements OnInit {
             }else{
                 Swal.fire(JSON.stringify(error.name),error.message,'error')
             }
+            return ;
           }
         )
+      }
+    )
+
+    let stock = InitialStock.InitialStockObj();
+    stock.id = uuidv4()
+    stock.productId = this.currentSupplierInvoiceDetail.productId
+    stock.status = "Purchase"
+    stock.quantity = this.currentSupplierInvoiceDetail.purchaseQty
+    stock.price = this.currentSupplierInvoiceDetail.purchaseUnitPrice
+    stock.description = ""
+    stock.expiryDate = this.expDate
+    stock.manuDate = this.manuDate
+    stock.userId = this.currentSupplierInvoice.userId
+    this.http.post('http://localhost:3000/stock/create',stock).subscribe(
+      res=>{
+        this.clear()
+      },error => {
+        if(error.error.meta){
+                Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+            }else{
+                Swal.fire(JSON.stringify(error.name),error.message,'error')
+            }
       }
     )
     // this.dataSourceDetails.push(this.currentSupplierInvoiceDetail)
@@ -253,6 +301,13 @@ export class Form03SupplierinvoiceComponent implements OnInit {
         this.clear()
         this.resetInvoice()
         this.dataSourceDetails = []
+      },
+      error => {
+        if(error.error.meta){
+                Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+            }else{
+                Swal.fire(JSON.stringify(error.name),error.message,'error')
+            }
       }
     )
   }
@@ -262,6 +317,13 @@ export class Form03SupplierinvoiceComponent implements OnInit {
       (res) =>{
         this.clearDetails()
         this.loadInvoiceDetail()
+      },
+      error => {
+        if(error.error.meta){
+                Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+            }else{
+                Swal.fire(JSON.stringify(error.name),error.message,'error')
+            }
       }
     )
   }
@@ -273,6 +335,13 @@ export class Form03SupplierinvoiceComponent implements OnInit {
       (res) =>{
         this.loadSupplierInvoice()
         this.clear()
+      },
+      error => {
+        if(error.error.meta){
+                Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+            }else{
+                Swal.fire(JSON.stringify(error.name),error.message,'error')
+            }
       }
     )
   }
@@ -328,13 +397,14 @@ export class Form03SupplierinvoiceComponent implements OnInit {
     console.log(id, 'page', this.selectInvoiceDetail)
   }
 
-  setTransaction(acctype: string, title: string, accHead: string, accControl: string, year: string){
+  setTransaction(invoiceDetailsId: string, acctype: string, title: string, accHead: string, accControl: string, year: string){
     let transaction = InitialTransaction.InitialTransactionObj(); 
     transaction.id = uuidv4()
     transaction.financialYearId = year
     transaction.accountHeadCode = accHead
     transaction.accountControlCode = accControl 
     transaction.invoiceNo = this.currentSupplierInvoice.invoiceNo 
+    transaction.invoiceDetailsId = invoiceDetailsId
     transaction.userId = this.currentSupplierInvoice.userId
     if(acctype == 'dr'){
       transaction.debit = this.currentSupplierInvoiceDetail.purchaseQty * this.currentSupplierInvoiceDetail.purchaseUnitPrice
@@ -348,14 +418,16 @@ export class Form03SupplierinvoiceComponent implements OnInit {
   }
 
   getName(value: string, field: string){
+    console.log("Product",value)
     if(field == 'supplier'){
       for (let i = 0; i < this.supplierDropDown.length; i++) {
         if( this.supplierDropDown[i].supplierId == value ) return this.supplierDropDown[i].supplierName
       }
     }
+
     if(field == 'product'){
       for (let i = 0; i < this.productDropDown.length; i++) {
-        if( this.productDropDown[i].productId == value ) return this.productDropDown[i].productName
+        if( this.productDropDown[i].id == value ) return this.productDropDown[i].productName
       }
     }
     return 'No Data'

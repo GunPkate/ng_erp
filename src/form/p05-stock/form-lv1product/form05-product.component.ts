@@ -6,125 +6,59 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatTableModule  } from '@angular/material/table';
 import { MatSortModule  } from '@angular/material/sort';
-import { Category } from 'src/shared/interface/P05Stock/Category';
 import { HttpClient } from '@angular/common/http';
-import { ProductBehaviorSubj } from 'src/shared/behaviorsubject/Product';
-import { Product, InitialProduct } from 'src/shared/interface/P05Stock/Product';
-import { StockService } from 'src/shared/services/S05Stocks/S05_Category';
-import { CategoryBehaviorSubj } from 'src/shared/behaviorsubject/Category';
 import { v4 as uuidv4 } from 'uuid';
+import { StockService } from 'src/shared/services/S05Stocks/S05_Category';
+import { InitialProduct, Product } from 'src/shared/interface/P05Stock/Product';
+import { ProductBehaviorSubj } from 'src/shared/behaviorsubject/Product';
+import { Category } from 'src/shared/interface/P05Stock/Category';
+import { CategoryBehaviorSubj } from 'src/shared/behaviorsubject/Category';
 import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-form05-product',
   templateUrl: './form05-product.component.html',
   standalone: true,
-  imports: [ MatFormFieldModule, MatInputModule,MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatSortModule, MatTableModule, NgFor ],
+  imports: [ MatFormFieldModule, MatInputModule,MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatSortModule, MatTableModule, NgFor],
   styleUrls: ['./form05-product.component.css']
 })
 
-export class FormProductComponent implements OnInit {
-
-  title05 = 'Product'
-  displayedColumns: string[] = ['id',
-    // 'productId',
-    'catagoryId','productName','quantity','salePrice','currentPurchasePrice','description',
-    // 'expiryDate','manuDate','stockThresholdQty','userId'
-  ];
+export class Form05ProductComponent implements OnInit {
+  
+  title = 'Product List'
+  displayedColumns: string[] = ['id', 'productName', 'stockThresholdQty', 'catagoryId'];
   dataSource :Product[] = []
+  currentProduct: Product = InitialProduct.InitialProductObj();
   categoryDropDown: Category[] = []
-  currentProduct: Product = InitialProduct.InitialProductObj()
-  manuDate: Date = new Date
-  expiryDate: Date = new Date
+
   constructor(
     private http: HttpClient,
     private stockService: StockService,
     private productBehaviorSubj: ProductBehaviorSubj,
     private categoryBehaviorSubj: CategoryBehaviorSubj,
   ) { 
-    this.stockService.loadCategory();
-    this.stockService.loadProduct();
-    this.categoryBehaviorSubj.getCategoryList().subscribe((res)=>{ this.categoryDropDown = res  } )
-    this.productBehaviorSubj.getProductList().subscribe((res)=>{ 
-      this.categoryBehaviorSubj.getCategoryList().subscribe((res2)=>{
-        for (let i = 0; i < res2.length; i++) {
-          for (let y = 0; y < res.length; y++) {
-            if( res[y].catagoryId == res2[i].id){
-              res[y].catagoryId = res2[i].categoryName
-            }
-          }
-        }  
-        this.dataSource = res
-      } )
-    } )
+    this.loadProduct()
   }
+
   ngOnInit(): void {
-    this.currentProduct.id  = '',
-    this.currentProduct.productId  = '123,'
-    this.currentProduct.catagoryId  = '',
-    this.currentProduct.productName  = 'Bufen'
-    this.currentProduct.quantity  = 40,
-    this.currentProduct.salePrice  = 50,
-    this.currentProduct.currentPurchasePrice  = 30,
-    this.currentProduct.description  = 'Bufen lot 1'
-    // this.currentProduct.expiryDate  = Date.now(),
-    // this.currentProduct.manuDate  = Date.now(),
-    this.currentProduct.stockThresholdQty  = 10,
-    this.currentProduct.userId  = '22d38441-b515-4a82-ae00-6207faa165b6'
+
   }
 
-  categoryChange( event : any){
-    this.currentProduct.catagoryId = event;
-    console.log(this.currentProduct)
+  register(){
+    this.currentProduct.id = uuidv4()
+    this.http.post('http://localhost:3000/stock/genproduct',this.currentProduct).subscribe((res)=>{this.loadProduct()})    
   }
 
-  productNameChange( event : any){
-    this.currentProduct.productName = this.validateInput(event.target.value);
-    console.log(this.currentProduct)
+  loadProduct() {
+    this.stockService.loadProduct();
+    this.productBehaviorSubj.getProductList().subscribe((res)=>{ this.dataSource = res  } )
+    this.stockService.loadCategory();
+    this.categoryBehaviorSubj.getCategoryList().subscribe((res=>{ this.categoryDropDown = res }))
   }
 
-  currentPriceChange( event : any){
-    this.currentProduct.currentPurchasePrice = this.validateInput(event.target.value);
-    console.log(this.currentProduct)
+  clear(){
+    this.currentProduct = InitialProduct.InitialProductObj();
   }
-
-  quantityChange( event : any){
-    this.currentProduct.quantity = this.validateInput(event.target.value);
-    console.log(this.currentProduct)
-  }
-
-  thresholdChange( event : any){
-    this.currentProduct.stockThresholdQty = event;
-    console.log(this.currentProduct)
-  }
-
-  salePriceChange( event : any){
-    this.currentProduct.salePrice = event;
-    console.log(this.currentProduct)
-  }
-
-  descriptionChange( event : any){
-    this.currentProduct.description = this.validateInput(event.target.value);
-    console.log(this.currentProduct)
-  }
-
-  expiryDateChange( event : any){
-    console.log(event)
-    this.expiryDate = this.validateInput(event);
-    this.currentProduct.expiryDate = this.expiryDate;
-    console.log(this.currentProduct)
-  }
-  manuDateChange( event : any){
-    console.log(event)
-    this.manuDate = this.validateInput(event);
-    this.currentProduct.manuDate = this.manuDate;
-    console.log(this.currentProduct)
-  }
-
-  // PasswordChange( event : any){
-  //   this.currentProduct.password = this.validateInput(event.target.value);
-  //   console.log(this.currentProduct)
-  // }
 
   validateInput(data: any){
     if(data){
@@ -134,26 +68,39 @@ export class FormProductComponent implements OnInit {
     }
   }
 
-  loadProduct(){
-    this.stockService.loadProduct();
+  IdChange( event : any){
+    this.currentProduct.id = this.validateInput(event.target.value);
+    console.log(this.currentProduct)
   }
 
-
-  register(){
-    this.currentProduct.id = uuidv4()
-    this.http.post('http://localhost:3000/product/create',this.currentProduct).subscribe(res=>{
-      this.loadProduct()
-      this.clear()
-    })
+  productNameChange( event : any){
+    this.currentProduct.productName = this.validateInput(event.target.value);
+    console.log(this.currentProduct)
   }
-  clear(){
-    this.currentProduct = InitialProduct.InitialProductObj();
+
+  qtyChange( event : any){
+    this.currentProduct.stockThresholdQty = parseInt(this.validateInput(event.target.value));
+    console.log(this.currentProduct)
+  }
+
+  categoryChange( event : any){
+    this.currentProduct.catagoryId = this.validateInput(event);
+    console.log(this.currentProduct)
+  }
+
+  getName(value: string, field: string){
+    if(field == 'category'){
+      for (let i = 0; i < this.categoryDropDown.length; i++) {
+        if( this.categoryDropDown[i].id == value ) return this.categoryDropDown[i].categoryName
+      }
+    }
+    return 'No Data'
   }
 
   deleteData(id: string){
     console.log(id)
     this.currentProduct.id = id
-    this.http.post('http://localhost:3000/product/delete',this.currentProduct).subscribe(
+    this.http.post('http://localhost:3000/stock/productdelete',this.currentProduct).subscribe(
       (res) =>{
         this.loadProduct()
         this.clear()
@@ -162,13 +109,14 @@ export class FormProductComponent implements OnInit {
   }
 
   updateData(id: string){
-    console.log(id)
-    this.currentProduct.userId = id
-    this.http.post('http://localhost:3000/user/update',this.currentProduct).subscribe(
-      (res) =>{
-        this.loadProduct()
-        this.clear()
-      }
-    )
+    // console.log(id)
+    // this.currentProduct.id = id
+    // this.http.post('http://localhost:3000/category/update',this.currentProduct).subscribe(
+    //   (res) =>{
+    //     this.loadProduct()
+    //     this.clear()
+    //   }
+    // )
   }
+
 }

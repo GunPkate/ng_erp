@@ -8,8 +8,8 @@ import { MatTableModule  } from '@angular/material/table';
 import { MatSortModule  } from '@angular/material/sort';
 import { Category } from 'src/shared/interface/P05Stock/Category';
 import { HttpClient } from '@angular/common/http';
-import { ProductBehaviorSubj } from 'src/shared/behaviorsubject/Product';
-import { Product, InitialProduct } from 'src/shared/interface/P05Stock/Product';
+import { StockBehaviorSubj } from 'src/shared/behaviorsubject/Stock';
+import { Stock, InitialStock } from 'src/shared/interface/P05Stock/Stock';
 import { StockService } from 'src/shared/services/S05Stocks/S05_Category';
 import { CategoryBehaviorSubj } from 'src/shared/behaviorsubject/Category';
 import { v4 as uuidv4 } from 'uuid';
@@ -28,6 +28,8 @@ import Swal from 'sweetalert2';
 import { catchError, throwError } from 'rxjs';
 import { InitialTransaction, Transaction } from 'src/shared/interface/P07Transaction/Transaction';
 import { CustomerInvoiceDetailBehaviorSubj } from 'src/shared/behaviorsubject/CustomerInvoiceDetail';
+import { Product } from 'src/shared/interface/P05Stock/Product';
+import { ProductBehaviorSubj } from 'src/shared/behaviorsubject/Product';
 
 
 @Component({
@@ -63,6 +65,8 @@ export class Form01CustomerinvoiceComponent implements OnInit {
   
 
   invoiceDate: Date = new Date
+  manuDate: Date = new Date
+  expDate: Date = new Date
 
   searchCustomerInvoice: CustomerInvoice[] = [];
   page:string = "list"
@@ -108,8 +112,11 @@ export class Form01CustomerinvoiceComponent implements OnInit {
     // } )
   }
   ngOnInit(): void {
+    let date = new Date()
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1 ;
     this.currentCustomerInvoice.id = '',
-    this.currentCustomerInvoice.invoiceNo = 'INV123'
+    this.currentCustomerInvoice.invoiceNo = 'INVS' + year + month
     this.currentCustomerInvoice.customerId = ''
     this.currentCustomerInvoice.date = new Date
     this.currentCustomerInvoice.title = 'Sale #1'
@@ -159,6 +166,17 @@ export class Form01CustomerinvoiceComponent implements OnInit {
     console.log(this.currentCustomerInvoice)
   }
 
+  dateManuChange( event : any){
+    console.log(event)
+    this.manuDate = this.validateInput(event);
+    console.log(this.manuDate)
+  }
+
+  dateExpChange( event : any){
+    console.log(event)
+    this.expDate = this.validateInput(event);
+    console.log(this.expDate)
+  }
 
   saleQtyChange(event: any){
     this.currentCustomerInvoiceDetail.saleQty = parseInt(this.validateInput(event.target.value));
@@ -217,8 +235,10 @@ export class Form01CustomerinvoiceComponent implements OnInit {
         }
       }
     )
-    this.transaction.push( this.setTransaction('dr','Inventory','1','104','8ff68454-c507-4784-9b83-7f11c1c649d4') )
-    this.transaction.push( this.setTransaction('cr','Account Payable','5','502','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+    this.transaction.push( this.setTransaction(this.currentCustomerInvoiceDetail.id, 'dr','Account Receivable','1','103','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+    this.transaction.push( this.setTransaction(this.currentCustomerInvoiceDetail.id, 'cr','Sale Revenue','4','401','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+    this.transaction.push( this.setTransaction(this.currentCustomerInvoiceDetail.id, 'dr','Cost of Goods Sold','5','502','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+    this.transaction.push( this.setTransaction(this.currentCustomerInvoiceDetail.id, 'cr','Inventory','1','104','8ff68454-c507-4784-9b83-7f11c1c649d4') )
     this.transaction.forEach(
       x => {
         this.http.post('http://localhost:3000/transaction/create',x).pipe(catchError(error => throwError(error))).subscribe(
@@ -236,6 +256,28 @@ export class Form01CustomerinvoiceComponent implements OnInit {
       }
     )
     // this.dataSourceDetails.push(this.currentCustomerInvoiceDetail)
+
+        let stock = InitialStock.InitialStockObj();
+        stock.id = uuidv4()
+        stock.productId = this.currentCustomerInvoiceDetail.productId
+        stock.status = "Sale"
+        stock.quantity = this.currentCustomerInvoiceDetail.saleQty
+        stock.price = this.currentCustomerInvoiceDetail.saleUnitPrice
+        stock.description = ""
+        stock.expiryDate = this.expDate
+        stock.manuDate = this.manuDate
+        stock.userId = this.currentCustomerInvoice.userId
+        this.http.post('http://localhost:3000/stock/create',stock).subscribe(
+          res=>{
+            this.clear()
+          },error => {
+            if(error.error.meta){
+                    Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+                }else{
+                    Swal.fire(JSON.stringify(error.name),error.message,'error')
+                }
+          }
+        )
   }
 
   clear(){
@@ -336,13 +378,14 @@ export class Form01CustomerinvoiceComponent implements OnInit {
     console.log(id, 'page', this.selectInvoiceDetail)
   }
 
-  setTransaction(acctype: string, title: string, accHead: string, accControl: string, year: string){
+  setTransaction(invoiceDetailsId: string, acctype: string, title: string, accHead: string, accControl: string, year: string){
     let transaction = InitialTransaction.InitialTransactionObj(); 
     transaction.id = uuidv4()
     transaction.financialYearId = year
     transaction.accountHeadCode = accHead
     transaction.accountControlCode = accControl
     transaction.invoiceNo = this.currentCustomerInvoice.invoiceNo 
+    transaction.invoiceDetailsId = invoiceDetailsId
     transaction.userId = this.currentCustomerInvoice.userId
     if(acctype == 'dr'){
       transaction.debit = this.currentCustomerInvoiceDetail.saleQty * this.currentCustomerInvoiceDetail.saleUnitPrice
@@ -363,7 +406,7 @@ export class Form01CustomerinvoiceComponent implements OnInit {
     }
     if(field == 'product'){
       for (let i = 0; i < this.productDropDown.length; i++) {
-        if( this.productDropDown[i].productId == value ) return this.productDropDown[i].productName
+        if( this.productDropDown[i].id == value ) return this.productDropDown[i].productName
       }
     }
     return 'No Data'

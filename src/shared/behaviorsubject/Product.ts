@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { Product, InitialProduct } from "../interface/P05Stock/Product";
 
+
 @Injectable()
 export class ProductBehaviorSubj {
     private ProductSubject = new BehaviorSubject<Product>(InitialProduct.InitialProductObj())

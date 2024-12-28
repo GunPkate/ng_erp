@@ -8,8 +8,8 @@ import { MatTableModule  } from '@angular/material/table';
 import { MatSortModule  } from '@angular/material/sort';
 import { Category } from 'src/shared/interface/P05Stock/Category';
 import { HttpClient } from '@angular/common/http';
-import { ProductBehaviorSubj } from 'src/shared/behaviorsubject/Product';
-import { Product, InitialProduct } from 'src/shared/interface/P05Stock/Product';
+import { StockBehaviorSubj } from 'src/shared/behaviorsubject/Stock';
+import { Stock, InitialStock } from 'src/shared/interface/P05Stock/Stock';
 import { StockService } from 'src/shared/services/S05Stocks/S05_Category';
 import { CategoryBehaviorSubj } from 'src/shared/behaviorsubject/Category';
 import { v4 as uuidv4 } from 'uuid';
@@ -60,7 +60,7 @@ export class Form01PaymentComponent implements OnInit {
   categoryDropDown: Category[] = []
   customerDropDown: Customer[] = []
   customerInvoiceDropdown: CustomerInvoice[] = []
-  productDropDown: Product[] = []
+  productDropDown: Stock[] = []
   accountControlDropDown: AccountControl[] = []
 
   invoiceDate: Date = new Date
@@ -81,7 +81,7 @@ export class Form01PaymentComponent implements OnInit {
     private customerService: CustomerService,
     private accountService: AccountService,
 
-    private productBehaviorSubj: ProductBehaviorSubj,
+    private productBehaviorSubj: StockBehaviorSubj,
     private categoryBehaviorSubj: CategoryBehaviorSubj,
     private customerBehaviorSubj: CustomerBehaviorSubj,
     private customerInvoiceBehaviorSubj: CustomerInvoiceBehaviorSubj,
@@ -98,7 +98,7 @@ export class Form01PaymentComponent implements OnInit {
     this.customerBehaviorSubj.getCustomerList().subscribe((res)=>{ this.customerDropDown = res})
     this.customerInvoiceBehaviorSubj.getCustomerInvoiceList().subscribe((res)=>{ this.dataSource = res })
     this.categoryBehaviorSubj.getCategoryList().subscribe((res)=>{ this.categoryDropDown = res  } )
-    this.productBehaviorSubj.getProductList().subscribe((res)=>{ this.productDropDown = res })
+    this.productBehaviorSubj.getStockList().subscribe((res)=>{ this.productDropDown = res })
     this.accountControlBehaviorSubj.getAccountControlList().subscribe((res)=>{ this.accountControlDropDown = res})
   }
   ngOnInit(): void {
@@ -262,13 +262,14 @@ export class Form01PaymentComponent implements OnInit {
     this.currentCustomerPayment.date = new Date
   }
 
-  setTransaction(acctype: string, title: string, accHead: string, accControl: string, year: string){
+  setTransaction(invoiceDetailsId: string, acctype: string, title: string, accHead: string, accControl: string, year: string){
     let transaction = InitialTransaction.InitialTransactionObj(); 
     transaction.id = uuidv4()
     transaction.financialYearId = year
     transaction.accountHeadCode = accHead
     transaction.accountControlCode = accControl 
-    transaction.invoiceNo = this.currentCustomerPayment.customerInvoiceNo 
+    transaction.invoiceNo = this.currentCustomerPayment.customerInvoiceNo
+    transaction.invoiceDetailsId = invoiceDetailsId
     transaction.userId = this.currentCustomerPayment.userId
     if(acctype == 'dr'){
       transaction.debit = this.currentCustomerPayment.paymentAmount
@@ -289,7 +290,7 @@ export class Form01PaymentComponent implements OnInit {
     }
     if(field == 'product'){
       for (let i = 0; i < this.productDropDown.length; i++) {
-        if( this.productDropDown[i].productId == value ) return this.productDropDown[i].productName
+        if( this.productDropDown[i].productId == value ) return this.productDropDown[i].productId
       }
     }
     return 'No Data'
@@ -328,8 +329,8 @@ export class Form01PaymentComponent implements OnInit {
       this.currentCustomerPayment.invoiceNo = rowData.id
       this.currentCustomerPayment.userId = '22d38441-b515-4a82-ae00-6207faa165b6'
 
-      this.transaction.push( this.setTransaction('dr','Account Payable','5','502','8ff68454-c507-4784-9b83-7f11c1c649d4') )
-      this.transaction.push( this.setTransaction('cr','Cash Payment','5','502','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+      this.transaction.push( this.setTransaction(this.currentCustomerPayment.paymentId, 'dr','Cash Received','1','101','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+      this.transaction.push( this.setTransaction(this.currentCustomerPayment.paymentId, 'cr','Account Receivable','1','103','8ff68454-c507-4784-9b83-7f11c1c649d4') )
       console.log('this.transaction',this.transaction)
     }
 
