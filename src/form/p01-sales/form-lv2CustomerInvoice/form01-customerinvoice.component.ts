@@ -65,6 +65,8 @@ export class Form01CustomerinvoiceComponent implements OnInit {
   
 
   invoiceDate: Date = new Date
+  manuDate: Date = new Date
+  expDate: Date = new Date
 
   searchCustomerInvoice: CustomerInvoice[] = [];
   page:string = "list"
@@ -164,6 +166,17 @@ export class Form01CustomerinvoiceComponent implements OnInit {
     console.log(this.currentCustomerInvoice)
   }
 
+  dateManuChange( event : any){
+    console.log(event)
+    this.manuDate = this.validateInput(event);
+    console.log(this.manuDate)
+  }
+
+  dateExpChange( event : any){
+    console.log(event)
+    this.expDate = this.validateInput(event);
+    console.log(this.expDate)
+  }
 
   saleQtyChange(event: any){
     this.currentCustomerInvoiceDetail.saleQty = parseInt(this.validateInput(event.target.value));
@@ -243,6 +256,28 @@ export class Form01CustomerinvoiceComponent implements OnInit {
       }
     )
     // this.dataSourceDetails.push(this.currentCustomerInvoiceDetail)
+
+        let stock = InitialStock.InitialStockObj();
+        stock.id = uuidv4()
+        stock.productId = this.currentCustomerInvoiceDetail.productId
+        stock.status = "Sale"
+        stock.quantity = this.currentCustomerInvoiceDetail.saleQty
+        stock.price = this.currentCustomerInvoiceDetail.saleUnitPrice
+        stock.description = ""
+        stock.expiryDate = this.expDate
+        stock.manuDate = this.manuDate
+        stock.userId = this.currentCustomerInvoice.userId
+        this.http.post('http://localhost:3000/stock/create',stock).subscribe(
+          res=>{
+            this.clear()
+          },error => {
+            if(error.error.meta){
+                    Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+                }else{
+                    Swal.fire(JSON.stringify(error.name),error.message,'error')
+                }
+          }
+        )
   }
 
   clear(){

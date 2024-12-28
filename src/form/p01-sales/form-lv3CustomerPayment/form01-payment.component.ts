@@ -262,13 +262,14 @@ export class Form01PaymentComponent implements OnInit {
     this.currentCustomerPayment.date = new Date
   }
 
-  setTransaction(acctype: string, title: string, accHead: string, accControl: string, year: string){
+  setTransaction(invoiceDetailsId: string, acctype: string, title: string, accHead: string, accControl: string, year: string){
     let transaction = InitialTransaction.InitialTransactionObj(); 
     transaction.id = uuidv4()
     transaction.financialYearId = year
     transaction.accountHeadCode = accHead
     transaction.accountControlCode = accControl 
-    transaction.invoiceNo = this.currentCustomerPayment.customerInvoiceNo 
+    transaction.invoiceNo = this.currentCustomerPayment.customerInvoiceNo
+    transaction.invoiceDetailsId = invoiceDetailsId
     transaction.userId = this.currentCustomerPayment.userId
     if(acctype == 'dr'){
       transaction.debit = this.currentCustomerPayment.paymentAmount
@@ -328,8 +329,8 @@ export class Form01PaymentComponent implements OnInit {
       this.currentCustomerPayment.invoiceNo = rowData.id
       this.currentCustomerPayment.userId = '22d38441-b515-4a82-ae00-6207faa165b6'
 
-      this.transaction.push( this.setTransaction('dr','Cash Received','1','101','8ff68454-c507-4784-9b83-7f11c1c649d4') )
-      this.transaction.push( this.setTransaction('cr','Account Receivable','1','103','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+      this.transaction.push( this.setTransaction(this.currentCustomerPayment.paymentId, 'dr','Cash Received','1','101','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+      this.transaction.push( this.setTransaction(this.currentCustomerPayment.paymentId, 'cr','Account Receivable','1','103','8ff68454-c507-4784-9b83-7f11c1c649d4') )
       console.log('this.transaction',this.transaction)
     }
 

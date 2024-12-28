@@ -177,7 +177,23 @@
                     <input [value]="currentCustomerInvoiceDetail.saleUnitPrice" (blur)="saleUnitPriceChange($event)" matInput>
                 </mat-form-field>
 
+                <div>
+                    <mat-form-field class="col-4" appearance="fill">
+                        <mat-label>Manufactured Date</mat-label>
+                        <input (dateInput)="dateManuChange($event.value)" matInput [matDatepicker]="manuDate">
+                        <mat-datepicker-toggle matSuffix [for]="manuDate"></mat-datepicker-toggle>
+                        <mat-datepicker #manuDate></mat-datepicker>
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                    </mat-form-field>  
     
+                    <mat-form-field class="col-4" appearance="fill">
+                        <mat-label>Expiry Date</mat-label>
+                        <input (dateInput)="dateExpChange($event.value)" matInput [matDatepicker]="expDate">
+                        <mat-datepicker-toggle matSuffix [for]="expDate"></mat-datepicker-toggle>
+                        <mat-datepicker #expDate></mat-datepicker>
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                    </mat-form-field>  
+                </div>
 
             </div>
 
