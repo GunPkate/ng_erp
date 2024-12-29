@@ -287,7 +287,7 @@ export class Form01CustomerinvoiceComponent implements OnInit {
   clear(){
     this.currentCustomerInvoice = InitialCustomerInvoice.InitialCustomerInvoiceObj();
     this.currentCustomerInvoice.userId  = '22d38441-b515-4a82-ae00-6207faa165b6'
-    this.dataSourceDetails = [];
+    // this.dataSourceDetails = [];
   }
 
   clearDetails(){

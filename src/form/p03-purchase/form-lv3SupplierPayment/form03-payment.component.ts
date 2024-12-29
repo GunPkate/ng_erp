@@ -175,7 +175,7 @@ export class Form03PaymentComponent implements OnInit {
       x => {
         this.http.post('http://localhost:3000/transaction/create',x).pipe(catchError(error => throwError(error))).subscribe(
           response => { 
-
+            this.currentSupplierPayment.paymentId = "";
           },
           error => {
             if(error.error.meta){
