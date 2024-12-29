@@ -173,6 +173,7 @@ export class Form03PaymentComponent implements OnInit {
     )
     this.transaction.forEach(
       x => {
+        x.invoiceDetailsId = this.currentSupplierPayment.paymentId;
         this.http.post('http://localhost:3000/transaction/create',x).pipe(catchError(error => throwError(error))).subscribe(
           response => { 
             this.currentSupplierPayment.paymentId = "";
@@ -266,14 +267,13 @@ export class Form03PaymentComponent implements OnInit {
     this.currentSupplierPayment.date = new Date
   }
 
-  setTransaction(invoiceDetailsId: string, acctype: string, title: string, accHead: string, accControl: string, year: string){
+  setTransaction( acctype: string, title: string, accHead: string, accControl: string, year: string){
     let transaction = InitialTransaction.InitialTransactionObj(); 
     transaction.id = uuidv4()
     transaction.financialYearId = year
     transaction.accountHeadCode = accHead
     transaction.accountControlCode = accControl
     transaction.invoiceNo = this.currentSupplierPayment.supplierInvoiceNo
-    transaction.invoiceDetailsId = invoiceDetailsId
     transaction.userId = this.currentSupplierPayment.userId
     if(acctype == 'dr'){
       transaction.debit = this.currentSupplierPayment.paymentAmount
@@ -333,8 +333,8 @@ export class Form03PaymentComponent implements OnInit {
       this.currentSupplierPayment.invoiceNo = rowData.id
       this.currentSupplierPayment.userId = '22d38441-b515-4a82-ae00-6207faa165b6'
       this.currentSupplierInvoice.id = this.selectInvoice
-      this.transaction.push( this.setTransaction(this.selectInvoiceDetail = id, 'dr','Account Payable','2','201','8ff68454-c507-4784-9b83-7f11c1c649d4') )
-      this.transaction.push( this.setTransaction(this.selectInvoiceDetail = id, 'cr','Cash Payment','1','101','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+      this.transaction.push( this.setTransaction('dr','Account Payable','2','201','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+      this.transaction.push( this.setTransaction('cr','Cash Payment','1','101','8ff68454-c507-4784-9b83-7f11c1c649d4') )
       console.log('this.transaction',this.transaction)
     }
 
