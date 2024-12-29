@@ -238,8 +238,8 @@ export class Form03PaymentComponent implements OnInit {
   clickCurrentInvoice(id: string, rowData: SupplierInvoice){
     if(this.selectInvoice == id)  {
       this.resetInvoice()
-      this.dataSourceDetails = []
-      this.dataSourcePayment = []
+      // this.dataSourceDetails = []
+      // this.dataSourcePayment = []
       this.selectPayment = ''
     }
     else{
@@ -251,6 +251,7 @@ export class Form03PaymentComponent implements OnInit {
       // console.log(this.supplierDropDown)
       this.setInitiaPayment(rowData)
     }
+    this.currentSupplierInvoice.id = this.selectInvoice
   }
 
   setInitiaPayment(rowData: SupplierInvoice){
@@ -331,9 +332,9 @@ export class Form03PaymentComponent implements OnInit {
       this.currentSupplierPayment.totalAmount = sum
       this.currentSupplierPayment.invoiceNo = rowData.id
       this.currentSupplierPayment.userId = '22d38441-b515-4a82-ae00-6207faa165b6'
-
-      this.transaction.push( this.setTransaction(this.currentSupplierPayment.paymentId, 'dr','Account Payable','2','201','8ff68454-c507-4784-9b83-7f11c1c649d4') )
-      this.transaction.push( this.setTransaction(this.currentSupplierPayment.paymentId, 'cr','Cash Payment','1','101','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+      this.currentSupplierInvoice.id = this.selectInvoice
+      this.transaction.push( this.setTransaction(this.selectInvoiceDetail = id, 'dr','Account Payable','2','201','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+      this.transaction.push( this.setTransaction(this.selectInvoiceDetail = id, 'cr','Cash Payment','1','101','8ff68454-c507-4784-9b83-7f11c1c649d4') )
       console.log('this.transaction',this.transaction)
     }
 

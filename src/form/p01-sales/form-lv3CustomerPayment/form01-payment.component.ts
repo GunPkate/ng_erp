@@ -189,8 +189,8 @@ export class Form01PaymentComponent implements OnInit {
   clear(){
     this.currentCustomerInvoice = InitialCustomerInvoice.InitialCustomerInvoiceObj();
     this.currentCustomerInvoice.userId  = '22d38441-b515-4a82-ae00-6207faa165b6'
-    this.dataSourceDetails = [];
-    this.dataSourcePayment = [];
+    // this.dataSourceDetails = [];
+    // this.dataSourcePayment = [];
   }
 
   deletePaymentData(id: string, data: CustomerPayment){
@@ -248,6 +248,7 @@ export class Form01PaymentComponent implements OnInit {
       // console.log(this.customerDropDown)
       this.setInitiaPayment(rowData)
     }
+    this.currentCustomerInvoice.id = this.selectInvoice
   }
 
   setInitiaPayment(rowData: CustomerInvoice){
@@ -327,13 +328,12 @@ export class Form01PaymentComponent implements OnInit {
       this.currentCustomerPayment.remainBalance = sum - this.currentCustomerPayment.paymentAmount
       this.currentCustomerPayment.totalAmount = sum
       this.currentCustomerPayment.invoiceNo = rowData.id
-      this.currentCustomerPayment.userId = '22d38441-b515-4a82-ae00-6207faa165b6'
-
-      this.transaction.push( this.setTransaction(this.currentCustomerPayment.paymentId, 'dr','Cash Received','1','101','8ff68454-c507-4784-9b83-7f11c1c649d4') )
-      this.transaction.push( this.setTransaction(this.currentCustomerPayment.paymentId, 'cr','Account Receivable','1','103','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+      this.transaction.push( this.setTransaction(this.selectInvoiceDetail = id, 'dr','Cash Received','1','101','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+      this.transaction.push( this.setTransaction(this.selectInvoiceDetail = id, 'cr','Account Receivable','1','103','8ff68454-c507-4784-9b83-7f11c1c649d4') )
       console.log('this.transaction',this.transaction)
     }
-
+    this.currentCustomerPayment.userId = '22d38441-b515-4a82-ae00-6207faa165b6'
+    this.currentCustomerInvoice.id = this.selectInvoice
   }
 
   resetPayment(){
