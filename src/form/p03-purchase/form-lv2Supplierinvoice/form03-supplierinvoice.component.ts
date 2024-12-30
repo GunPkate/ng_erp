@@ -286,6 +286,11 @@ export class Form03SupplierinvoiceComponent implements OnInit {
   clear(){
     this.currentSupplierInvoice = InitialSupplierInvoice.InitialSupplierInvoiceObj();
     this.currentSupplierInvoice.userId  = '22d38441-b515-4a82-ae00-6207faa165b6'
+    
+    let date = new Date()
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1 ;
+    this.currentSupplierInvoice.invoiceNo = 'INVP' + year + month
     // this.dataSourceDetails = [];
   }
 
