@@ -1,0 +1,152 @@
+<p>General Ledger</p>
+<div class="d-flex justify-content-center">
+    <app-draggable-general-ledger></app-draggable-general-ledger>
+</div>
+
+<div class="d-flex flex-row">
+      <div><button style="width: 120px;" class="btn btn-primary" (click)="changePage('list')" >List</button></div>
+      <div *ngIf="selectInvoice !== ''"><button style="width: 120px; transition: 1s;" class="btn btn-warning" (click)="changePage('new')" >{{'Payment'}}</button></div>
+      <div *ngIf="selectInvoice === ''"><button style="width: 120px; transition: 1s;" class="btn btn-warning disabled" >{{'Payment'}}</button></div>
+      <!-- <div><button style="width: 80px;" class="btn btn-info" >Update</button></div>
+      <div><button style="width: 80px;" class="btn btn-warning" (click)="clear()">Clear</button></div>
+      <div><button style="width: 80px;" class="btn btn-danger" >Cancel</button></div> -->
+</div>
+
+<div *ngIf="page=='list'" class="col-12">
+    <div class="col-12">  
+        <mat-form-field class="col-12" appearance="fill">
+            <mat-label>ID</mat-label>
+            <input [value]="currentSupplierInvoice.id" disabled matInput>
+        </mat-form-field>
+
+        <mat-form-field class="col-12" appearance="fill">
+            <mat-label>Select Supplier</mat-label>
+            <mat-select>
+                <mat-option value="one">First option</mat-option>
+                <mat-option value="two">Second option</mat-option>
+            </mat-select>
+        </mat-form-field>
+        </div>
+
+    <div class="col-12">
+        <table mat-table [dataSource]="dataSourceT" class="mat-elevation-z8 col-12">
+
+            <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+        
+
+            <ng-container matColumnDef="transaction_date">
+            <th mat-header-cell *matHeaderCellDef> Date </th>
+            <td mat-cell *matCellDef="let element"> {{element.transaction_date | dateFormatPipe}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="accountControlCode">
+            <th mat-header-cell *matHeaderCellDef> Account </th>
+            <td mat-cell *matCellDef="let element"> {{element.accountControlCode}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="invoiceNo">
+            <th mat-header-cell *matHeaderCellDef> Invoice No </th>
+            <td mat-cell *matCellDef="let element"> {{element.invoiceNo}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="transaction_title">
+            <th mat-header-cell *matHeaderCellDef> Transaction Title </th>
+            <td mat-cell *matCellDef="let element"> {{element.transaction_title}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef> Description </th>
+            <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="debit">
+            <th mat-header-cell *matHeaderCellDef> Debit </th>
+            <td mat-cell *matCellDef="let element"> {{element.debit  }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="credit">
+            <th mat-header-cell *matHeaderCellDef> Credit </th>
+            <td mat-cell *matCellDef="let element"> {{element.credit  }} </td>
+            </ng-container>
+
+
+        
+            <tr mat-header-row class="text-center" *matHeaderRowDef="displayedColumnsT"></tr>
+            <tr (click)="clickCurrentInvoice(row.id,row)" id="{{row.id}}" ngClass mat-row *matRowDef="let row; columns: displayedColumnsT;"
+                style="{{
+                    setTransactionStyle(row)
+                }}"
+            ></tr>
+        </table>
+    </div>
+</div>
+
+<div *ngIf="page=='new'">  
+    <div  class="d-flex">
+
+    <div class="col-6" *ngIf="subpage !=='detail'">
+        <div class="col-12">  
+            <mat-form-field class="col-12" appearance="fill">
+                <mat-label>ID</mat-label>
+                <input [value]="currentSupplierInvoice.id" disabled matInput>
+            </mat-form-field>
+
+            <mat-form-field class="col-12" appearance="fill">
+                <mat-label>Supplier </mat-label>
+                <input [value]="getName(selectName, 'supplier')" disabled="" matInput>
+            </mat-form-field>
+
+            <div>
+                <mat-form-field class="col-4" appearance="fill">
+                    <mat-label>Invoice No</mat-label>
+                    <input [value]="currentSupplierPayment.supplierInvoiceNo" disabled matInput>
+                </mat-form-field>
+            
+                <mat-form-field class="col-4" appearance="fill">
+                    <mat-label>Invoice Detail No</mat-label>
+                    <input [value]="currentSupplierPayment.invoiceNo" disabled matInput>
+                </mat-form-field>
+            
+                <mat-form-field class="col-4" appearance="fill">
+                    <mat-label>Date</mat-label>
+                    <input (dateInput)="dateChange($event.value)" matInput [matDatepicker]="invoiceDate">
+                    <mat-datepicker-toggle matSuffix [for]="invoiceDate"></mat-datepicker-toggle>
+                    <mat-datepicker #invoiceDate></mat-datepicker>
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                </mat-form-field>  
+            </div>
+
+            <div>
+                <mat-form-field class="col-4" appearance="fill">
+                    <mat-label>Total Amount</mat-label>
+                    <input [value]="currentSupplierPayment.totalAmount" disabled matInput>
+                </mat-form-field>
+            
+                <mat-form-field class="col-4" appearance="fill">
+                    <mat-label>Payment Amount</mat-label>
+                    <input [value]="currentSupplierPayment.paymentAmount" (blur)="paymentAmountChange($event)" matInput>
+                </mat-form-field>
+
+                <mat-form-field class="col-4" appearance="fill">
+                    <mat-label>Remain Amount</mat-label>
+                    <input [value]="currentSupplierPayment.remainBalance" disabled matInput>
+                </mat-form-field>
+            </div>
+
+            <div class="d-flex">
+                <div class="ml-4">
+                    <button *ngIf="validate.length == 0" class="btn btn-primary" (click)="register()" type="submit">Register</button>
+                    <button *ngIf="validate.length > 0" class="btn btn-primary" disabled type="submit">Register</button>
+                    <button class="btn btn-danger" (click)="clear()">Clear</button>
+                </div>
+
+            </div>
+        </div> 
+    </div>
+
+
+
+    </div>
+
+</div>

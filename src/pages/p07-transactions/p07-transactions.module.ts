@@ -9,6 +9,7 @@ import { TransactionBehaviorSubj } from 'src/shared/behaviorsubject/Transaction'
 import { TransactionService } from 'src/shared/services/S07transactions/S07_Transactions';
 import { Draggable } from 'src/components/draggable/draggable.component';
 import { AccountFilterBehaviorSubj } from 'src/shared/behaviorsubject/AccountFilter';
+import { Form07GeneralLedgerComponent } from 'src/form/p07-transactions/form-lv7generalLedger/form07-generalLedger.component';
 
 export const p07routes: Routes = [
   { 
@@ -16,6 +17,7 @@ export const p07routes: Routes = [
     component:  P07TransactionListComponent,
     children: [
       {path: 'transactionlist', component: Form07TransactionListComponent},
+      {path: 'generalledger', component: Form07GeneralLedgerComponent},
     ]
   }
 ]
@@ -28,7 +30,6 @@ export const p07routes: Routes = [
     ButtonMenuComponent,
     RouterModule.forChild(p07routes),
     Draggable,
-
     MatFormFieldModule,
     MatInputModule
   ],
