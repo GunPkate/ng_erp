@@ -28,15 +28,19 @@ export class P07TransactionListComponent implements OnInit {
   TransactionList: Transaction[] = []
 
   accList: AccList[] = [
-    {acc:"Assets"},
-    {acc:"Liabilities"},
-    {acc:"Equity"},
-    {acc:"Revenues"},
-    {acc:"Expenses"}
+    {acc:"Assets", code: "1"},
+    {acc:"Liabilities", code: "2"},
+    {acc:"Equity", code: "3"},
+    {acc:"Revenues", code: "4"},
+    {acc:"Expenses", code: "5"}
    ];
   ngOnInit(): void {
   }
 
+  onLoad(event: any) {
+    event.accList = this.accList
+    event.accFilter = this.accFilter
+  }
 
 
 }

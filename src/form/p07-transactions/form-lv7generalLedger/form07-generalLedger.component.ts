@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -33,6 +33,7 @@ import { Transaction,InitialTransaction } from 'src/shared/interface/P07Transact
 import { TransactionService } from 'src/shared/services/S07transactions/S07_Transactions';
 import { TransactionBehaviorSubj } from 'src/shared/behaviorsubject/Transaction';
 import { DraggableGeneralLedger } from "../../../components/draggable-general-ledger/draggable-general-ledger.component";
+import { AccList } from 'src/shared/interface/P07Transaction/AccList';
 
 
 @Component({
@@ -57,6 +58,7 @@ setTransactionStyle(row: Transaction) {
   return style;
 }
 
+  @Input() accList:AccList[] = []
   title07 = 'Transaction List'
 
   currentSupplierInvoice: SupplierInvoice = InitialSupplierInvoice.InitialSupplierInvoiceObj()
@@ -126,6 +128,7 @@ setTransactionStyle(row: Transaction) {
     this.accountControlBehaviorSubj.getAccountControlList().subscribe((res)=>{ this.accountControlDropDown = res})
   }
   ngOnInit(): void {
+    console.log(this.accList)
   }
 
   supplierChange( event : any){

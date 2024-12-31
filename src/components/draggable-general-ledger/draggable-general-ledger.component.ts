@@ -20,7 +20,7 @@ export class DraggableGeneralLedger implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(2134,this.accFilter)
+
   }
 
 }
