@@ -43,19 +43,22 @@ export class Form07GeneralLedgerComponent implements OnInit {
   tableLedger: tableLedger[] = []
   ledger: GeneralLedger[] = []
   setAcc(data: string){
+
     console.log("Acc",data)
     if(data !== ''){
       this.transactionService.loadGeneralLedger(data)
       this.generalLedgerBehaviorSubj.getGeneralLedgerList().subscribe(
         res=>{
-          let uniqueAcc = [...new Set(res.map(y => y.accountcontrolname+" "+y.controlcode))]
+          this.tableLedger = []
+          let uniqueAcc = [...new Set(res.map(y => y.controlcode+" "+y.accountcontrolname))]
 
           if(uniqueAcc){
+            
             for (let i = 0; i < uniqueAcc.length; i++) {
               let item = InitialTableLedger.InitialTableLedger()
               let temp = uniqueAcc[i].split(" ")
-              item.accountcontrolname = temp[0]
-              item.controlcode = temp[1]
+              item.accountcontrolname = temp[1]
+              item.controlcode = temp[0]
               this.tableLedger.push(item) ;
             }
           }
@@ -64,11 +67,11 @@ export class Form07GeneralLedgerComponent implements OnInit {
           res.forEach( x => {
             for (let y = 0; y < this.tableLedger.length; y++) {
               if(this.tableLedger[y].controlcode == x.controlcode){
-                if(x.debit > 0){
+                if(x.debit >= 0 && x.credit==0 ){
                   let debit: valueDetail = { date: x.date, value: x.debit}
                   this.tableLedger[y].debit.push(debit)
-                }else if(x.credit > 0){
-                  let credit: valueDetail = { date: x.date, value: x.debit}
+                }else if(x.debit == 0 && x.credit >= 0){
+                  let credit: valueDetail = { date: x.date, value: x.credit}
                   this.tableLedger[y].credit.push(credit)
                 }
               }

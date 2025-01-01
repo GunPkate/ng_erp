@@ -12,9 +12,15 @@
                     {{ j.accountcontrolname }} {{j.controlcode}}
                 </h2>
             </div>
-            <div>
-                <div class="col-6" *ngFor="let i of j.debit">{{i.date | dateFormatPipe}} {{ i.value }}</div>
-                <div class="col-6" *ngFor="let i of j.credit">{{i.date | dateFormatPipe}} {{ i.value }}</div>
+            <div class="row d-flex">
+                <div class="col-6">
+                    DR
+                    <div *ngFor="let i of j.debit">{{i.date | dateFormatPipe}} &nbsp; &nbsp; {{ i.value }}</div>
+                </div>
+                <div class="col-6">
+                    CR
+                    <div *ngFor="let i of j.credit">{{i.date | dateFormatPipe}} &nbsp; &nbsp; {{ i.value }}</div>
+                </div>
             </div>
                 
           </div>
