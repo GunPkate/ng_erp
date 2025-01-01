@@ -1,5 +1,5 @@
 <div class="example-boundary">
-  <div *ngFor="let j of accList" class="example-box" (click)="passAcc(j.acc)">
+  <div *ngFor="let j of accList" class="example-box" style="{{selectAcc != '' && selectAcc == j.code ?'box-shadow: 5px 5px 5px 5px; transition: .8s;':'box-shadow: none; transition: .8s;'}}" (click)="passAcc(j.code)">
     <div class="d-flex flex-column row col-12">
       <h2>
         {{j.acc}}

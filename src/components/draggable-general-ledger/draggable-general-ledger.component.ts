@@ -22,11 +22,19 @@ export class DraggableGeneralLedger implements OnInit {
   
   constructor() { }
 
+  selectAcc: string = ''
   ngOnInit(): void {
 
   }
 
   passAcc(value: string){
-    this.accEvent.emit(value)
+
+    if( this.selectAcc !== ''){
+      this.selectAcc = ''
+      this.accEvent.emit('')
+    } else {
+      this.selectAcc = value
+      this.accEvent.emit(value)
+    }
   }
 }
