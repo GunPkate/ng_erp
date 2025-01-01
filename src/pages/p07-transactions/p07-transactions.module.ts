@@ -10,6 +10,7 @@ import { TransactionService } from 'src/shared/services/S07transactions/S07_Tran
 import { Draggable } from 'src/components/draggable/draggable.component';
 import { AccountFilterBehaviorSubj } from 'src/shared/behaviorsubject/AccountFilter';
 import { Form07GeneralLedgerComponent } from 'src/form/p07-transactions/form-lv7generalLedger/form07-generalLedger.component';
+import { GeneralLedgerBehaviorSubj } from 'src/shared/behaviorsubject/GeneralLedger';
 
 export const p07routes: Routes = [
   { 
@@ -34,7 +35,7 @@ export const p07routes: Routes = [
     MatInputModule
   ],
   providers: [
-    TransactionService, TransactionBehaviorSubj, AccountFilterBehaviorSubj
+    TransactionService, TransactionBehaviorSubj, AccountFilterBehaviorSubj, GeneralLedgerBehaviorSubj 
    ],
 
 })
