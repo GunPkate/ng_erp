@@ -165,8 +165,13 @@ export const AllBtn: Btn[] = [
           subBtn:[]
         },
         {
-          btnTitleName: "Sale Report",
+          btnTitleName: "General Ledger",
           subMenu: "2",
+          subBtn:[]
+        },
+        {
+          btnTitleName: "Sale Report",
+          subMenu: "3",
           subBtn: [
             {btnTitleName: "Daily"},
             {btnTitleName: "Weekly"},
@@ -175,7 +180,7 @@ export const AllBtn: Btn[] = [
         },
         {
           btnTitleName: "Purchase Report",
-          subMenu: "3",
+          subMenu: "4",
           subBtn: [
             {btnTitleName: "Daily"},
             {btnTitleName: "Weekly"},

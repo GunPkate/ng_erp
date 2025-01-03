@@ -17,26 +17,28 @@ export class P07TransactionListComponent implements OnInit {
   constructor(
     private transactionService: TransactionService,
     private accountFilterBehaviorSubj: AccountFilterBehaviorSubj
-  ) { 
-    this.transactionService.loadAccountFilter()
-    this.accountFilterBehaviorSubj.getAccountFilterList().subscribe( (x)=>{
-      this.accFilter = x; 
-    } 
-    )
-  }
+  ) {   }
 
   TransactionList: Transaction[] = []
 
   accList: AccList[] = [
-    {acc:"Assets"},
-    {acc:"Liabilities"},
-    {acc:"Equity"},
-    {acc:"Revenues"},
-    {acc:"Expenses"}
+    {acc:"Assets", code: "1"},
+    {acc:"Liabilities", code: "2"},
+    {acc:"Equity", code: "3"},
+    {acc:"Revenues", code: "4"},
+    {acc:"Expenses", code: "5"}
    ];
   ngOnInit(): void {
   }
 
+  onLoad(event: any) {
+    event.accList = this.accList
+    this.transactionService.loadAccountFilter()
+    this.accountFilterBehaviorSubj.getAccountFilterList().subscribe( (x)=>{
+      event.accFilter = x; 
+    } 
+    )
+  }
 
 
 }

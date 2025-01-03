@@ -209,7 +209,10 @@ export class Form03SupplierinvoiceComponent implements OnInit {
     }
     this.currentSupplierInvoiceDetail.supplierInvoiceId = this.currentSupplierInvoice.id
     this.http.post('http://localhost:3000/supplierinvoice/create',this.currentSupplierInvoice).subscribe(
-      response => { this.loadSupplierInvoice() },
+      response => { 
+        this.loadSupplierInvoice()
+        Swal.fire(this.title05,"create detail",'success')
+      },
       error => {
         if(error.error.meta){
                 Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
@@ -227,6 +230,7 @@ export class Form03SupplierinvoiceComponent implements OnInit {
       this.loadSupplierInvoice()
       // this.clearDetails()
       this.loadInvoiceDetail()
+      Swal.fire(this.title05,"create detail",'success')
     },error => {
       if(error.error.meta){
           Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
@@ -282,7 +286,12 @@ export class Form03SupplierinvoiceComponent implements OnInit {
   clear(){
     this.currentSupplierInvoice = InitialSupplierInvoice.InitialSupplierInvoiceObj();
     this.currentSupplierInvoice.userId  = '22d38441-b515-4a82-ae00-6207faa165b6'
-    this.dataSourceDetails = [];
+    
+    let date = new Date()
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1 ;
+    this.currentSupplierInvoice.invoiceNo = 'INVP' + year + month
+    // this.dataSourceDetails = [];
   }
 
   clearDetails(){

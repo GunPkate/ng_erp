@@ -1,0 +1,30 @@
+<div class="example-boundary">
+  <div *ngFor="let j of accList" class="example-box" style="{{selectAcc != '' && selectAcc == j.code ?'box-shadow: 5px 5px 5px 5px; transition: .8s;':'box-shadow: none; transition: .8s;'}}" (click)="passAcc(j.code)">
+    <div class="d-flex flex-column row col-12">
+      <h2>
+        {{j.acc}}
+      </h2>
+      <div *ngFor="let i of accFilter" class="row justify-content-center">
+          <div *ngIf="i.accountheadname === j.acc && i.debit !== i.credit" class="row w-100 col-12 d-flex justify-content-between">
+            <div>
+              {{ i.accountcontrolname }}
+            </div>
+            <div>
+              {{ i.controlcode }}
+            </div>
+          </div>
+          <div *ngIf="i.accountheadname === j.acc && i.debit !== i.credit" class="d-flex row col-12">
+            <div class="btn-primary col-6">
+              {{ i.debit - i.credit > 0 ?  i.debit - i.credit  : 0}}
+            </div>
+            <div class="btn-danger col-6">
+              {{ i.credit - i.debit > 0 ?  i.credit - i.debit  : 0}}
+            </div>          
+          </div>
+
+
+      </div>
+    </div>
+
+  </div>
+</div>

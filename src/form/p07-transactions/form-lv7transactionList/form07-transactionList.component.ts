@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -32,13 +32,16 @@ import { SupplierPaymentBehaviorSubj } from 'src/shared/behaviorsubject/Supplier
 import { Transaction,InitialTransaction } from 'src/shared/interface/P07Transaction/Transaction';
 import { TransactionService } from 'src/shared/services/S07transactions/S07_Transactions';
 import { TransactionBehaviorSubj } from 'src/shared/behaviorsubject/Transaction';
+import { Draggable } from "../../../components/draggable/draggable.component";
+import { AccList } from 'src/shared/interface/P07Transaction/AccList';
+import { AccountFilter } from 'src/shared/interface/P07Transaction/AccountFilter';
 
 
 @Component({
   selector: 'app-form07-transactionList',
   templateUrl: './form07-transactionList.component.html',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatSortModule, MatTableModule, NgIf, DateFormatPipe],
+  imports: [MatFormFieldModule, MatInputModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatSortModule, MatTableModule, NgIf, DateFormatPipe, Draggable],
   styleUrls: ['./form07-transactionList.component.css']
 })
 
@@ -55,6 +58,8 @@ setTransactionStyle(row: Transaction) {
   
   return style;
 }
+  @Input() accList:AccList[] = []
+  @Input() accFilter: AccountFilter[] = []
 
   title07 = 'Transaction List'
 

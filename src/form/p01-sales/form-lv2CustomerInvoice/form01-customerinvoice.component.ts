@@ -208,7 +208,10 @@ export class Form01CustomerinvoiceComponent implements OnInit {
     }
     this.currentCustomerInvoiceDetail.customerInvoiceId = this.currentCustomerInvoice.id
     this.http.post('http://localhost:3000/customerinvoice/create',this.currentCustomerInvoice).subscribe(
-      response => { this.loadCustomerInvoice() },
+      response => { 
+        this.loadCustomerInvoice()
+        Swal.fire(this.title05,"create",'success')
+      },
       error => {
         if(error.error.meta){
                 Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
@@ -227,6 +230,7 @@ export class Form01CustomerinvoiceComponent implements OnInit {
         this.loadCustomerInvoice()
         // this.clearDetails()
         this.loadInvoiceDetail()
+        Swal.fire(this.title05,"create detail",'success')
       },error => {
         if(error.error.meta){
             Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
@@ -283,7 +287,12 @@ export class Form01CustomerinvoiceComponent implements OnInit {
   clear(){
     this.currentCustomerInvoice = InitialCustomerInvoice.InitialCustomerInvoiceObj();
     this.currentCustomerInvoice.userId  = '22d38441-b515-4a82-ae00-6207faa165b6'
-    this.dataSourceDetails = [];
+
+    let date = new Date()
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1 ;
+    this.currentCustomerInvoice.invoiceNo = 'INVS' + year + month
+    // this.dataSourceDetails = [];
   }
 
   clearDetails(){
