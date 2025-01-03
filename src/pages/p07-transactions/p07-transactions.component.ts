@@ -17,13 +17,7 @@ export class P07TransactionListComponent implements OnInit {
   constructor(
     private transactionService: TransactionService,
     private accountFilterBehaviorSubj: AccountFilterBehaviorSubj
-  ) { 
-    this.transactionService.loadAccountFilter()
-    this.accountFilterBehaviorSubj.getAccountFilterList().subscribe( (x)=>{
-      this.accFilter = x; 
-    } 
-    )
-  }
+  ) {   }
 
   TransactionList: Transaction[] = []
 
@@ -39,7 +33,11 @@ export class P07TransactionListComponent implements OnInit {
 
   onLoad(event: any) {
     event.accList = this.accList
-    event.accFilter = this.accFilter
+    this.transactionService.loadAccountFilter()
+    this.accountFilterBehaviorSubj.getAccountFilterList().subscribe( (x)=>{
+      event.accFilter = x; 
+    } 
+    )
   }
 
 

@@ -15,6 +15,8 @@ import { TransactionService } from 'src/shared/services/S07transactions/S07_Tran
 import { GeneralLedger, InitialTableLedger, tableLedger, valueDetail } from 'src/shared/interface/P07Transaction/GeneralLedger';
 import { GeneralLedgerBehaviorSubj } from 'src/shared/behaviorsubject/GeneralLedger';
 import Swal from 'sweetalert2';
+import { AccountFilter } from 'src/shared/interface/P07Transaction/AccountFilter';
+import { TransactionBehaviorSubj } from 'src/shared/behaviorsubject/Transaction';
 
 
 @Component({
@@ -29,21 +31,32 @@ export class Form07GeneralLedgerComponent implements OnInit {
 
 
   @Input() accList:AccList[] = []
+  @Input() accFilter:AccountFilter[] = []
   title07 = 'General Ledger List'
 
   constructor(
     private http: HttpClient,
     private transactionService: TransactionService,
-    private generalLedgerBehaviorSubj: GeneralLedgerBehaviorSubj
-  ) {  }
+    private generalLedgerBehaviorSubj: GeneralLedgerBehaviorSubj,
+    private transactionBehaviorSubj: TransactionBehaviorSubj
+  ) {  
+  }
   ngOnInit(): void {
 
   }
 
   tableLedger: tableLedger[] = []
   ledger: GeneralLedger[] = []
-  setAcc(data: string){
 
+  loadTransaction(){
+    this.transactionService.loadTransaction()
+    this.transactionBehaviorSubj.getTransactionList().subscribe(x=>{
+      // this.dataSourceT = x
+      console.log(x)
+    })    
+  }
+
+  setAcc(data: string){
     console.log("Acc",data)
     if(data !== ''){
       this.transactionService.loadGeneralLedger(data)
@@ -56,9 +69,10 @@ export class Form07GeneralLedgerComponent implements OnInit {
             
             for (let i = 0; i < uniqueAcc.length; i++) {
               let item = InitialTableLedger.InitialTableLedger()
-              let temp = uniqueAcc[i].split(" ")
-              item.accountcontrolname = temp[1]
-              item.controlcode = temp[0]
+              let [first,...temp] = uniqueAcc[i].split(" ")
+              let temp2 = temp.join(" ")
+              item.accountcontrolname = temp2
+              item.controlcode = first
               this.tableLedger.push(item) ;
             }
           }

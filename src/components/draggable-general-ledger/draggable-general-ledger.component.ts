@@ -24,7 +24,7 @@ export class DraggableGeneralLedger implements OnInit {
 
   selectAcc: string = ''
   ngOnInit(): void {
-
+    console.log("filter",this)
   }
 
   passAcc(value: string){
