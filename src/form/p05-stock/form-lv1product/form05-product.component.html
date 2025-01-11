@@ -30,7 +30,7 @@
 
     <div class="col-4">   
     <mat-form-field class="col-12" appearance="fill">
-        <mat-label>Select Supplier</mat-label>
+        <mat-label>Select Product Category</mat-label>
         <mat-select [value]="currentProduct.catagoryId" (selectionChange)="categoryChange($event.value)">
             <div *ngFor="let i of categoryDropDown">
                 <mat-option [value]="i.id	">{{i.categoryName}}</mat-option>

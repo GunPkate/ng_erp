@@ -5,7 +5,7 @@ export interface Stock{
     status: string
     quantity: number
     price: number
-    description: string
+    invoiceDetailId: string
     expiryDate: Date
     manuDate: Date
     userId: string,
@@ -20,7 +20,7 @@ export class InitialStock{
             status: "",
             quantity: 0,
             price: 0,
-            description: "",
+            invoiceDetailId: "",
             expiryDate: new Date(),
             manuDate: new Date(),
             userId: "",

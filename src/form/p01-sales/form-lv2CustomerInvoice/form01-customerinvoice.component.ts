@@ -267,7 +267,7 @@ export class Form01CustomerinvoiceComponent implements OnInit {
         stock.status = "Sale"
         stock.quantity = this.currentCustomerInvoiceDetail.saleQty
         stock.price = this.currentCustomerInvoiceDetail.saleUnitPrice
-        stock.description = ""
+        stock.invoiceDetailId = this.currentCustomerInvoiceDetail.id
         stock.expiryDate = this.expDate
         stock.manuDate = this.manuDate
         stock.userId = this.currentCustomerInvoice.userId

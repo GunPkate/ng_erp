@@ -64,7 +64,7 @@ export class Form05StockComponent implements OnInit {
     this.currentProduct.catagoryId  = '',
     this.currentProduct.quantity  = 40,
     this.currentProduct.price  = 50,
-    this.currentProduct.description  = 'Bufen lot 1'
+    this.currentProduct.invoiceDetailId  = 'Bufen lot 1'
     // this.currentProduct.expiryDate  = Date.now(),
     // this.currentProduct.manuDate  = Date.now(),
     this.currentProduct.userId  = '22d38441-b515-4a82-ae00-6207faa165b6'
@@ -91,8 +91,8 @@ export class Form05StockComponent implements OnInit {
     console.log(this.currentProduct)
   }
 
-  descriptionChange( event : any){
-    this.currentProduct.description = this.validateInput(event.target.value);
+  invoiceDetailIdChange( event : any){
+    this.currentProduct.invoiceDetailId = this.validateInput(event.target.value);
     console.log(this.currentProduct)
   }
 
