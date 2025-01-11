@@ -322,6 +322,19 @@ export class Form01CustomerinvoiceComponent implements OnInit {
         this.loadInvoiceDetail()
       }
     )
+
+    this.http.post('http://localhost:3000/stock/delete',data).subscribe(
+      (res) =>{
+
+      },
+      error => {
+        if(error.error.meta){
+                Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+            }else{
+                Swal.fire(JSON.stringify(error.name),error.message,'error')
+            }
+      }
+    )    
   }
 
   updateData(id: string){
