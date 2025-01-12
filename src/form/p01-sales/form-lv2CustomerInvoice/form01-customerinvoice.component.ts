@@ -225,43 +225,58 @@ export class Form01CustomerinvoiceComponent implements OnInit {
   registerDetails(){
     this.transaction = [];
     this.currentCustomerInvoiceDetail.id = uuidv4()
-    this.http.post('http://localhost:3000/customerinvoicedetail/create',this.currentCustomerInvoiceDetail).subscribe(
-      res=>{
-        this.loadCustomerInvoice()
-        // this.clearDetails()
-        this.loadInvoiceDetail()
-        Swal.fire(this.title05,"create detail",'success')
-      },error => {
-        if(error.error.meta){
-            Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+
+    this.http.get('http://localhost:3000/stock/purchaselist').subscribe(
+      (res: any)=>{
+        let check = res.sale + this.currentCustomerInvoiceDetail.saleQty
+        if(res.purchase < check ){
+          console.log("stock",res.purchase , check)
+          Swal.fire("Out of Stock", ` In Stock : ${res.purchase} \n /n ${res.sale}`,'error')
+          return;
         }else{
-            Swal.fire(JSON.stringify(error.name),error.message,'error')
-        }
-      }
-    )
-    this.transaction.push( this.setTransaction(this.currentCustomerInvoiceDetail.id, 'dr','Account Receivable','1','103','8ff68454-c507-4784-9b83-7f11c1c649d4') )
-    this.transaction.push( this.setTransaction(this.currentCustomerInvoiceDetail.id, 'cr','Sale Revenue','4','401','8ff68454-c507-4784-9b83-7f11c1c649d4') )
-    this.transaction.push( this.setTransaction(this.currentCustomerInvoiceDetail.id, 'dr','Cost of Goods Sold','5','502','8ff68454-c507-4784-9b83-7f11c1c649d4') )
-    this.transaction.push( this.setTransaction(this.currentCustomerInvoiceDetail.id, 'cr','Inventory','1','104','8ff68454-c507-4784-9b83-7f11c1c649d4') )
-    this.transaction.forEach(
-      x => {
-        this.http.post('http://localhost:3000/transaction/create',x).pipe(catchError(error => throwError(error))).subscribe(
-          response => { 
 
-          },
-          error => {
-            if(error.error.meta){
-                Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
-            }else{
-                Swal.fire(JSON.stringify(error.name),error.message,'error')
+          this.http.post('http://localhost:3000/customerinvoicedetail/create',this.currentCustomerInvoiceDetail).subscribe(
+            res=>{
+              this.loadCustomerInvoice()
+              // this.clearDetails()
+              this.loadInvoiceDetail()
+              Swal.fire(this.title05,"create detail",'success')
+            },error => {
+              if(error.error.meta){
+                  Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+              }else{
+                  Swal.fire(JSON.stringify(error.name),error.message,'error')
+              }
             }
-          }
-        )
-      }
-    )
-    // this.dataSourceDetails.push(this.currentCustomerInvoiceDetail)
-
-        let stock = InitialStock.InitialStockObj();
+          )
+          
+          this.transaction.push( this.setTransaction(this.currentCustomerInvoiceDetail.id, 'dr','Account Receivable','1','103','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+          this.transaction.push( this.setTransaction(this.currentCustomerInvoiceDetail.id, 'cr','Sale Revenue','4','401','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+          
+          // if(true){
+            this.transaction.push( this.setTransaction(this.currentCustomerInvoiceDetail.id, 'dr','Cost of Goods Sold','5','502','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+          // }
+          
+          this.transaction.push( this.setTransaction(this.currentCustomerInvoiceDetail.id, 'cr','Inventory','1','104','8ff68454-c507-4784-9b83-7f11c1c649d4') )
+          this.transaction.forEach(
+            x => {
+              this.http.post('http://localhost:3000/transaction/create',x).pipe(catchError(error => throwError(error))).subscribe(
+                response => { 
+      
+                },
+                error => {
+                  if(error.error.meta){
+                      Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+                  }else{
+                      Swal.fire(JSON.stringify(error.name),error.message,'error')
+                  }
+                }
+              )
+            }
+          )
+          // this.dataSourceDetails.push(this.currentCustomerInvoiceDetail)
+      
+          let stock = InitialStock.InitialStockObj();
         stock.id = uuidv4()
         stock.productId = this.currentCustomerInvoiceDetail.productId
         stock.status = "Sale"
@@ -282,6 +297,15 @@ export class Form01CustomerinvoiceComponent implements OnInit {
                 }
           }
         )
+        }
+      },error => {
+        if(error.error.meta){
+            Swal.fire(JSON.stringify(error.error.meta.target),error.error.error,'error')
+        }else{
+            Swal.fire(JSON.stringify(error.name),error.message,'error')
+        }
+      }
+    )   
   }
 
   clear(){
