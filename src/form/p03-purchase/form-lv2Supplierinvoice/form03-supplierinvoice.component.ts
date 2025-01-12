@@ -269,6 +269,7 @@ export class Form03SupplierinvoiceComponent implements OnInit {
     stock.expiryDate = this.expDate
     stock.manuDate = this.manuDate
     stock.userId = this.currentSupplierInvoice.userId
+    stock.usedQty = 0
     this.http.post('http://localhost:3000/stock/create',stock).subscribe(
       res=>{
         this.clear()

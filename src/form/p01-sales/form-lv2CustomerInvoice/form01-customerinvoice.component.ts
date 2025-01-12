@@ -228,10 +228,10 @@ export class Form01CustomerinvoiceComponent implements OnInit {
 
     this.http.get('http://localhost:3000/stock/purchaselist').subscribe(
       (res: any)=>{
-        let check = res.sale + this.currentCustomerInvoiceDetail.saleQty
+        let check = res.usedQty + this.currentCustomerInvoiceDetail.saleQty
         if(res.purchase < check ){
           console.log("stock",res.purchase , check)
-          Swal.fire("Out of Stock", ` In Stock : ${res.purchase} \n /n ${res.sale}`,'error')
+          Swal.fire("Out of Stock", ` In Stock : ${res.purchase} \n /n ${res.usedQty}`,'error')
           return;
         }else{
 
@@ -286,6 +286,7 @@ export class Form01CustomerinvoiceComponent implements OnInit {
         stock.expiryDate = this.expDate
         stock.manuDate = this.manuDate
         stock.userId = this.currentCustomerInvoice.userId
+        stock.usedQty = stock.quantity
         this.http.post('http://localhost:3000/stock/create',stock).subscribe(
           res=>{
             this.clear()

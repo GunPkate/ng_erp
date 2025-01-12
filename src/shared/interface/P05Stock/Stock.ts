@@ -9,6 +9,7 @@ export interface Stock{
     expiryDate: Date
     manuDate: Date
     userId: string,
+    usedQty: number
 }
 
 export class InitialStock{
@@ -24,6 +25,7 @@ export class InitialStock{
             expiryDate: new Date(),
             manuDate: new Date(),
             userId: "",
+            usedQty: 0
         }
     }
 }
