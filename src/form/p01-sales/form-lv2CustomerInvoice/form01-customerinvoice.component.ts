@@ -322,6 +322,7 @@ export class Form01CustomerinvoiceComponent implements OnInit {
   clearDetails(){
     this.currentCustomerInvoiceDetail = InitialCustomerInvoiceDetail.InitialCustomerInvoiceDetailObj();
     if(this.selectInvoice) this.currentCustomerInvoiceDetail.customerInvoiceId = this.selectInvoice;
+    this.currentCustomerInvoiceDetail.productId = ""
     // this.currentCustomerInvoiceDetail.customerInvoiceId = this.currentCustomerInvoice.invoiceNo;
   }
 

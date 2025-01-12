@@ -297,6 +297,7 @@ export class Form03SupplierinvoiceComponent implements OnInit {
   clearDetails(){
     this.currentSupplierInvoiceDetail = InitialSupplierInvoiceDetail.InitialSupplierInvoiceDetailObj();
     if(this.selectInvoice) this.currentSupplierInvoiceDetail.supplierInvoiceId = this.selectInvoice;
+    this.currentSupplierInvoiceDetail.productId = ""
     // this.currentSupplierInvoiceDetail.supplierInvoiceId = this.currentSupplierInvoice.invoiceNo;
   }
 

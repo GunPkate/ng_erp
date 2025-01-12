@@ -160,7 +160,7 @@
             <div>
                 <mat-form-field class="col-4" appearance="fill">
                     <mat-label>Select Product</mat-label>
-                    <mat-select [value]="currentCustomerInvoice.customerId" (selectionChange)="productChange($event.value)">
+                    <mat-select [value]="currentCustomerInvoiceDetail.productId" (selectionChange)="productChange($event.value)">
                         <div *ngFor="let i of productDropDown">
                             <mat-option [value]="i.id">{{getName(i.id, 'product')}}</mat-option>
                         </div>
