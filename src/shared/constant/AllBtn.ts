@@ -97,7 +97,7 @@ export const AllBtn: Btn[] = [
           subBtn: []
         }, 
         {
-          btnTitleName: "Low Stock Details",
+          btnTitleName: "Low Stock",
           subMenu: "4",
           subBtn: []
         }, 

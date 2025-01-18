@@ -11,6 +11,8 @@ import { StockService } from 'src/shared/services/S05Stocks/S05_Category';
 import { CategoryBehaviorSubj } from 'src/shared/behaviorsubject/Category';
 import { StockBehaviorSubj } from 'src/shared/behaviorsubject/Stock';
 import { ProductBehaviorSubj } from 'src/shared/behaviorsubject/Product';
+import { Form05LowStockComponent } from 'src/form/p05-stock/form-lv1lowstock/form05-low-stock.component';
+import { NgChartsModule } from 'ng2-charts';
 
 export const p05routes: Routes = [
   { 
@@ -20,6 +22,7 @@ export const p05routes: Routes = [
       {path: 'categories', component: Form05CategoryComponent},
       {path: 'products', component: Form05ProductComponent},
       {path: 'stockdetails', component: Form05StockComponent},
+      {path: 'lowstock', component: Form05LowStockComponent},
     ]
   }
 ]
@@ -34,6 +37,7 @@ export const p05routes: Routes = [
     Form05StockComponent,
     RouterModule.forChild(p05routes),
 
+    NgChartsModule,
     MatFormFieldModule,
     MatInputModule
   ],
