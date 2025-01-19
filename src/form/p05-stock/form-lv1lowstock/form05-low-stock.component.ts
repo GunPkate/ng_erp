@@ -9,6 +9,9 @@ import { MatSortModule } from '@angular/material/sort';
 import { v4 as uuidv4 } from 'uuid';
 import { NgFor } from '@angular/common';
 import { Chart } from 'chart.js';
+import { StockService } from 'src/shared/services/S05Stocks/S05_Category';
+import { StockBehaviorSubj } from 'src/shared/behaviorsubject/Stock';
+import { Stock } from 'src/shared/interface/P05Stock/Stock';
 
 @Component({
   selector: 'app-form05-low-stock',
@@ -22,32 +25,52 @@ export class Form05LowStockComponent implements OnInit {
 
   title05 = 'Product'
   chart: any
+  constructor(
+    private stockService: StockService,
+    private stockBehaviorSubj: StockBehaviorSubj
+  ){}
 
+  data: Stock[] = []
   ngOnInit() {
-    this.createChart()
+    this.stockService.loadStock();
+    this.stockBehaviorSubj.getStockList().subscribe(response=>
+      {
+        let sum = 0
+        let qtyData: number[] = [0]
+        response.forEach(temp => qtyData.push(sum += temp.quantity))
+        let dateData = ['']
+        response.forEach(x=>dateData.push(x.manuDate.toString()))
+
+        if (this.chart) {
+          this.chart.destroy();
+          this.createChart(qtyData, dateData)
+        } else {
+          this.createChart(qtyData, dateData)
+        }
+        
+      }  
+    )
   }
 
-  createChart() {
+  createChart(xData: number[],yData: String[]) {
 
     this.chart = new Chart("MyChart", {
       type: 'line', //this denotes tha type of chart
 
       data: {// values on X-Axis
-        labels: ['2022-05-10', '2022-05-11', '2022-05-12', '2022-05-13',
-          '2022-05-14', '2022-05-15', '2022-05-16', '2022-05-17',],
+        labels: yData,
         datasets: [
           {
             label: "Sales",
-            data: ['467', '576', '572', '79', '92',
-              '574', '573', '576'],
+            data: xData,
             backgroundColor: 'blue'
           },
-          {
-            label: "Profit",
-            data: ['542', '542', '536', '327', '17',
-              '0.00', '538', '541'],
-            backgroundColor: 'limegreen'
-          }
+          // {
+          //   label: "Profit",
+          //   data: ['542', '542', '536', '327', '17',
+          //     '0.00', '538', '541'],
+          //   backgroundColor: 'limegreen'
+          // }
         ]
       },
       options: {
@@ -56,10 +79,11 @@ export class Form05LowStockComponent implements OnInit {
           y: {
               display: true,
               stacked: true,
-              // min: -10,
-              // max: 700
+              min: 0,
+              max: xData[xData.length-1]+100
               
           }
+          
       }
       }
 
