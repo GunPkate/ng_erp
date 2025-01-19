@@ -1,11 +1,8 @@
+<button >Monthly</button>
 <div class="d-flex">   
   Low Stock Details
-  <button ></button>
-  <div *ngFor="let data of dataSource">
-    <canvas 
-      [id]="data.id"
-      attr.data = "data.data"
-    ></canvas>
+  <div>
+    <canvas  id="MyChart" >{{ chart }}</canvas>
   </div> 
 
 </div>

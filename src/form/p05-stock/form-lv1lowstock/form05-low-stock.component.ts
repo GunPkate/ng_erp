@@ -8,7 +8,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { v4 as uuidv4 } from 'uuid';
 import { NgFor } from '@angular/common';
-import { Chart, registerables } from 'chart.js';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-form05-low-stock',
@@ -21,84 +21,49 @@ import { Chart, registerables } from 'chart.js';
 export class Form05LowStockComponent implements OnInit {
 
   title05 = 'Product'
+  chart: any
 
-  dataSource = [
-    {
-      id: 'chartOne',
-      title: 'Chart One',
-      type: 'line',
-      lables: ['Villas By Taru', 'Watch Tower'],
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)',
-      ],
-      borderColor: [
-        'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)',
-      ],
-      borderWidth: 2,
-      data: [18, 12],
-    },
-    {
-      id: 'chartTwo',
-      title: 'Chart Two',
-      type: 'line',
-      lables: ['Tea Avenue', 'The Grill Bar'],
-      data: [18, 12, 2, 7],
-    },
-  ];
-
-  ngOnInit(){}
-  ngAfterViewInit() {
-    this.dataSource.forEach((element) => {
-      this.generateType(element);
-    });
+  ngOnInit() {
+    this.createChart()
   }
 
-  generateType(dataSet: any) {
-    const myChart = new Chart(dataSet.id, {
-      type: 'line',
-      data: {
-        labels: dataSet.labels,
+  createChart() {
+
+    this.chart = new Chart("MyChart", {
+      type: 'line', //this denotes tha type of chart
+
+      data: {// values on X-Axis
+        labels: ['2022-05-10', '2022-05-11', '2022-05-12', '2022-05-13',
+          '2022-05-14', '2022-05-15', '2022-05-16', '2022-05-17',],
         datasets: [
           {
-            label: '# of Votes',
-            data: dataSet.data,
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(255, 159, 64, 0.2)',
-            ],
-            borderColor: [
-              'rgba(255, 99, 132, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)',
-            ],
-            borderWidth: 2,
+            label: "Sales",
+            data: ['467', '576', '572', '79', '92',
+              '574', '573', '576'],
+            backgroundColor: 'blue'
           },
-        ],
+          {
+            label: "Profit",
+            data: ['542', '542', '536', '327', '17',
+              '0.00', '538', '541'],
+            backgroundColor: 'limegreen'
+          }
+        ]
       },
       options: {
+        aspectRatio: 2,
         scales: {
           y: {
-            beginAtZero: true,
-          },
-        },
-      },
+              display: true,
+              stacked: true,
+              // min: -10,
+              // max: 700
+              
+          }
+      }
+      }
+
     });
+    this.chart.resize(1200,300)
   }
 }
