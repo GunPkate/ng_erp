@@ -37,7 +37,7 @@ export class Form05LowStockComponent implements OnInit {
       {
         let sum = 0
         let qtyData: number[] = [0]
-        response.forEach(temp => qtyData.push(sum += temp.quantity))
+        response.forEach(temp => qtyData.push(temp.status == 'Purchase' ? sum += temp.quantity: sum -= temp.quantity))
         let dateData = ['']
         response.forEach(x=>dateData.push(x.manuDate.toString()))
 
@@ -53,7 +53,7 @@ export class Form05LowStockComponent implements OnInit {
   }
 
   createChart(xData: number[],yData: String[]) {
-
+    let max = xData.map( x=> x );
     this.chart = new Chart("MyChart", {
       type: 'line', //this denotes tha type of chart
 
@@ -80,7 +80,7 @@ export class Form05LowStockComponent implements OnInit {
               display: true,
               stacked: true,
               min: 0,
-              max: xData[xData.length-1]+100
+              max: max.sort()[xData.length-1]+100
               
           }
           
