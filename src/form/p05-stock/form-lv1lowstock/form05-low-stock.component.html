@@ -1,8 +1,11 @@
 <div class="d-flex">   
   Low Stock Details
-
-  <div *ngFor="let data of data">
-    <canvas [id]="data.id"></canvas>
+  <button ></button>
+  <div *ngFor="let data of dataSource">
+    <canvas 
+      [id]="data.id"
+      attr.data = "data.data"
+    ></canvas>
   </div> 
 
 </div>
