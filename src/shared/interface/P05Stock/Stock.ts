@@ -8,7 +8,8 @@ export interface Stock{
     invoiceDetailId: string
     expiryDate: Date
     manuDate: Date
-    userId: string,
+    invoiceDate: Date
+    userId: string
     usedQty: number
 }
 
@@ -24,6 +25,7 @@ export class InitialStock{
             invoiceDetailId: "",
             expiryDate: new Date(),
             manuDate: new Date(),
+            invoiceDate: new Date(),
             userId: "",
             usedQty: 0
         }
