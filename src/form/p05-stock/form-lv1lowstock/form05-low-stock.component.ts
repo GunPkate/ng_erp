@@ -12,6 +12,8 @@ import { Chart } from 'chart.js';
 import { StockService } from 'src/shared/services/S05Stocks/S05_Category';
 import { StockBehaviorSubj } from 'src/shared/behaviorsubject/Stock';
 import { Stock } from 'src/shared/interface/P05Stock/Stock';
+import annotationPlugin from 'chartjs-plugin-annotation';
+Chart.register(annotationPlugin);
 
 @Component({
   selector: 'app-form05-low-stock',
@@ -74,7 +76,7 @@ export class Form05LowStockComponent implements OnInit {
         ]
       },
       options: {
-        aspectRatio: 2,
+        aspectRatio: 2.5,
         scales: {
           y: {
               display: true,
@@ -83,11 +85,23 @@ export class Form05LowStockComponent implements OnInit {
               max: max.sort()[xData.length-1]+100
               
           }
-          
-      }
+        },
+        plugins: {
+          annotation: {
+            annotations: {
+              line1: {
+                type: 'line',
+                yMin: 200,
+                yMax: 200,
+                borderColor: 'rgb(0, 99, 132)',
+                borderWidth: 2,
+              }
+            }
+          }
+        }
       }
 
     });
-    this.chart.resize(1200,300)
+    this.chart.resize(1300,800)
   }
 }
